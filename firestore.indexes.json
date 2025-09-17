@@ -1,0 +1,93 @@
+{
+    "indexes": [
+        {
+            "collectionGroup": "raves",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "organizerId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "startDate",
+                    "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "raves",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "djIds",
+                    "arrayConfig": "CONTAINS"
+                },
+                {
+                    "fieldPath": "startDate",
+                    "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "raves",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "collaboratorIds",
+                    "arrayConfig": "CONTAINS"
+                },
+                {
+                    "fieldPath": "startDate",
+                    "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "group_chats",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "isActive",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "autoDeleteAt",
+                    "order": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "group_chats",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "memberIds",
+                    "arrayConfig": "CONTAINS"
+                },
+                {
+                    "fieldPath": "isActive",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "lastMessageTimestamp",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "group_messages",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "groupChatId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "timestamp",
+                    "order": "ASCENDING"
+                }
+            ]
+        }
+    ],
+    "fieldOverrides": []
+}

@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Most permissive rules - allow everything for authenticated users
+    match /{document=**} {
+      allow read, write: if true; // WARNING: This allows even unauthenticated access
+    }
+  }
+}

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.b0esche.gig_hub"
+    namespace = "com.gighub.gighub"
     compileSdk = 35  // Updated for latest Android dependencies
     ndkVersion = "27.0.12077973"
 
@@ -27,13 +27,13 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.b0esche.gig_hub"
+        applicationId = "com.gighub.gighub"
         minSdk = 23
         targetSdk = 35  // Updated for latest Android features
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        manifestPlaceholders["appAuthRedirectScheme"] = "com.b0esche.gig_hub"
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.gighub.gighub"
     }
 
     buildTypes {

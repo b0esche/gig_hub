@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
-    id("com.google.gms.google-services") // FlutterFire
+    id("com.google.gms.google-services")
+    id("com.google.firebase.firebase-perf")
+    id("com.google.firebase.crashlytics") // FlutterFire
     id("org.jetbrains.kotlin.android")
     id("dev.flutter.flutter-gradle-plugin") // Must be last!
 }

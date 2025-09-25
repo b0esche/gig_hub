@@ -1,4 +1,6 @@
 import 'package:gig_hub/src/Data/app_imports.dart';
+import 'package:gig_hub/src/Features/legal/services/legal_agreement_service.dart';
+import 'package:gig_hub/src/Features/legal/presentation/legal_agreement_wrapper.dart';
 
 class RouteObserverProvider extends InheritedWidget {
   final RouteObserver<PageRoute> observer;
@@ -145,10 +147,31 @@ class _AppState extends State<App> {
                     },
                   );
                 }
-                if (authSnap.connectionState == ConnectionState.done) {
-                  return MainScreen(initialUser: userSnap.data!);
-                }
-                return MainScreen(initialUser: userSnap.data!);
+                // Check legal agreements before proceeding to main screen
+                return FutureBuilder<bool>(
+                  future: LegalAgreementService.hasAcceptedAllAgreements(),
+                  builder: (context, legalSnap) {
+                    if (legalSnap.connectionState == ConnectionState.waiting) {
+                      return Scaffold(
+                        backgroundColor: Palette.primalBlack,
+                        body: Center(
+                          child: CircularProgressIndicator(
+                            color: Palette.forgedGold,
+                            strokeWidth: 1.65,
+                          ),
+                        ),
+                      );
+                    }
+
+                    final hasAcceptedAgreements = legalSnap.data ?? false;
+
+                    if (!hasAcceptedAgreements) {
+                      return LegalAgreementWrapper(user: userSnap.data!);
+                    }
+
+                    return MainScreen(initialUser: userSnap.data!);
+                  },
+                );
               },
             );
           },

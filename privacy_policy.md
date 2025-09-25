@@ -101,7 +101,7 @@ We may update this privacy policy from time to time. We will notify you of any s
 
 If you have questions about this privacy policy or our data practices, please contact us at:
 
-**Email**: privacy@gighub.app
+**Email**: b0eschex@gmail.com
 **Website**: www.gighub.app/privacy
 
 ---

@@ -1,6 +1,8 @@
 import 'package:gig_hub/src/Data/app_imports.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../../main.dart' show globalNavigatorKey;
+import 'package:gig_hub/src/Features/legal/services/legal_agreement_service.dart';
+import 'package:gig_hub/src/Features/legal/presentation/legal_agreement_wrapper.dart';
 
 import '../../Data/app_imports.dart' as http;
 
@@ -222,9 +224,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (!context.mounted) return;
       if (mounted) {
+        // Check if legal agreements are needed
+        final hasAcceptedAllAgreements =
+            await LegalAgreementService.hasAcceptedAllAgreements();
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => MainScreen(initialUser: guestUser),
+            builder:
+                (context) =>
+                    hasAcceptedAllAgreements
+                        ? MainScreen(initialUser: guestUser)
+                        : LegalAgreementWrapper(user: guestUser),
           ),
         );
       }

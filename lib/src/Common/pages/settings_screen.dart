@@ -1,5 +1,6 @@
 import 'package:gig_hub/src/Data/app_imports.dart';
 import 'package:gig_hub/src/Common/widgets/blocked_users_dialog.dart';
+import 'package:gig_hub/src/Features/legal/presentation/legal_status_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -587,6 +588,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                     ),
+
+                  // Legal Agreements Status
+                  LegalStatusWidget(),
+
                   if (_user is! Guest)
                     Container(
                       height: 48,

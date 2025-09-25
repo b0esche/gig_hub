@@ -29,6 +29,10 @@ class Guest extends AppUser {
   String name; // Username for group chats
   List<String> favoriteUIds;
   bool isFlinta; // FLINTA* marking
+  bool hasAcceptedTerms;
+  bool hasAcceptedPrivacy;
+  String? termsAcceptedAt;
+  String? privacyAcceptedAt;
 
   Guest({
     required super.id,
@@ -36,6 +40,10 @@ class Guest extends AppUser {
     this.name = '', // Empty by default, set when joining first group chat
     this.favoriteUIds = const [],
     this.isFlinta = false,
+    this.hasAcceptedTerms = false,
+    this.hasAcceptedPrivacy = false,
+    this.termsAcceptedAt,
+    this.privacyAcceptedAt,
   }) : super(type: UserType.guest);
 
   Map<String, dynamic> toJson() => {
@@ -44,6 +52,10 @@ class Guest extends AppUser {
     'favoriteUIds': favoriteUIds,
     'avatarImageUrl': avatarImageUrl,
     'isFlinta': isFlinta,
+    'hasAcceptedTerms': hasAcceptedTerms,
+    'hasAcceptedPrivacy': hasAcceptedPrivacy,
+    'termsAcceptedAt': termsAcceptedAt,
+    'privacyAcceptedAt': privacyAcceptedAt,
   };
 
   factory Guest.fromJson(String id, Map<String, dynamic> json) => Guest(
@@ -52,6 +64,10 @@ class Guest extends AppUser {
     favoriteUIds: List<String>.from(json['favoriteUIds'] ?? []),
     avatarImageUrl: json['avatarImageUrl'] as String,
     isFlinta: json['isFlinta'] as bool? ?? false,
+    hasAcceptedTerms: json['hasAcceptedTerms'] as bool? ?? false,
+    hasAcceptedPrivacy: json['hasAcceptedPrivacy'] as bool? ?? false,
+    termsAcceptedAt: json['termsAcceptedAt'] as String?,
+    privacyAcceptedAt: json['privacyAcceptedAt'] as String?,
   );
 }
 
@@ -78,6 +94,11 @@ class DJ extends AppUser {
 
   List<int> bpm;
 
+  bool hasAcceptedTerms;
+  bool hasAcceptedPrivacy;
+  String? termsAcceptedAt;
+  String? privacyAcceptedAt;
+
   DJ({
     required super.id,
     required this.avatarImageUrl,
@@ -97,6 +118,10 @@ class DJ extends AppUser {
     this.mediaImageUrls = const [],
     this.mediaImageBlurHashes = const [],
     this.favoriteUIds = const [],
+    this.hasAcceptedTerms = false,
+    this.hasAcceptedPrivacy = false,
+    this.termsAcceptedAt,
+    this.privacyAcceptedAt,
   }) : super(type: UserType.dj);
 
   Map<String, dynamic> toJson() => {
@@ -118,6 +143,10 @@ class DJ extends AppUser {
     'mediaImageUrls': mediaImageUrls,
     'mediaImageBlurHashes': mediaImageBlurHashes,
     'favoriteUIds': favoriteUIds,
+    'hasAcceptedTerms': hasAcceptedTerms,
+    'hasAcceptedPrivacy': hasAcceptedPrivacy,
+    'termsAcceptedAt': termsAcceptedAt,
+    'privacyAcceptedAt': privacyAcceptedAt,
   };
 
   factory DJ.fromJson(String id, Map<String, dynamic> json) => DJ(
@@ -139,6 +168,10 @@ class DJ extends AppUser {
     mediaImageUrls: List<String>.from(json['mediaImageUrls'] ?? []),
     mediaImageBlurHashes: List<String>.from(json['mediaImageBlurHashes'] ?? []),
     favoriteUIds: List<String>.from(json['favoriteUIds'] ?? []),
+    hasAcceptedTerms: json['hasAcceptedTerms'] as bool? ?? false,
+    hasAcceptedPrivacy: json['hasAcceptedPrivacy'] as bool? ?? false,
+    termsAcceptedAt: json['termsAcceptedAt'] as String?,
+    privacyAcceptedAt: json['privacyAcceptedAt'] as String?,
   );
 }
 
@@ -158,6 +191,11 @@ class Booker extends AppUser {
 
   List<String> mediaImageUrls, favoriteUIds, mediaImageBlurHashes;
 
+  bool hasAcceptedTerms;
+  bool hasAcceptedPrivacy;
+  String? termsAcceptedAt;
+  String? privacyAcceptedAt;
+
   Booker({
     required super.id,
     required this.avatarImageUrl,
@@ -173,6 +211,10 @@ class Booker extends AppUser {
     this.mediaImageUrls = const [],
     this.mediaImageBlurHashes = const [],
     this.favoriteUIds = const [],
+    this.hasAcceptedTerms = false,
+    this.hasAcceptedPrivacy = false,
+    this.termsAcceptedAt,
+    this.privacyAcceptedAt,
   }) : super(type: UserType.booker);
 
   Map<String, dynamic> toJson() => {
@@ -190,6 +232,10 @@ class Booker extends AppUser {
     'mediaImageUrls': mediaImageUrls,
     'mediaImageBlurHashes': mediaImageBlurHashes,
     'favoriteUIds': favoriteUIds,
+    'hasAcceptedTerms': hasAcceptedTerms,
+    'hasAcceptedPrivacy': hasAcceptedPrivacy,
+    'termsAcceptedAt': termsAcceptedAt,
+    'privacyAcceptedAt': privacyAcceptedAt,
   };
 
   factory Booker.fromJson(String id, Map<String, dynamic> json) => Booker(
@@ -207,6 +253,10 @@ class Booker extends AppUser {
     mediaImageUrls: List<String>.from(json['mediaImageUrls'] ?? []),
     mediaImageBlurHashes: List<String>.from(json['mediaImageBlurHashes'] ?? []),
     favoriteUIds: List<String>.from(json['favoriteUIds'] ?? []),
+    hasAcceptedTerms: json['hasAcceptedTerms'] as bool? ?? false,
+    hasAcceptedPrivacy: json['hasAcceptedPrivacy'] as bool? ?? false,
+    termsAcceptedAt: json['termsAcceptedAt'] as String?,
+    privacyAcceptedAt: json['privacyAcceptedAt'] as String?,
   );
 }
 
@@ -226,5 +276,36 @@ extension AppUserView on AppUser {
     if (this is Booker) return (this as Booker).avatarImageUrl;
     if (this is Guest) return (this as Guest).avatarImageUrl;
     return 'https://firebasestorage.googleapis.com/v0/b/gig-hub-8ac24.firebasestorage.app/o/default%2Fdefault_avatar.jpg?alt=media&token=9c48f377-736e-4a9a-bf31-6ffc3ed020f7';
+  }
+
+  // Legal agreement helpers
+  bool get hasAcceptedTerms {
+    if (this is DJ) return (this as DJ).hasAcceptedTerms;
+    if (this is Booker) return (this as Booker).hasAcceptedTerms;
+    if (this is Guest) return (this as Guest).hasAcceptedTerms;
+    return false;
+  }
+
+  bool get hasAcceptedPrivacy {
+    if (this is DJ) return (this as DJ).hasAcceptedPrivacy;
+    if (this is Booker) return (this as Booker).hasAcceptedPrivacy;
+    if (this is Guest) return (this as Guest).hasAcceptedPrivacy;
+    return false;
+  }
+
+  bool get hasAcceptedAllAgreements => hasAcceptedTerms && hasAcceptedPrivacy;
+
+  String? get termsAcceptedAt {
+    if (this is DJ) return (this as DJ).termsAcceptedAt;
+    if (this is Booker) return (this as Booker).termsAcceptedAt;
+    if (this is Guest) return (this as Guest).termsAcceptedAt;
+    return null;
+  }
+
+  String? get privacyAcceptedAt {
+    if (this is DJ) return (this as DJ).privacyAcceptedAt;
+    if (this is Booker) return (this as Booker).privacyAcceptedAt;
+    if (this is Guest) return (this as Guest).privacyAcceptedAt;
+    return null;
   }
 }

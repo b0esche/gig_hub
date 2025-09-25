@@ -1,5 +1,7 @@
 import "../../../../Data/app_imports.dart";
 import 'package:gig_hub/src/Common/widgets/safe_pinch_zoom.dart';
+import 'package:gig_hub/src/Features/legal/services/legal_agreement_service.dart';
+import 'package:gig_hub/src/Features/legal/presentation/legal_agreement_wrapper.dart';
 
 class CreateProfileScreenDJ extends StatefulWidget {
   final String email;
@@ -998,11 +1000,22 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
                                   await db.createDJ(dj);
                                   final newUser = await db.getCurrentUser();
                                   if (!context.mounted) return;
+
+                                  // Check if legal agreements are needed
+                                  final hasAcceptedAllAgreements =
+                                      await LegalAgreementService.hasAcceptedAllAgreements();
+
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder:
                                           (context) =>
-                                              MainScreen(initialUser: newUser),
+                                              hasAcceptedAllAgreements
+                                                  ? MainScreen(
+                                                    initialUser: newUser,
+                                                  )
+                                                  : LegalAgreementWrapper(
+                                                    user: newUser,
+                                                  ),
                                     ),
                                   );
                                 } catch (e) {

@@ -631,6 +631,39 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
     _cache.cacheUser(user.id, user);
   }
 
+  @override
+  Future<void> updateDJ(DJ dj) async {
+    await super.updateDJ(dj);
+
+    // Invalidate user cache
+    _cache.invalidateUserCache(dj.id);
+
+    // Update cache with new data
+    _cache.cacheUser(dj.id, dj);
+  }
+
+  @override
+  Future<void> updateBooker(Booker booker) async {
+    await super.updateBooker(booker);
+
+    // Invalidate user cache
+    _cache.invalidateUserCache(booker.id);
+
+    // Update cache with new data
+    _cache.cacheUser(booker.id, booker);
+  }
+
+  @override
+  Future<void> updateGuest(Guest guest) async {
+    await super.updateGuest(guest);
+
+    // Invalidate user cache
+    _cache.invalidateUserCache(guest.id);
+
+    // Update cache with new data
+    _cache.cacheUser(guest.id, guest);
+  }
+
   // =============================================================================
   // RAVE OPERATIONS WITH CACHING
   // =============================================================================

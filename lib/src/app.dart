@@ -149,7 +149,9 @@ class _AppState extends State<App> {
                 }
                 // Check legal agreements before proceeding to main screen
                 return FutureBuilder<bool>(
-                  future: LegalAgreementService.hasAcceptedAllAgreements(),
+                  future: LegalAgreementService.hasAcceptedAllAgreements(
+                    userSnap.data!,
+                  ),
                   builder: (context, legalSnap) {
                     if (legalSnap.connectionState == ConnectionState.waiting) {
                       return Scaffold(

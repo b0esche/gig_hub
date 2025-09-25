@@ -94,6 +94,11 @@ class FirebaseAuthRepository implements AuthRepository {
     try {
       await GoogleSignIn.instance.signOut();
     } catch (_) {}
+
+    // Clear all cached data on logout to ensure fresh data on next login
+    try {
+      await CacheService().clearAllCaches();
+    } catch (_) {}
   }
 
   // delete user and sign out
@@ -108,5 +113,28 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Stream<User?> authStateChanges() {
     return FirebaseAuth.instance.authStateChanges();
+  }
+
+  // Passkey support (placeholder for future implementation)
+  @override
+  Future<bool> isPasskeySupported() async {
+    // Native passkey support would require platform-specific implementation
+    // For now, we rely on iOS/Android native password management
+    return false;
+  }
+
+  @override
+  Future<void> signUpWithPasskey(String email) async {
+    throw UnimplementedError('Native passkey support not yet implemented');
+  }
+
+  @override
+  Future<void> signInWithPasskey() async {
+    throw UnimplementedError('Native passkey support not yet implemented');
+  }
+
+  @override
+  Future<String> generateStrongPassword() async {
+    throw UnimplementedError('Use native system password generation instead');
   }
 }

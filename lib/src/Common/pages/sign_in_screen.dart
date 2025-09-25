@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         // Check if legal agreements are needed
         final hasAcceptedAllAgreements =
-            await LegalAgreementService.hasAcceptedAllAgreements();
+            await LegalAgreementService.hasAcceptedAllAgreements(guestUser);
 
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

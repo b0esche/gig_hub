@@ -1,6 +1,7 @@
 import 'package:gig_hub/src/Data/app_imports.dart';
 import 'package:gig_hub/src/Features/legal/presentation/terms_of_service_screen.dart';
 import 'package:gig_hub/src/Features/legal/presentation/privacy_policy_screen.dart';
+import 'package:gig_hub/src/Features/legal/services/legal_agreement_service.dart';
 
 class LegalAgreementDialog extends StatefulWidget {
   final VoidCallback? onAccept;
@@ -19,8 +20,34 @@ class LegalAgreementDialog extends StatefulWidget {
 class _LegalAgreementDialogState extends State<LegalAgreementDialog> {
   bool _hasAcceptedTerms = false;
   bool _hasAcceptedPrivacy = false;
+  bool _isLoading = true;
 
   bool get _canProceed => _hasAcceptedTerms && _hasAcceptedPrivacy;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentAgreementStatus();
+  }
+
+  Future<void> _loadCurrentAgreementStatus() async {
+    try {
+      final termsAccepted = await LegalAgreementService.hasAcceptedTerms();
+      final privacyAccepted = await LegalAgreementService.hasAcceptedPrivacy();
+
+      if (mounted) {
+        setState(() {
+          _hasAcceptedTerms = termsAccepted;
+          _hasAcceptedPrivacy = privacyAccepted;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,90 +82,104 @@ class _LegalAgreementDialogState extends State<LegalAgreementDialog> {
       ),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Introduction text
-            Text(
-              widget.isRequired
-                  ? 'To continue using Gig Hub, please review and accept our legal agreements:'
-                  : 'Please review our legal agreements:',
-              style: TextStyle(
-                color: Palette.glazedWhite.o(0.9),
-                fontSize: 14,
-                height: 1.4,
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Terms of Service Section
-            _buildAgreementSection(
-              title: 'Terms of Service',
-              description: 'Rules and guidelines for using Gig Hub',
-              isAccepted: _hasAcceptedTerms,
-              onToggle:
-                  (value) => setState(() => _hasAcceptedTerms = value ?? false),
-              onViewPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const TermsOfServiceScreen(),
-                  ),
-                );
-              },
-            ),
-
-            const SizedBox(height: 16),
-
-            // Privacy Policy Section
-            _buildAgreementSection(
-              title: 'Privacy Policy',
-              description: 'How we collect, use, and protect your data',
-              isAccepted: _hasAcceptedPrivacy,
-              onToggle:
-                  (value) =>
-                      setState(() => _hasAcceptedPrivacy = value ?? false),
-              onViewPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const PrivacyPolicyScreen(),
-                  ),
-                );
-              },
-            ),
-
-            if (widget.isRequired) ...[
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Palette.forgedGold.o(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Palette.forgedGold.o(0.3)),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.info_outline,
+        child:
+            _isLoading
+                ? SizedBox(
+                  height: 200,
+                  child: Center(
+                    child: CircularProgressIndicator(
                       color: Palette.forgedGold,
-                      size: 16,
+                      strokeWidth: 2,
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Acceptance of both agreements is required to continue.',
-                        style: TextStyle(
-                          color: Palette.glazedWhite.o(0.9),
-                          fontSize: 12,
-                        ),
+                  ),
+                )
+                : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Introduction text
+                    Text(
+                      widget.isRequired
+                          ? 'To continue using Gig Hub, please review and accept our legal agreements:'
+                          : 'Please review our legal agreements:',
+                      style: TextStyle(
+                        color: Palette.glazedWhite.o(0.9),
+                        fontSize: 14,
+                        height: 1.4,
                       ),
                     ),
+                    const SizedBox(height: 20),
+
+                    // Terms of Service Section
+                    _buildAgreementSection(
+                      title: 'Terms of Service',
+                      description: 'Rules and guidelines for using Gig Hub',
+                      isAccepted: _hasAcceptedTerms,
+                      onToggle:
+                          (value) => setState(
+                            () => _hasAcceptedTerms = value ?? false,
+                          ),
+                      onViewPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const TermsOfServiceScreen(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Privacy Policy Section
+                    _buildAgreementSection(
+                      title: 'Privacy Policy',
+                      description: 'How we collect, use, and protect your data',
+                      isAccepted: _hasAcceptedPrivacy,
+                      onToggle:
+                          (value) => setState(
+                            () => _hasAcceptedPrivacy = value ?? false,
+                          ),
+                      onViewPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const PrivacyPolicyScreen(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    if (widget.isRequired) ...[
+                      const SizedBox(height: 20),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Palette.forgedGold.o(0.1),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Palette.forgedGold.o(0.3)),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              color: Palette.forgedGold,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Acceptance of both agreements is required to continue.',
+                                style: TextStyle(
+                                  color: Palette.glazedWhite.o(0.9),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ],
                 ),
-              ),
-            ],
-          ],
-        ),
       ),
       actions: [
         if (!widget.isRequired)

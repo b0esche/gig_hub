@@ -1003,7 +1003,9 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
 
                                   // Check if legal agreements are needed
                                   final hasAcceptedAllAgreements =
-                                      await LegalAgreementService.hasAcceptedAllAgreements();
+                                      await LegalAgreementService.hasAcceptedAllAgreements(
+                                        newUser,
+                                      );
 
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(

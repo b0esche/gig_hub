@@ -186,8 +186,10 @@ class _SignUpSheetState extends State<SignUpSheet> {
                 textInputAction: TextInputAction.next,
                 controller: _passwordController,
                 obscureText: isObscured,
+                enableSuggestions: false,
+                autocorrect: false,
                 validator: validatePassword,
-                autofillHints: [AutofillHints.password],
+                autofillHints: const [AutofillHints.newPassword],
                 onFieldSubmitted: (_) {
                   FocusScope.of(
                     context,
@@ -225,6 +227,8 @@ class _SignUpSheetState extends State<SignUpSheet> {
                 textInputAction: TextInputAction.done,
                 controller: _confirmPasswordController,
                 obscureText: isObscured,
+                enableSuggestions: false,
+                autocorrect: false,
                 validator:
                     (value) => validateConfirmPassword(
                       value,

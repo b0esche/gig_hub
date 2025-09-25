@@ -65,6 +65,10 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
       'favoriteUIds': guest.favoriteUIds,
       'avatarImageUrl': guest.avatarImageUrl,
       'isFlinta': guest.isFlinta,
+      'hasAcceptedTerms': guest.hasAcceptedTerms,
+      'hasAcceptedPrivacy': guest.hasAcceptedPrivacy,
+      'termsAcceptedAt': guest.termsAcceptedAt,
+      'privacyAcceptedAt': guest.privacyAcceptedAt,
     });
   }
 
@@ -82,6 +86,10 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
       'streamingUrls': dj.streamingUrls,
       'mediaImageUrls': dj.mediaImageUrls,
       'favoriteUIds': dj.favoriteUIds,
+      'hasAcceptedTerms': dj.hasAcceptedTerms,
+      'hasAcceptedPrivacy': dj.hasAcceptedPrivacy,
+      'termsAcceptedAt': dj.termsAcceptedAt,
+      'privacyAcceptedAt': dj.privacyAcceptedAt,
     });
   }
 
@@ -97,6 +105,10 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
       'mediaImageUrls': booker.mediaImageUrls,
       'category': booker.category,
       'favoriteUIds': booker.favoriteUIds,
+      'hasAcceptedTerms': booker.hasAcceptedTerms,
+      'hasAcceptedPrivacy': booker.hasAcceptedPrivacy,
+      'termsAcceptedAt': booker.termsAcceptedAt,
+      'privacyAcceptedAt': booker.privacyAcceptedAt,
     });
   }
 

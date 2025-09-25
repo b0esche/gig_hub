@@ -11,4 +11,10 @@ abstract class AuthRepository {
   Future<void> deleteUser();
   Future<String> verifyPasswordResetCode(String code);
   Stream<User?> authStateChanges();
+
+  // Passkey methods
+  Future<bool> isPasskeySupported();
+  Future<void> signUpWithPasskey(String email);
+  Future<void> signInWithPasskey();
+  Future<String> generateStrongPassword();
 }

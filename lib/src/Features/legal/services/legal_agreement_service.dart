@@ -31,7 +31,7 @@ class LegalAgreementService {
   static Future<void> acceptTerms([AppUser? user]) async {
     user ??= await _db.getCurrentUser();
     final now = DateTime.now().toIso8601String();
-    
+
     if (user is DJ) {
       final updatedUser = DJ(
         id: user.id,
@@ -100,7 +100,7 @@ class LegalAgreementService {
   static Future<void> acceptPrivacy([AppUser? user]) async {
     user ??= await _db.getCurrentUser();
     final now = DateTime.now().toIso8601String();
-    
+
     if (user is DJ) {
       final updatedUser = DJ(
         id: user.id,
@@ -177,7 +177,7 @@ class LegalAgreementService {
   /// Reset all agreement acceptances for a user (useful for testing)
   static Future<void> resetAgreements([AppUser? user]) async {
     user ??= await _db.getCurrentUser();
-    
+
     if (user is DJ) {
       final updatedUser = DJ(
         id: user.id,
@@ -244,10 +244,7 @@ class LegalAgreementService {
 
   /// Get current agreement versions
   static Map<String, String> getVersions() {
-    return {
-      'terms': _currentTermsVersion,
-      'privacy': _currentPrivacyVersion,
-    };
+    return {'terms': _currentTermsVersion, 'privacy': _currentPrivacyVersion};
   }
 
   /// Check if agreements need to be shown (either first time or updated version)

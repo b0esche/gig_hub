@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../../Data/app_imports.dart';
 
 class ContentReportButton extends StatelessWidget {
@@ -10,12 +7,12 @@ class ContentReportButton extends StatelessWidget {
   final String? contentTitle; // Optional title for context
 
   const ContentReportButton({
-    Key? key,
+    super.key,
     required this.contentId,
     required this.contentType,
     required this.reportedUserId,
     this.contentTitle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

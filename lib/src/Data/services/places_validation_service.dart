@@ -51,12 +51,6 @@ class PlacesValidationService {
       final response = await http.get(url);
       final data = jsonDecode(response.body);
 
-      // Debug logging
-      print('=== CITY VALIDATION DEBUG ===');
-      print('Input: "$trimmedValue"');
-      print('API Status: ${data['status']}');
-      print('Results count: ${(data['results'] as List?)?.length ?? 0}');
-
       if (response.statusCode == 200 && data['status'] == 'OK') {
         final results = data['results'] as List;
 
@@ -102,18 +96,11 @@ class PlacesValidationService {
               // If we found a city, it's valid regardless of exact name match
               // Google's geocoding handles international names beautifully
               if (primaryCityName != null) {
-                print(
-                  'Found city: "$primaryCityName" in country: "$countryName"',
-                );
-
                 // For international cities, show both the input and resolved name
                 final suggestedName =
                     primaryCityName.toLowerCase() != trimmedValue.toLowerCase()
-                        ? '$primaryCityName (${trimmedValue})'
+                        ? '$primaryCityName ($trimmedValue)'
                         : primaryCityName;
-
-                print('Validation successful! Suggested: "$suggestedName"');
-                print('=============================');
 
                 return CityValidationResult(
                   isValid: true,

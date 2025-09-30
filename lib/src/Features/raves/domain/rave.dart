@@ -120,15 +120,18 @@ class Rave {
 
   factory Rave.fromJson(Map<String, dynamic> json) {
     return Rave(
-      id: json['id'],
-      name: json['name'],
-      organizerId: json['organizerId'],
-      startDate: DateTime.parse(json['startDate']),
+      id: json['id'] ?? '',
+      name: json['name'] ?? 'Untitled Rave',
+      organizerId: json['organizerId'] ?? '',
+      startDate:
+          json['startDate'] != null
+              ? DateTime.parse(json['startDate'])
+              : DateTime.now(),
       endDate: json['endDate'] != null ? DateTime.parse(json['endDate']) : null,
-      startTime: json['startTime'],
-      location: json['location'],
+      startTime: json['startTime'] ?? '00:00',
+      location: json['location'] ?? 'Unknown Location',
       geoPoint: json['geoPoint'] as GeoPoint?,
-      description: json['description'],
+      description: json['description'] ?? '',
       ticketShopLink: json['ticketShopLink'],
       additionalLink: json['additionalLink'],
       djIds: List<String>.from(json['djIds'] ?? []),
@@ -136,8 +139,14 @@ class Rave {
       attendingUserIds: List<String>.from(json['attendingUserIds'] ?? []),
       hasGroupChat: json['hasGroupChat'] ?? false,
       groupChatId: json['groupChatId'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+      createdAt:
+          json['createdAt'] != null
+              ? DateTime.parse(json['createdAt'])
+              : DateTime.now(),
+      updatedAt:
+          json['updatedAt'] != null
+              ? DateTime.parse(json['updatedAt'])
+              : DateTime.now(),
     );
   }
 

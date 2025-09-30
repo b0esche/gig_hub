@@ -83,11 +83,10 @@ class _RaveRadarScreenState extends State<RaveRadarScreen> {
     } catch (e) {
       setState(() => _isLoading = false);
       if (mounted) {
+        final errorMessage = AppLocale.failedLoadRaves.getString(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              '${AppLocale.failedLoadRaves.getString(context)}: $e',
-            ),
+            content: Text('$errorMessage: $e'),
             backgroundColor: Palette.alarmRed,
           ),
         );

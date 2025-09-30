@@ -54,7 +54,22 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<true/>
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>soundcloud.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.0</string>
+			</dict>
+			<key>maps.googleapis.com</key>
+			<dict>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>GigHub needs camera access so you can take photos for your profile and share content with other users.</string>
@@ -66,6 +81,8 @@
 	<string>GigHub needs microphone access to enable audio playback features for DJ track previews and audio content.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>GigHub needs access to your photo library so you can select images for your profile and share media content.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>GigHub uses tracking to provide personalized event recommendations and improve your experience. You can change this anytime in Settings.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -85,5 +102,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>http</string>
+		<string>soundcloud</string>
+		<string>instagram</string>
+	</array>
+	<key>NSContactsUsageDescription</key>
+	<string>GigHub can access your contacts to help you find and connect with friends who are also using the app.</string>
+	<key>UIRequiresFullScreen</key>
+	<false/>
 </dict>
 </plist>

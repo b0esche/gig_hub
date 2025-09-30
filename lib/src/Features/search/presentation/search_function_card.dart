@@ -108,7 +108,7 @@ class _SearchFunctionCardState extends State<SearchFunctionCard> {
           shape: LiquidRoundedRectangle(borderRadius: Radius.circular(16)),
           settings: LiquidGlassSettings(
             thickness: 18,
-            refractiveIndex: 1.25,
+            refractiveIndex: 1.15,
             chromaticAberration: 0.25,
             glassColor: Palette.forgedGold.o(0.025),
           ),

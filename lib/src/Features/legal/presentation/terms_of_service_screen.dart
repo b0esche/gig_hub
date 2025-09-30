@@ -94,32 +94,52 @@ class TermsOfServiceScreen extends StatelessWidget {
             ),
 
             _buildSection(
-              '7. Privacy',
+              '7. User-Generated Content & Third-Party Materials',
+              'By uploading content to Gig Hub, you grant us a worldwide, non-exclusive, royalty-free license to use, display, and distribute your content within the app. You represent that you own or have the necessary rights to all content you upload. You are solely responsible for ensuring that any content you share does not infringe on third-party rights, including copyrights, trademarks, or privacy rights.',
+            ),
+
+            _buildSection(
+              '8. Third-Party Integrations',
+              'Gig Hub integrates with third-party services including SoundCloud, Google Maps, and social media platforms. Your use of these features is subject to their respective terms of service. We are not responsible for content or services provided by third parties. When you connect external accounts, you authorize us to access information as permitted by those services.',
+            ),
+
+            _buildSection(
+              '9. Music and Audio Content',
+              'Music content is provided through SoundCloud\'s API and other authorized sources. Users must have proper rights to any music they share or stream. Gig Hub does not host copyrighted music content directly. All music streaming and sharing is governed by the terms of the respective content providers.',
+            ),
+
+            _buildSection(
+              '10. Content Moderation and Reporting',
+              'We reserve the right to remove any content that violates these terms, infringes on third-party rights, or is otherwise inappropriate. Users can report inappropriate content through our reporting system. We may suspend or terminate accounts that repeatedly violate content policies.',
+            ),
+
+            _buildSection(
+              '11. Privacy',
               'Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and protect your information.',
             ),
 
             _buildSection(
-              '8. Payments and Transactions',
-              '8.1 Booking Fees: Transactions between DJs and bookers are facilitated through our platform.\n\n8.2 Payment Processing: We use third-party payment processors and are not responsible for payment processing issues.\n\n8.3 Refunds: Refund policies are subject to individual agreements between users.',
+              '12. Payments and Transactions',
+              '12.1 Booking Fees: Transactions between DJs and bookers are facilitated through our platform.\n\n12.2 Payment Processing: We use third-party payment processors and are not responsible for payment processing issues.\n\n12.3 Refunds: Refund policies are subject to individual agreements between users.',
             ),
 
             _buildSection(
-              '9. Limitation of Liability',
+              '13. Limitation of Liability',
               'TO THE MAXIMUM EXTENT PERMITTED BY LAW, GIG HUB SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE SERVICE.',
             ),
 
             _buildSection(
-              '10. Termination',
+              '14. Termination',
               'We may suspend or terminate your account at our discretion for violations of these Terms. You may also delete your account at any time through the app settings.',
             ),
 
             _buildSection(
-              '11. Changes to Terms',
+              '15. Changes to Terms',
               'We reserve the right to modify these Terms at any time. We will notify users of significant changes through the app or email.',
             ),
 
             _buildSection(
-              '12. Contact Information',
+              '16. Contact Information',
               'If you have questions about these Terms, please contact us through the app support feature or at our official support channels.',
             ),
 

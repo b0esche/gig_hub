@@ -3,6 +3,7 @@ import 'package:gig_hub/src/data/services/image_compression_service.dart';
 import 'package:gig_hub/src/Features/profile/booker/presentation/widgets/star_rating_booker.dart';
 import 'package:gig_hub/src/Features/raves/presentation/widgets/rave_list.dart';
 import 'package:gig_hub/src/Common/widgets/safe_pinch_zoom.dart';
+import 'package:gig_hub/src/Common/widgets/content_report_button.dart';
 
 class ProfileScreenBookerArgs {
   final Booker booker;
@@ -479,6 +480,20 @@ class _ProfileScreenBookerState extends State<ProfileScreenBooker> {
                     ),
                   ),
                 ),
+
+                // Content report button for App Store compliance
+                if (!(_currentUser != null &&
+                    _currentUser!.id == widget.booker.id))
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: ContentReportButton(
+                      contentType: 'profile',
+                      contentId: widget.booker.id,
+                      reportedUserId: widget.booker.id,
+                      contentTitle: widget.booker.name,
+                    ),
+                  ),
 
                 if (!editMode &&
                     _currentUser != null &&

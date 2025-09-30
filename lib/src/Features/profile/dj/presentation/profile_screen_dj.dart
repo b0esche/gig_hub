@@ -7,6 +7,7 @@ import 'package:gig_hub/src/Features/profile/dj/presentation/widgets/track_selec
 import 'package:gig_hub/src/data/services/image_compression_service.dart';
 import 'package:gig_hub/src/Features/raves/presentation/widgets/rave_list.dart';
 import 'package:gig_hub/src/Common/widgets/safe_pinch_zoom.dart';
+import 'package:gig_hub/src/Common/widgets/content_report_button.dart';
 import "../../../../Data/app_imports.dart";
 import "../../../../Data/app_imports.dart" as http;
 
@@ -502,6 +503,19 @@ class _ProfileScreenDJState extends State<ProfileScreenDJ> {
                       !(widget.currentUser is DJ &&
                           (widget.currentUser as DJ).id == widget.dj.id))
                     _favoriteButton(),
+                  // Content report button for App Store compliance
+                  if (!(widget.currentUser is DJ &&
+                      (widget.currentUser as DJ).id == widget.dj.id))
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: ContentReportButton(
+                        contentType: 'profile',
+                        contentId: widget.dj.id,
+                        reportedUserId: widget.dj.id,
+                        contentTitle: widget.dj.name,
+                      ),
+                    ),
                   Positioned.fill(
                     bottom: 2,
                     child: Align(

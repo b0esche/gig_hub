@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import '../../domain/rave.dart';
 import '../../../../Data/app_imports.dart';
+import '../../../../Common/widgets/content_report_button.dart';
 
 class RaveDetailDialog extends StatefulWidget {
   final Rave rave;
@@ -61,6 +62,12 @@ class _RaveDetailDialogState extends State<RaveDetailDialog> {
                 fontWeight: FontWeight.w600,
               ),
             ),
+          ),
+          ContentReportButton(
+            contentId: widget.rave.id,
+            contentType: 'rave',
+            reportedUserId: widget.rave.organizerId,
+            contentTitle: widget.rave.name,
           ),
           IconButton(
             onPressed: () => Navigator.of(context).pop(),

@@ -99,27 +99,32 @@ class PrivacyPolicyScreen extends StatelessWidget {
             ),
 
             _buildSection(
-              '8. Third-Party Services',
-              'Our app integrates with third-party services:\n\n• SoundCloud: For music streaming and profile integration\n• Firebase: For authentication, database, and analytics\n• Payment processors: For handling transactions\n\nEach service has its own privacy policy governing your data.',
+              '8. Third-Party Content and Services',
+              'Our app integrates with third-party services and displays user-generated content:\n\n• SoundCloud: For music streaming and profile integration\n• Google Maps: For location services and event discovery\n• Firebase: For authentication, database, and analytics\n• Social Media: For profile connections and sharing\n\nWhen you use these features, you are also subject to their privacy policies and terms of service. We do not control how these third parties collect or use your data.',
             ),
 
             _buildSection(
-              '9. Children\'s Privacy',
+              '9. User Content Rights',
+              'You retain ownership of content you upload but grant us license to display and distribute it within our app. You are responsible for ensuring you have rights to any content you share. We may process user content to:\n\n• Display profiles and events\n• Enable search and discovery\n• Moderate inappropriate content\n• Comply with legal requirements',
+            ),
+
+            _buildSection(
+              '10. Children\'s Privacy',
               'Gig Hub is not intended for users under 13 years of age. We do not knowingly collect personal information from children under 13. If we discover such information, we will delete it promptly.',
             ),
 
             _buildSection(
-              '10. International Data Transfers',
+              '11. International Data Transfers',
               'Your data may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data during such transfers.',
             ),
 
             _buildSection(
-              '11. Changes to This Policy',
+              '12. Changes to This Policy',
               'We may update this Privacy Policy from time to time. We will notify you of significant changes through the app or by email. Your continued use of the service after changes constitutes acceptance.',
             ),
 
             _buildSection(
-              '12. Contact Us',
+              '13. Contact Us',
               'If you have questions about this Privacy Policy or how we handle your data, please contact us through:\n\n• In-app support feature\n• Email: b0eschex@gmail.com\n• App settings > Privacy & Legal',
             ),
 

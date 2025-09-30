@@ -81,8 +81,6 @@
 	<string>GigHub needs microphone access to enable audio playback features for DJ track previews and audio content.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>GigHub needs access to your photo library so you can select images for your profile and share media content.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>GigHub uses tracking to provide personalized event recommendations and improve your experience. You can change this anytime in Settings.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

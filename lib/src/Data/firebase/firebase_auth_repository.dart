@@ -44,7 +44,26 @@ class FirebaseAuthRepository implements AuthRepository {
       );
 
       // Sign in to Firebase with the Apple credential
-      await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(
+        oauthCredential,
+      );
+
+      // IMPORTANT: Use Apple-provided data, don't ask user again
+      if (userCredential.user != null) {
+        String displayName = '';
+
+        // Use Apple-provided name if available
+        if (credential.givenName != null || credential.familyName != null) {
+          displayName =
+              '${credential.givenName ?? ''} ${credential.familyName ?? ''}'
+                  .trim();
+        }
+
+        // If Apple provided name, update Firebase user profile
+        if (displayName.isNotEmpty) {
+          await userCredential.user!.updateDisplayName(displayName);
+        }
+      }
     } catch (e) {
       rethrow; // Rethrow the original exception to preserve the exact error
     }

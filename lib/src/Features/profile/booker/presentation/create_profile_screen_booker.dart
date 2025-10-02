@@ -21,14 +21,10 @@ class CreateProfileScreenBooker extends StatefulWidget {
 
 class _CreateProfileScreenBookerState extends State<CreateProfileScreenBooker> {
   final _formKey = GlobalKey<FormState>();
-  late final _nameController = TextEditingController(
-    text: AppLocale.yourName.getString(context),
-  );
-  late final _locationController = TextEditingController(
-    text: AppLocale.yourCity.getString(context),
-  );
-
+  late final _nameController = TextEditingController();
+  late final _locationController = TextEditingController();
   late final _aboutController = TextEditingController();
+
   late final _infoController = TextEditingController();
 
   final _locationFocusNode = FocusNode();
@@ -46,7 +42,28 @@ class _CreateProfileScreenBookerState extends State<CreateProfileScreenBooker> {
   @override
   void initState() {
     _locationFocusNode.addListener(_onLocationFocusChange);
+    _initializeUserData();
     super.initState();
+  }
+
+  // Pre-populate fields if user signed in with Apple
+  void _initializeUserData() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null && widget.pw.isEmpty) {
+      // Social login case - pre-populate with Apple-provided data
+      if (currentUser.displayName != null &&
+          currentUser.displayName!.isNotEmpty) {
+        _nameController.text = currentUser.displayName!;
+      } else {
+        _nameController.text = AppLocale.yourName.getString(context);
+      }
+    } else {
+      // Regular signup - use default placeholders
+      _nameController.text = AppLocale.yourName.getString(context);
+    }
+
+    // Set other default values
+    _locationController.text = AppLocale.yourCity.getString(context);
   }
 
   @override

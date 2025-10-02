@@ -127,58 +127,103 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
 
   Future<void> _init() async {
     try {
-      // Use the shared background player
-      final backgroundService = BackgroundAudioService.instance;
-      _audioPlayer = backgroundService.getSharedPlayer();
+      print('Initializing audio player for session: ${widget.sessionId}');
 
-      _playerStateSubscription = _audioPlayer!.playerStateStream.listen((
-        state,
-      ) {
-        if (mounted) {
-          // Only update state if this session is active
-          final isThisSessionActive = backgroundService.isSessionActive(
-            widget.sessionId,
-          );
-          setState(() {
-            _isPlaying = isThisSessionActive && state.playing;
-            _hasFinished =
-                isThisSessionActive &&
-                state.processingState == ProcessingState.completed;
-          });
+      // Try to use the shared background player first
+      try {
+        final backgroundService = BackgroundAudioService.instance;
+        _audioPlayer = backgroundService.getSharedPlayer();
+        print('Got shared audio player successfully for ${widget.sessionId}');
+      } catch (e) {
+        print('Shared audio player failed, creating standalone player: $e');
+        // Fallback: Create a standalone AudioPlayer for iPad
+        _audioPlayer = AudioPlayer();
+        print('Created standalone audio player for ${widget.sessionId}');
+      }
 
-          if (isThisSessionActive && state.playing) {
-            _controller.forward();
-            AudioPlayerCoordinator.instance.requestPlayback(this);
-          } else {
-            _controller.reverse();
-            if (isThisSessionActive) {
-              AudioPlayerCoordinator.instance.playerStopped(this);
+      _playerStateSubscription = _audioPlayer!.playerStateStream.listen(
+        (state) {
+          if (mounted) {
+            // Check if this session is active (for background service) or just use playing state (for standalone)
+            bool isThisSessionActive = true;
+            try {
+              final backgroundService = BackgroundAudioService.instance;
+              isThisSessionActive = backgroundService.isSessionActive(
+                widget.sessionId,
+              );
+            } catch (e) {
+              // Fallback for standalone players - assume active if playing
+              isThisSessionActive = state.playing;
+            }
+
+            setState(() {
+              _isPlaying = isThisSessionActive && state.playing;
+              _hasFinished =
+                  isThisSessionActive &&
+                  state.processingState == ProcessingState.completed;
+            });
+
+            if (isThisSessionActive && state.playing) {
+              _controller.forward();
+              AudioPlayerCoordinator.instance.requestPlayback(this);
+            } else {
+              _controller.reverse();
+              if (isThisSessionActive) {
+                AudioPlayerCoordinator.instance.playerStopped(this);
+              }
             }
           }
-        }
-      });
+        },
+        onError: (error) {
+          print('Player state stream error for ${widget.sessionId}: $error');
+        },
+      );
 
-      _positionSubscription = _audioPlayer!.positionStream.listen((position) {
-        if (mounted) {
-          // Only update position if this session is active
-          final isThisSessionActive = BackgroundAudioService.instance
-              .isSessionActive(widget.sessionId);
-          if (isThisSessionActive) {
-            setState(() => _position = position);
-          }
-        }
-      });
+      _positionSubscription = _audioPlayer!.positionStream.listen(
+        (position) {
+          if (mounted) {
+            // Only update position if this session is active or if using standalone player
+            bool isThisSessionActive = true;
+            try {
+              isThisSessionActive = BackgroundAudioService.instance
+                  .isSessionActive(widget.sessionId);
+            } catch (e) {
+              // For standalone players, always update position
+              isThisSessionActive = true;
+            }
 
-      _durationSubscription = _audioPlayer!.durationStream.listen((duration) {
-        if (mounted) {
-          // Only update duration if this session is active
-          final isThisSessionActive = BackgroundAudioService.instance
-              .isSessionActive(widget.sessionId);
-          if (isThisSessionActive) {
-            setState(() => _duration = duration);
+            if (isThisSessionActive) {
+              setState(() => _position = position);
+            }
           }
-        }
-      });
+        },
+        onError: (error) {
+          print('Position stream error for ${widget.sessionId}: $error');
+        },
+      );
+
+      _durationSubscription = _audioPlayer!.durationStream.listen(
+        (duration) {
+          if (mounted) {
+            // Only update duration if this session is active or if using standalone player
+            bool isThisSessionActive = true;
+            try {
+              isThisSessionActive = BackgroundAudioService.instance
+                  .isSessionActive(widget.sessionId);
+            } catch (e) {
+              // For standalone players, always update duration
+              isThisSessionActive = true;
+            }
+
+            if (isThisSessionActive) {
+              setState(() => _duration = duration);
+            }
+          }
+        },
+        onError: (error) {
+          print('Duration stream error for ${widget.sessionId}: $error');
+        },
+      );
 
       // Show simple waveform initially
       _showSimpleWaveform();
@@ -347,46 +392,85 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
   }
 
   Future<void> _togglePlayPause() async {
-    if (_audioPlayer == null) return;
+    print('Toggle play/pause requested for ${widget.sessionId}');
+
+    if (_audioPlayer == null) {
+      print('AudioPlayer is null for ${widget.sessionId}, reinitializing...');
+      await _init();
+      if (_audioPlayer == null) {
+        print('Failed to initialize audio player for ${widget.sessionId}');
+        return;
+      }
+    }
 
     try {
       if (_isPlaying) {
+        print('Pausing audio for ${widget.sessionId}');
         await _audioPlayer!.pause();
       } else {
+        print('Starting playback for ${widget.sessionId}');
+
         // Request playback coordination first to stop other players
         AudioPlayerCoordinator.instance.requestPlayback(this);
 
-        // Always switch to this audio source before playing to ensure the correct track is loaded
-        final backgroundService = BackgroundAudioService.instance;
+        // Check if we're using background service or standalone player
+        bool useBackgroundService = true;
+        bool sessionActive = false;
 
-        if (!backgroundService.isSessionActive(widget.sessionId)) {
-          // This session is not active, switch to our audio source
+        try {
+          final backgroundService = BackgroundAudioService.instance;
+          sessionActive = backgroundService.isSessionActive(widget.sessionId);
+        } catch (e) {
+          print('Background service unavailable, using standalone player');
+          useBackgroundService = false;
+        }
+
+        if (!sessionActive) {
+          print('Session not active, getting audio URL...');
 
           final urlToStream = widget.audioUrl;
+          print('Original SoundCloud URL: $urlToStream');
+
           final publicUrl = await SoundcloudService().getPublicStreamUrl(
             urlToStream,
           );
+          print('Public streaming URL: $publicUrl');
 
           if (publicUrl.isNotEmpty) {
+            print('Attempting to switch to new audio source...');
             try {
-              // Try streaming first
-              await backgroundService.switchToNewAudio(
-                sessionId: widget.sessionId,
-                audioUrl: publicUrl,
-                trackTitle: widget.trackTitle,
-                artistName: widget.artistName,
-                artworkUrl: widget.artworkUrl,
-              );
+              if (useBackgroundService) {
+                // Try background service first
+                final backgroundService = BackgroundAudioService.instance;
+                await backgroundService.switchToNewAudio(
+                  sessionId: widget.sessionId,
+                  audioUrl: publicUrl,
+                  trackTitle: widget.trackTitle,
+                  artistName: widget.artistName,
+                  artworkUrl: widget.artworkUrl,
+                );
+                print(
+                  'Successfully switched to new audio source via background service',
+                );
+              } else {
+                // Use standalone player
+                final audioSource = AudioSource.uri(Uri.parse(publicUrl));
+                await _audioPlayer!.setAudioSource(audioSource);
+                print('Successfully set audio source on standalone player');
+              }
 
               // Start background waveform extraction
               _downloadAndExtractWaveformInBackground(publicUrl);
             } catch (e) {
+              print('Audio source setup failed, trying download: $e');
               // If streaming fails, download and try from file
               await _downloadAndSetupPlayer(publicUrl);
             }
           } else {
-            throw Exception('Could not get audio URL');
+            throw Exception('Could not get audio URL from SoundCloud');
           }
+        } else {
+          print('Session already active, resuming...');
         }
 
         // Reset position if finished
@@ -396,9 +480,22 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
         }
 
         // Start playback
+        print('Starting audio playback...');
         await _audioPlayer!.play();
+        print('Audio playback started successfully');
       }
-    } catch (_) {}
+    } catch (e) {
+      print('Error in _togglePlayPause for ${widget.sessionId}: $e');
+      print('Stack trace: ${StackTrace.current}');
+
+      // Show error feedback for iPad debugging
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+          _isPlaying = false;
+        });
+      }
+    }
   }
 
   @override

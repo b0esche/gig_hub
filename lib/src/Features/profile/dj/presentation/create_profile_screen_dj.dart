@@ -19,25 +19,20 @@ class CreateProfileScreenDJ extends StatefulWidget {
 
 class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
   final _formKey = GlobalKey<FormState>();
-  late final _nameController = TextEditingController(
-    text: AppLocale.yourName.getString(context),
-  );
-  late final _locationController = TextEditingController(
-    text: AppLocale.yourCity.getString(context),
-  );
-  late final _bpmController = TextEditingController(
-    text: AppLocale.yourTempo.getString(context),
-  );
-  late final _aboutController = TextEditingController();
-  late final _infoController = TextEditingController();
+  late final _nameController = TextEditingController();
+  late final _locationController = TextEditingController();
+  late final _bpmController = TextEditingController();
+
+  List<String> genres = [];
   final FocusNode _locationFocusNode = FocusNode();
+  final TextEditingController _aboutController = TextEditingController();
+  final TextEditingController _infoController = TextEditingController();
   String? headUrl;
   String? _locationError;
   String? bpmMin;
   String? bpmMax;
   String? about;
   String? info;
-  List<String>? genres;
   List<String>? mediaUrl;
   int index = 0;
   bool isSoundcloudConnected = false;
@@ -53,11 +48,33 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
   @override
   void initState() {
     super.initState();
+    _initializeUserData();
 
     _locationFocusNode.addListener(_onLocationFocusChange);
 
     _appLinks = AppLinks();
     _initDeepLinks();
+  }
+
+  // Pre-populate fields if user signed in with Apple
+  void _initializeUserData() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null && widget.pw.isEmpty) {
+      // Social login case - pre-populate with Apple-provided data
+      if (currentUser.displayName != null &&
+          currentUser.displayName!.isNotEmpty) {
+        _nameController.text = currentUser.displayName!;
+      } else {
+        _nameController.text = AppLocale.yourName.getString(context);
+      }
+    } else {
+      // Regular signup - use default placeholders
+      _nameController.text = AppLocale.yourName.getString(context);
+    }
+
+    // Set other default values
+    _locationController.text = AppLocale.yourCity.getString(context);
+    _bpmController.text = AppLocale.yourTempo.getString(context);
   }
 
   void _initDeepLinks() {
@@ -166,9 +183,7 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
   Future<void> _showGenreDialog() async {
     final result = await showDialog<List<String>>(
       context: context,
-      builder:
-          (context) =>
-              GenreSelectionDialog(initialSelectedGenres: genres ?? []),
+      builder: (context) => GenreSelectionDialog(initialSelectedGenres: genres),
     );
     if (result != null && result.isNotEmpty) {
       setState(() {
@@ -587,8 +602,8 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
                           runSpacing: 8,
                           alignment: WrapAlignment.center,
                           children: [
-                            if (genres != null && genres!.isNotEmpty) ...[
-                              ...genres!.map(
+                            if (genres.isNotEmpty) ...[
+                              ...genres.map(
                                 (genre) => GenreBubble(genre: genre),
                               ),
                             ],
@@ -604,7 +619,7 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
                                 onTap: _showGenreDialog,
                                 child: GenreBubble(
                                   genre:
-                                      (genres == null)
+                                      genres.isEmpty
                                           ? AppLocale.addGenres.getString(
                                             context,
                                           )
@@ -964,7 +979,7 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
                                   }
                                   final dj = DJ(
                                     id: firebaseUser.uid,
-                                    genres: genres!,
+                                    genres: genres,
                                     headImageUrl: uploadedHeadImageUrl,
                                     headImageBlurHash: headImageBlurHash,
                                     avatarImageUrl:

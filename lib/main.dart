@@ -79,7 +79,13 @@ Future<void> main() async {
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   // Initialize background audio service for DJ track playback
-  await BackgroundAudioService.initialize();
+  try {
+    await BackgroundAudioService.initialize();
+    print('Background audio service initialized in main.dart');
+  } catch (e) {
+    print('Background audio service initialization failed in main.dart: $e');
+    // Continue without background audio support
+  }
 
   GroupChatCleanupService().startCleanupService();
 

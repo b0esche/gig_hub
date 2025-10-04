@@ -37,7 +37,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.753984654569-49vkjnsevln5u2c5ss6fspapm9lc0jar</string>
+				<string>com.googleusercontent.apps.753984654569-04vqsvfa4s2imr9h5uj13ikhmi8n2cfm</string>
 			</array>
 		</dict>
 	</array>
@@ -46,7 +46,7 @@
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<true/>
 	<key>GIDClientID</key>
-	<string>753984654569-49vkjnsevln5u2c5ss6fspapm9lc0jar.apps.googleusercontent.com</string>
+	<string>753984654569-04vqsvfa4s2imr9h5uj13ikhmi8n2cfm.apps.googleusercontent.com</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>

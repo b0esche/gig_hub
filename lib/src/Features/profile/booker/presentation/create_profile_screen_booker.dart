@@ -41,9 +41,15 @@ class _CreateProfileScreenBookerState extends State<CreateProfileScreenBooker> {
 
   @override
   void initState() {
-    _locationFocusNode.addListener(_onLocationFocusChange);
-    _initializeUserData();
     super.initState();
+    _locationFocusNode.addListener(_onLocationFocusChange);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize user data here after the widget tree is fully built
+    _initializeUserData();
   }
 
   // Pre-populate fields if user signed in with Apple

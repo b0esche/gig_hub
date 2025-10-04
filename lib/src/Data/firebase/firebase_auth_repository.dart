@@ -72,15 +72,47 @@ class FirebaseAuthRepository implements AuthRepository {
   // sign in/up w/ google ###
   @override
   Future<void> signInWithGoogle() async {
-    await GoogleSignIn.instance.initialize();
-    final GoogleSignInAccount googleUser =
-        await GoogleSignIn.instance.authenticate();
+    try {
+      print('Starting Google Sign In process...');
 
-    final GoogleSignInAuthentication googleAuth = googleUser.authentication;
-    final credential = GoogleAuthProvider.credential(
-      idToken: googleAuth.idToken,
-    );
-    await FirebaseAuth.instance.signInWithCredential(credential);
+      // Initialize Google Sign In
+      await GoogleSignIn.instance.initialize();
+      print('Google Sign In initialized');
+
+      // Authenticate with Google
+      final GoogleSignInAccount googleUser =
+          await GoogleSignIn.instance.authenticate();
+      print('Google authentication completed');
+
+      // Get authentication details
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+      print('Got Google authentication details');
+
+      // Create Firebase credential
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+      print('Created Firebase credential');
+
+      // Sign in to Firebase
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      print('Firebase sign in completed successfully');
+    } catch (e) {
+      print('Google Sign In error: $e');
+      print('Error type: ${e.runtimeType}');
+
+      // Provide more specific error messages
+      if (e.toString().contains('cancelled') ||
+          e.toString().contains('CANCEL')) {
+        throw Exception('Google Sign In was cancelled');
+      } else if (e.toString().contains('network')) {
+        throw Exception(
+          'Network error during Google Sign In. Please check your connection.',
+        );
+      } else {
+        throw Exception('Google Sign In failed: ${e.toString()}');
+      }
+    }
   }
 
   // password reset ###

@@ -48,12 +48,18 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
   @override
   void initState() {
     super.initState();
-    _initializeUserData();
 
     _locationFocusNode.addListener(_onLocationFocusChange);
 
     _appLinks = AppLinks();
     _initDeepLinks();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize user data here after the widget tree is fully built
+    _initializeUserData();
   }
 
   // Pre-populate fields if user signed in with Apple

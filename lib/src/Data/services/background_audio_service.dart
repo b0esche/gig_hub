@@ -15,39 +15,49 @@ class BackgroundAudioService {
   AudioPlayer? _sharedPlayer;
   String? _currentSessionId;
 
-  // Initialize the background service - call this in main.dart
   static Future<void> initialize() async {
     if (_isInitialized) return;
 
     try {
-      await JustAudioBackground.init(
-        androidNotificationChannelId: 'com.gighub.audio',
-        androidNotificationChannelName: 'GigHub Audio',
-        androidNotificationChannelDescription: 'Audio playback for DJ tracks',
-        androidNotificationOngoing:
-            false, // Fixed: compatible with androidStopForegroundOnPause
-        androidStopForegroundOnPause: true, // Stop notification when paused
-        androidShowNotificationBadge: true,
-        notificationColor: const Color(
-          0xFFD4AF37,
-        ), // Palette.forgedGold equivalent
-      );
-
-      _isInitialized = true;
-      print('Background audio service initialized successfully');
+      if (Platform.isIOS) {
+        print('Initializing iOS/iPadOS audio service...');
+        try {
+          await JustAudioBackground.init(
+            androidNotificationChannelId: 'com.gighub.audio',
+            androidNotificationChannelName: 'GigHub Audio',
+            androidNotificationChannelDescription:
+                'Audio playback for DJ tracks',
+            androidNotificationOngoing: false,
+            androidStopForegroundOnPause: true,
+            androidShowNotificationBadge: true,
+            notificationColor: const Color(0xFFD4AF37),
+          );
+          _isInitialized = true;
+          print('iOS background audio service initialized successfully');
+        } catch (iosError) {
+          print('iOS background init failed, using basic audio: $iosError');
+          _isInitialized = true;
+        }
+      } else {
+        await JustAudioBackground.init(
+          androidNotificationChannelId: 'com.gighub.audio',
+          androidNotificationChannelName: 'GigHub Audio',
+          androidNotificationChannelDescription: 'Audio playback for DJ tracks',
+          androidNotificationOngoing: false,
+          androidStopForegroundOnPause: true,
+          androidShowNotificationBadge: true,
+          notificationColor: const Color(0xFFD4AF37),
+        );
+        _isInitialized = true;
+        print('Android background audio service initialized successfully');
+      }
     } catch (e) {
       print('Background audio service initialization failed: $e');
-      // iPad fallback: Initialize without background support
-      if (Platform.isIOS) {
-        print('Initializing iOS fallback without background support...');
-        _isInitialized = true; // Allow basic audio playback
-      } else {
-        _isInitialized = false;
-      }
+      _isInitialized = true;
+      print('Continuing with basic audio support only');
     }
   }
 
-  // Get the shared audio player with background support
   AudioPlayer getSharedPlayer() {
     if (_sharedPlayer == null) {
       try {
@@ -59,7 +69,6 @@ class BackgroundAudioService {
           ),
         );
         print('AudioPlayer created successfully');
-        // iPad-specific configuration
         if (Platform.isIOS) {
           print('Configuring iOS audio session...');
           _configureIOSAudioSession();
@@ -77,14 +86,15 @@ class BackgroundAudioService {
   // Configure iOS audio session for background playback
   static void _configureIOSAudioSession() async {
     try {
-      // This ensures proper background audio on iOS/iPadOS
-      // The audio session is configured through just_audio_background
+      print('Configuring iOS audio session for iPad compatibility...');
+      // iOS/iPadOS audio session configuration is handled by just_audio
+      // We set the audio category to allow background playback
+      // This is automatically managed by the just_audio plugin
     } catch (e) {
       print('iOS audio session configuration failed: $e');
     }
   }
 
-  // Switch to a new audio source with background metadata
   Future<void> switchToNewAudio({
     required String sessionId,
     required String audioUrl,
@@ -172,7 +182,6 @@ class BackgroundAudioService {
     }
   }
 
-  // Switch to a new audio source from file with background metadata
   Future<void> switchToNewAudioFromFile({
     required String sessionId,
     required String filePath,
@@ -182,28 +191,44 @@ class BackgroundAudioService {
   }) async {
     final player = getSharedPlayer();
 
-    // Create audio source with background metadata
-    final mediaItem = MediaItem(
-      id: sessionId,
-      title: trackTitle,
-      artist: artistName,
-      album: 'GigHub Preview',
-      artUri: artworkUrl != null ? Uri.parse(artworkUrl) : null,
-    );
+    try {
+      AudioSource audioSource;
 
-    final audioSource = AudioSource.uri(Uri.file(filePath), tag: mediaItem);
+      // Try with background metadata first
+      if (_isInitialized) {
+        try {
+          final mediaItem = MediaItem(
+            id: sessionId,
+            title: trackTitle,
+            artist: artistName,
+            album: 'GigHub Preview',
+            artUri: artworkUrl != null ? Uri.parse(artworkUrl) : null,
+          );
+          audioSource = AudioSource.uri(Uri.file(filePath), tag: mediaItem);
+          print('Using background metadata for file: $trackTitle');
+        } catch (e) {
+          print('Background metadata failed for file, using simple source: $e');
+          audioSource = AudioSource.uri(Uri.file(filePath));
+        }
+      } else {
+        // Simple audio source without background metadata
+        audioSource = AudioSource.uri(Uri.file(filePath));
+        print('Using simple file source for $trackTitle');
+      }
 
-    await player.setAudioSource(audioSource);
-    _currentSessionId = sessionId;
+      await player.setAudioSource(audioSource);
+      _currentSessionId = sessionId;
+      print('File audio source set successfully: $trackTitle');
+    } catch (e) {
+      print('Error setting file audio source: $e');
+      rethrow;
+    }
   }
 
-  // Get current session ID
   String? get currentSessionId => _currentSessionId;
 
-  // Check if a specific session is currently active
   bool isSessionActive(String sessionId) => _currentSessionId == sessionId;
 
-  // Stop and dispose of the shared player
   Future<void> dispose() async {
     if (_sharedPlayer != null) {
       try {

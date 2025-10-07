@@ -81,9 +81,7 @@ Future<void> main() async {
   // Initialize background audio service for DJ track playback
   try {
     await BackgroundAudioService.initialize();
-    print('Background audio service initialized in main.dart');
   } catch (e) {
-    print('Background audio service initialization failed in main.dart: $e');
     // Continue without background audio support
   }
 

@@ -73,34 +73,24 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Future<void> signInWithGoogle() async {
     try {
-      print('Starting Google Sign In process...');
-
       // Initialize Google Sign In
       await GoogleSignIn.instance.initialize();
-      print('Google Sign In initialized');
 
       // Authenticate with Google
       final GoogleSignInAccount googleUser =
           await GoogleSignIn.instance.authenticate();
-      print('Google authentication completed');
 
       // Get authentication details
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
-      print('Got Google authentication details');
 
       // Create Firebase credential
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
-      print('Created Firebase credential');
 
       // Sign in to Firebase
       await FirebaseAuth.instance.signInWithCredential(credential);
-      print('Firebase sign in completed successfully');
     } catch (e) {
-      print('Google Sign In error: $e');
-      print('Error type: ${e.runtimeType}');
-
       // Provide more specific error messages
       if (e.toString().contains('cancelled') ||
           e.toString().contains('CANCEL')) {

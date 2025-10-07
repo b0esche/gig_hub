@@ -206,905 +206,905 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
       return Scaffold(
         backgroundColor: Palette.primalBlack,
         body: Center(
-          child: CircularProgressIndicator(color: Palette.forgedGold),
+          child: PopScope(
+            canPop: false,
+            child: CircularProgressIndicator(color: Palette.forgedGold),
+          ),
         ),
       );
     }
 
     return Scaffold(
       backgroundColor: Palette.primalBlack,
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 256,
-                  color: Palette.gigGrey,
-                  child: AnimatedSwitcher(
-                    duration: Duration(milliseconds: 200),
-                    child:
-                        headUrl != null
-                            ? Image.file(
-                              File(headUrl!),
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              key: ValueKey(headUrl!),
-                            )
-                            : null,
-                  ),
-                ),
-                Center(
-                  heightFactor: 4,
-                  child: IconButton(
-                    style: ButtonStyle(
-                      tapTargetSize: MaterialTapTargetSize.padded,
-                      splashFactory: NoSplash.splashFactory,
+      body: PopScope(
+        canPop: false,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 256,
+                    color: Palette.gigGrey,
+                    child: AnimatedSwitcher(
+                      duration: Duration(milliseconds: 200),
+                      child:
+                          headUrl != null
+                              ? Image.file(
+                                File(headUrl!),
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                key: ValueKey(headUrl!),
+                              )
+                              : null,
                     ),
-                    onPressed: () async {
-                      final XFile? picked = await ImagePicker().pickImage(
-                        source: ImageSource.gallery,
-                      );
-
-                      if (picked != null) {
-                        final File originalFile = File(picked.path);
-                        final File compressedFile = await compressImage(
-                          originalFile,
+                  ),
+                  Center(
+                    heightFactor: 4,
+                    child: IconButton(
+                      style: ButtonStyle(
+                        tapTargetSize: MaterialTapTargetSize.padded,
+                        splashFactory: NoSplash.splashFactory,
+                      ),
+                      onPressed: () async {
+                        final XFile? picked = await ImagePicker().pickImage(
+                          source: ImageSource.gallery,
                         );
 
-                        setState(() {
-                          headUrl = compressedFile.path;
-                        });
-                      }
-                    },
-                    icon: Icon(
-                      Icons.file_upload_rounded,
-                      color: Palette.concreteGrey,
-                      size: 48,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 32,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+                        if (picked != null) {
+                          final File originalFile = File(picked.path);
+                          final File compressedFile = await compressImage(
+                            originalFile,
+                          );
+
+                          setState(() {
+                            headUrl = compressedFile.path;
+                          });
+                        }
                       },
                       icon: Icon(
-                        Icons.chevron_left,
-                        shadows: [
-                          BoxShadow(blurRadius: 4, color: Palette.primalBlack),
-                        ],
-                      ),
-                      iconSize: 36,
-                      color: Palette.shadowGrey,
-                      style: const ButtonStyle(
-                        tapTargetSize: MaterialTapTargetSize.padded,
+                        Icons.file_upload_rounded,
+                        color: Palette.concreteGrey,
+                        size: 48,
                       ),
                     ),
                   ),
-                ),
-                Positioned.fill(
-                  bottom: 2,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Palette.primalBlack.o(0.6),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12),
-                        ),
-                        border: Border(
-                          left: BorderSide(
-                            color: Palette.gigGrey.o(0.6),
-                            width: 2,
-                          ),
-                          right: BorderSide(
-                            color: Palette.gigGrey.o(0.6),
-                            width: 2,
-                          ),
-                          top: BorderSide(
-                            color: Palette.gigGrey.o(0.6),
-                            width: 2,
-                          ),
-                        ),
-                      ),
+
+                  Positioned.fill(
+                    bottom: 2,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
                       child: Container(
-                        width: 160,
-                        height: 28,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Palette.glazedWhite,
-                            width: 1,
+                          color: Palette.primalBlack.o(0.6),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                          color: Palette.glazedWhite.o(0.2),
-                        ),
-                        child: TextFormField(
-                          onTap: _nameController.clear,
-                          controller: _nameController,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Palette.glazedWhite,
-                            fontSize: 14,
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(bottom: 14),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: Palette.forgedGold,
-                                width: 2,
-                              ),
+                          border: Border(
+                            left: BorderSide(
+                              color: Palette.gigGrey.o(0.6),
+                              width: 2,
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: Colors.transparent),
+                            right: BorderSide(
+                              color: Palette.gigGrey.o(0.6),
+                              width: 2,
+                            ),
+                            top: BorderSide(
+                              color: Palette.gigGrey.o(0.6),
+                              width: 2,
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  left: 0,
-                  bottom: 0,
-                  child: Divider(
-                    height: 0,
-                    thickness: 2,
-                    color: Palette.forgedGold.o(0.8),
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Palette.shadowGrey.o(0.35),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Palette.concreteGrey),
+                        child: Container(
+                          width: 160,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Palette.glazedWhite,
+                              width: 1,
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  const Icon(Icons.location_on, size: 16),
-                                  const SizedBox(width: 4),
-                                  SizedBox(
-                                    width: 138,
-                                    height: 24,
-                                    child: TextFormField(
-                                      onTap: _locationController.clear,
-                                      style: TextStyle(
-                                        color: Palette.glazedWhite,
-                                        fontSize: 13,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                      controller: _locationController,
-                                      focusNode: _locationFocusNode,
-                                      validator: (value) {
-                                        return _locationError;
-                                      },
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.only(
-                                          bottom: 12,
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Palette.alarmRed,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Palette.alarmRed,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Palette.forgedGold,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Palette.glazedWhite,
-                                          ),
-                                        ),
-                                        errorStyle: TextStyle(
-                                          fontSize: 0,
-                                          height: 0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Palette.shadowGrey.o(0.35),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Palette.concreteGrey),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.speed, size: 20),
-                                  const SizedBox(width: 4),
-                                  SizedBox(
-                                    width: 138,
-                                    height: 24,
-                                    child: TextFormField(
-                                      readOnly: true,
-                                      textAlign: TextAlign.center,
-                                      onTap: () async {
-                                        final result = await showDialog<
-                                          List<int>
-                                        >(
-                                          context: context,
-                                          builder:
-                                              (context) => BpmSelectionDialog(
-                                                intialSelectedBpm: [
-                                                  int.tryParse(
-                                                        bpmMin?.toString() ??
-                                                            '',
-                                                      ) ??
-                                                      100,
-                                                  int.tryParse(
-                                                        bpmMax?.toString() ??
-                                                            '',
-                                                      ) ??
-                                                      130,
-                                                ],
-                                              ),
-                                        );
-
-                                        if (result != null &&
-                                            result.length == 2) {
-                                          setState(() {
-                                            bpmMin = result[0].toString();
-                                            bpmMax = result[1].toString();
-                                            _bpmController.text =
-                                                '${result[0]}-${result[1]} bpm';
-                                          });
-                                        }
-                                      },
-                                      style: TextStyle(
-                                        color: Palette.glazedWhite,
-                                        fontSize: 13,
-                                      ),
-                                      controller: _bpmController,
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.only(
-                                          bottom: 12,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Palette.forgedGold,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          borderSide: BorderSide(
-                                            color: Palette.glazedWhite,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 36),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocale.about.getString(context),
-                            style: GoogleFonts.sometypeMono(
-                              textStyle: TextStyle(
-                                color: Palette.glazedWhite,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Palette.glazedWhite,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                              color: Palette.glazedWhite.o(0.2),
-                            ),
-                            child: TextFormField(
-                              onEditingComplete: () {
-                                setState(() {
-                                  about = _aboutController.text;
-                                });
-                              },
-                              minLines: 1,
-                              maxLines: 7,
-                              maxLength: 250,
-                              cursorColor: Palette.forgedGold,
-
-                              style: TextStyle(
-                                color: Palette.glazedWhite,
-                                fontSize: 14,
-                                overflow: TextOverflow.visible,
-                              ),
-                              controller: _aboutController,
-                              decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Palette.forgedGold,
-                                    width: 3,
-                                  ),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Palette.forgedGold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 60),
-                      Center(
-                        child: Wrap(
-                          spacing: 16,
-                          runSpacing: 8,
-                          alignment: WrapAlignment.center,
-                          children: [
-                            if (genres.isNotEmpty) ...[
-                              ...genres.map(
-                                (genre) => GenreBubble(genre: genre),
-                              ),
-                            ],
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Palette.forgedGold,
-                                  width: 2.7,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: GestureDetector(
-                                onTap: _showGenreDialog,
-                                child: GenreBubble(
-                                  genre:
-                                      genres.isEmpty
-                                          ? AppLocale.addGenres.getString(
-                                            context,
-                                          )
-                                          : AppLocale.editGenres.getString(
-                                            context,
-                                          ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: !isSoundcloudConnected ? 72 : 48),
-                      IndexedStack(
-                        index: isSoundcloudConnected ? 0 : 1,
-                        children: [
-                          soundcloudFields(),
-                          connectToSoundcloudButton(),
-                        ],
-                      ),
-
-                      SizedBox(height: isSoundcloudConnected ? 72 : 0),
-                      (mediaUrl != null && mediaUrl!.isNotEmpty)
-                          ? ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: ImageSlideshow(
-                              width: double.infinity,
-                              height: 240,
-                              isLoop: true,
-                              autoPlayInterval: 12000,
-                              indicatorColor: Palette.shadowGrey,
-                              indicatorBackgroundColor: Palette.gigGrey,
-                              initialPage: index,
-                              onPageChanged: (value) {
-                                setState(() => index = value);
-                              },
-                              children:
-                                  mediaUrl!.map((path) {
-                                    return SafePinchZoom(
-                                      zoomEnabled: true,
-                                      maxScale: 2.5,
-                                      child: Image.network(
-                                        path,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    );
-                                  }).toList(),
-                            ),
-                          )
-                          : Center(
-                            child: Column(
-                              children: [
-                                Text(
-                                  AppLocale.addImages.getString(context),
-                                  style: GoogleFonts.sometypeMono(
-                                    textStyle: TextStyle(
-                                      color: Palette.glazedWhite,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                Container(
-                                  height: 160,
-                                  width: 240,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Palette.forgedGold,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: IconButton(
-                                    style: ButtonStyle(
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.padded,
-                                    ),
-                                    onPressed: () async {
-                                      final picker = ImagePicker();
-                                      final medias = await picker
-                                          .pickMultiImage(limit: 5);
-
-                                      if (medias.isNotEmpty) {
-                                        List<String> newMediaUrls = [];
-
-                                        for (XFile xfile in medias) {
-                                          File originalFile = File(xfile.path);
-                                          File compressedFile =
-                                              await compressImage(originalFile);
-                                          newMediaUrls.add(compressedFile.path);
-                                        }
-
-                                        setState(() {
-                                          mediaUrl = newMediaUrls;
-                                        });
-                                      }
-                                    },
-                                    icon: Icon(
-                                      Icons.file_upload_rounded,
-                                      color: Palette.concreteGrey,
-                                      size: 48,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            color: Palette.glazedWhite.o(0.2),
                           ),
-                      SizedBox(height: 8),
-                      (mediaUrl != null && mediaUrl!.isNotEmpty)
-                          ? Center(
-                            child: TextButton(
-                              onPressed:
-                                  () => setState(() {
-                                    mediaUrl!.clear();
-                                  }),
-                              child: Text(
-                                AppLocale.removeImages.getString(context),
-                                style: TextStyle(
-                                  color: Palette.alarmRed.o(0.7),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                          child: TextFormField(
+                            onTap: _nameController.clear,
+                            controller: _nameController,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Palette.glazedWhite,
+                              fontSize: 14,
                             ),
-                          )
-                          : SizedBox.shrink(),
-                      SizedBox(height: 36),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocale.info.getString(context),
-                            style: GoogleFonts.sometypeMono(
-                              textStyle: TextStyle(
-                                color: Palette.glazedWhite,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Palette.glazedWhite,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                              color: Palette.glazedWhite.o(0.2),
-                            ),
-                            child: TextFormField(
-                              onEditingComplete: () {
-                                setState(() => info = _infoController.text);
-                              },
-
-                              minLines: 1,
-                              maxLines: 7,
-                              maxLength: 250,
-                              cursorColor: Palette.forgedGold,
-
-                              style: TextStyle(
-                                color: Palette.glazedWhite,
-                                fontSize: 14,
-                                overflow: TextOverflow.visible,
-                              ),
-                              controller: _infoController,
-                              decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Palette.forgedGold,
-                                    width: 3,
-                                  ),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Palette.forgedGold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Center(
-                        child: SizedBox(
-                          height: 100,
-                          child: OutlinedButton(
-                            onPressed: () async {
-                              if (_nameController.text.isEmpty ||
-                                  _nameController.text == '' ||
-                                  _nameController.text == 'Name' ||
-                                  _nameController.text == 'name' ||
-                                  _nameController.text ==
-                                      AppLocale.yourName.getString(context) ||
-                                  _aboutController.text == '' ||
-                                  _aboutController.text.isEmpty ||
-                                  _infoController.text == '' ||
-                                  _infoController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: Palette.forgedGold,
-                                    content: Center(
-                                      child: Text(
-                                        AppLocale.fillOutAllFields.getString(
-                                          context,
-                                        ),
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              if (headUrl == null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: Palette.forgedGold,
-                                    content: Center(
-                                      child: Text(
-                                        AppLocale.addHeadImage.getString(
-                                          context,
-                                        ),
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              // Check if SoundCloud is connected
-                              if (!isSoundcloudConnected) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: Palette.alarmRed,
-                                    content: Center(
-                                      child: Text(
-                                        'please connect your SoundCloud account first.',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              // Check if both tracks are selected
-                              if (selectedTrackOne == null ||
-                                  selectedTrackTwo == null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: Palette.alarmRed,
-                                    content: Center(
-                                      child: Text(
-                                        'please select 2 tracks from your SoundCloud.',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              setState(() {
-                                isLoading = true;
-                              });
-                              FocusManager.instance.primaryFocus?.unfocus();
-
-                              if (headUrl?.isNotEmpty == true &&
-                                  bpmMin?.isNotEmpty == true &&
-                                  bpmMax?.isNotEmpty == true &&
-                                  _infoController.text.isNotEmpty &&
-                                  _aboutController.text.isNotEmpty &&
-                                  _locationController.text.isNotEmpty &&
-                                  _nameController.text.isNotEmpty) {
-                                try {
-                                  User? firebaseUser;
-
-                                  // Check if user is already authenticated (social login)
-                                  final currentUser =
-                                      FirebaseAuth.instance.currentUser;
-                                  if (currentUser != null &&
-                                      widget.pw.isEmpty) {
-                                    // Social login case - user is already authenticated
-                                    firebaseUser = currentUser;
-                                  } else {
-                                    // Email/password signup case
-                                    final UserCredential userCredential =
-                                        await FirebaseAuth.instance
-                                            .createUserWithEmailAndPassword(
-                                              email: widget.email,
-                                              password: widget.pw,
-                                            );
-                                    firebaseUser = userCredential.user;
-                                  }
-
-                                  if (firebaseUser == null) {
-                                    throw Exception("user creation failed");
-                                  }
-
-                                  String uploadedHeadImageUrl = headUrl!;
-                                  String headImageBlurHash =
-                                      BlurHashService.defaultBlurHash;
-
-                                  if (!headUrl!.startsWith('http')) {
-                                    final headFile = File(headUrl!);
-
-                                    // Generate BlurHash for head image
-                                    headImageBlurHash =
-                                        await BlurHashService.generateBlurHash(
-                                          headFile,
-                                        );
-
-                                    final headStorageRef = FirebaseStorage
-                                        .instance
-                                        .ref()
-                                        .child(
-                                          'head_images/${firebaseUser.uid}.jpg',
-                                        );
-                                    await headStorageRef.putFile(headFile);
-                                    uploadedHeadImageUrl =
-                                        await headStorageRef.getDownloadURL();
-                                  }
-
-                                  List<String> uploadedMediaUrls = [];
-                                  List<String> mediaImageBlurHashes = [];
-
-                                  if (mediaUrl != null &&
-                                      mediaUrl!.isNotEmpty) {
-                                    for (int i = 0; i < mediaUrl!.length; i++) {
-                                      final mediaPath = mediaUrl![i];
-                                      if (mediaPath.startsWith('http')) {
-                                        uploadedMediaUrls.add(mediaPath);
-                                        mediaImageBlurHashes.add(
-                                          BlurHashService.defaultBlurHash,
-                                        );
-                                      } else {
-                                        final mediaFile = File(mediaPath);
-
-                                        // Generate BlurHash for media image
-                                        final blurHash =
-                                            await BlurHashService.generateBlurHash(
-                                              mediaFile,
-                                            );
-                                        mediaImageBlurHashes.add(blurHash);
-
-                                        final mediaStorageRef = FirebaseStorage
-                                            .instance
-                                            .ref()
-                                            .child(
-                                              'media_images/${firebaseUser.uid}_$i.jpg',
-                                            );
-                                        await mediaStorageRef.putFile(
-                                          mediaFile,
-                                        );
-                                        final downloadUrl =
-                                            await mediaStorageRef
-                                                .getDownloadURL();
-                                        uploadedMediaUrls.add(downloadUrl);
-                                      }
-                                    }
-                                  }
-                                  final dj = DJ(
-                                    id: firebaseUser.uid,
-                                    genres: genres,
-                                    headImageUrl: uploadedHeadImageUrl,
-                                    headImageBlurHash: headImageBlurHash,
-                                    avatarImageUrl:
-                                        'https://firebasestorage.googleapis.com/v0/b/gig-hub-8ac24.firebasestorage.app/o/default%2Fdefault_avatar.jpg?alt=media&token=9c48f377-736e-4a9a-bf31-6ffc3ed020f7',
-                                    bpm: [
-                                      int.parse(bpmMin!),
-                                      int.parse(bpmMax!),
-                                    ],
-                                    about: _aboutController.text,
-                                    streamingUrls: [
-                                      if (selectedTrackOne?.streamUrl != null)
-                                        selectedTrackOne!.streamUrl!,
-                                      if (selectedTrackTwo?.streamUrl != null)
-                                        selectedTrackTwo!.streamUrl!,
-                                    ],
-                                    trackTitles: [
-                                      selectedTrackOne!.title,
-                                      selectedTrackTwo!.title,
-                                    ],
-                                    trackUrls: [
-                                      selectedTrackOne!.permalinkUrl,
-                                      selectedTrackTwo!.permalinkUrl,
-                                    ],
-                                    mediaImageUrls: uploadedMediaUrls,
-                                    mediaImageBlurHashes: mediaImageBlurHashes,
-                                    info: _infoController.text,
-                                    name: _nameController.text,
-                                    avgRating: 0,
-                                    ratingCount: 0,
-                                    city: _locationController.text,
-                                    favoriteUIds: [],
-                                  );
-                                  await db.createDJ(dj);
-                                  final newUser = await db.getCurrentUser();
-                                  if (!context.mounted) return;
-
-                                  // Check if legal agreements are needed
-                                  final hasAcceptedAllAgreements =
-                                      await LegalAgreementService.hasAcceptedAllAgreements(
-                                        newUser,
-                                      );
-
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) =>
-                                              hasAcceptedAllAgreements
-                                                  ? MainScreen(
-                                                    initialUser: newUser,
-                                                  )
-                                                  : LegalAgreementWrapper(
-                                                    user: newUser,
-                                                  ),
-                                    ),
-                                  );
-                                } catch (e) {
-                                  if (!context.mounted) return;
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: Palette.forgedGold,
-                                      content: Center(
-                                        child: Text(
-                                          AppLocale.profileCreationFailed
-                                              .getString(context),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            style: ButtonStyle(
-                              splashFactory: NoSplash.splashFactory,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 14),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
                                   color: Palette.forgedGold,
                                   width: 2,
                                 ),
-                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
+                    child: Divider(
+                      height: 0,
+                      thickness: 2,
+                      color: Palette.forgedGold.o(0.8),
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Palette.shadowGrey.o(0.35),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Palette.concreteGrey),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(6.0),
                                 child: Row(
-                                  spacing: 4,
-                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text(
-                                      AppLocale.done.getString(context),
-                                      style: GoogleFonts.sometypeMono(
-                                        textStyle: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 13,
+                                    const Icon(Icons.location_on, size: 16),
+                                    const SizedBox(width: 4),
+                                    SizedBox(
+                                      width: 138,
+                                      height: 24,
+                                      child: TextFormField(
+                                        onTap: _locationController.clear,
+                                        style: TextStyle(
                                           color: Palette.glazedWhite,
-                                          decoration: TextDecoration.underline,
-                                          decorationColor: Palette.glazedWhite,
+                                          fontSize: 13,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        controller: _locationController,
+                                        focusNode: _locationFocusNode,
+                                        validator: (value) {
+                                          return _locationError;
+                                        },
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.only(
+                                            bottom: 12,
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: BorderSide(
+                                                  color: Palette.alarmRed,
+                                                  width: 2,
+                                                ),
+                                              ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Palette.alarmRed,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Palette.forgedGold,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Palette.glazedWhite,
+                                            ),
+                                          ),
+                                          errorStyle: TextStyle(
+                                            fontSize: 0,
+                                            height: 0,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Icon(
-                                      Icons.done,
-                                      size: 14,
-                                      color: Palette.glazedWhite,
                                     ),
                                   ],
                                 ),
                               ),
                             ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Palette.shadowGrey.o(0.35),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Palette.concreteGrey),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.speed, size: 20),
+                                    const SizedBox(width: 4),
+                                    SizedBox(
+                                      width: 138,
+                                      height: 24,
+                                      child: TextFormField(
+                                        readOnly: true,
+                                        textAlign: TextAlign.center,
+                                        onTap: () async {
+                                          final result = await showDialog<
+                                            List<int>
+                                          >(
+                                            context: context,
+                                            builder:
+                                                (context) => BpmSelectionDialog(
+                                                  intialSelectedBpm: [
+                                                    int.tryParse(
+                                                          bpmMin?.toString() ??
+                                                              '',
+                                                        ) ??
+                                                        100,
+                                                    int.tryParse(
+                                                          bpmMax?.toString() ??
+                                                              '',
+                                                        ) ??
+                                                        130,
+                                                  ],
+                                                ),
+                                          );
+
+                                          if (result != null &&
+                                              result.length == 2) {
+                                            setState(() {
+                                              bpmMin = result[0].toString();
+                                              bpmMax = result[1].toString();
+                                              _bpmController.text =
+                                                  '${result[0]}-${result[1]} bpm';
+                                            });
+                                          }
+                                        },
+                                        style: TextStyle(
+                                          color: Palette.glazedWhite,
+                                          fontSize: 13,
+                                        ),
+                                        controller: _bpmController,
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.only(
+                                            bottom: 12,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Palette.forgedGold,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                            borderSide: BorderSide(
+                                              color: Palette.glazedWhite,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 36),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocale.about.getString(context),
+                              style: GoogleFonts.sometypeMono(
+                                textStyle: TextStyle(
+                                  color: Palette.glazedWhite,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Palette.glazedWhite,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                                color: Palette.glazedWhite.o(0.2),
+                              ),
+                              child: TextFormField(
+                                onEditingComplete: () {
+                                  setState(() {
+                                    about = _aboutController.text;
+                                  });
+                                },
+                                minLines: 1,
+                                maxLines: 7,
+                                maxLength: 250,
+                                cursorColor: Palette.forgedGold,
+
+                                style: TextStyle(
+                                  color: Palette.glazedWhite,
+                                  fontSize: 14,
+                                  overflow: TextOverflow.visible,
+                                ),
+                                controller: _aboutController,
+                                decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Palette.forgedGold,
+                                      width: 3,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Palette.forgedGold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 60),
+                        Center(
+                          child: Wrap(
+                            spacing: 16,
+                            runSpacing: 8,
+                            alignment: WrapAlignment.center,
+                            children: [
+                              if (genres.isNotEmpty) ...[
+                                ...genres.map(
+                                  (genre) => GenreBubble(genre: genre),
+                                ),
+                              ],
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Palette.forgedGold,
+                                    width: 2.7,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: GestureDetector(
+                                  onTap: _showGenreDialog,
+                                  child: GenreBubble(
+                                    genre:
+                                        genres.isEmpty
+                                            ? AppLocale.addGenres.getString(
+                                              context,
+                                            )
+                                            : AppLocale.editGenres.getString(
+                                              context,
+                                            ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: !isSoundcloudConnected ? 72 : 48),
+                        IndexedStack(
+                          index: isSoundcloudConnected ? 0 : 1,
+                          children: [
+                            soundcloudFields(),
+                            connectToSoundcloudButton(),
+                          ],
+                        ),
+
+                        SizedBox(height: isSoundcloudConnected ? 72 : 0),
+                        (mediaUrl != null && mediaUrl!.isNotEmpty)
+                            ? ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: ImageSlideshow(
+                                width: double.infinity,
+                                height: 240,
+                                isLoop: true,
+                                autoPlayInterval: 12000,
+                                indicatorColor: Palette.shadowGrey,
+                                indicatorBackgroundColor: Palette.gigGrey,
+                                initialPage: index,
+                                onPageChanged: (value) {
+                                  setState(() => index = value);
+                                },
+                                children:
+                                    mediaUrl!.map((path) {
+                                      return SafePinchZoom(
+                                        zoomEnabled: true,
+                                        maxScale: 2.5,
+                                        child: Image.network(
+                                          path,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    }).toList(),
+                              ),
+                            )
+                            : Center(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    AppLocale.addImages.getString(context),
+                                    style: GoogleFonts.sometypeMono(
+                                      textStyle: TextStyle(
+                                        color: Palette.glazedWhite,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Container(
+                                    height: 160,
+                                    width: 240,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Palette.forgedGold,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: IconButton(
+                                      style: ButtonStyle(
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.padded,
+                                      ),
+                                      onPressed: () async {
+                                        final picker = ImagePicker();
+                                        final medias = await picker
+                                            .pickMultiImage(limit: 5);
+
+                                        if (medias.isNotEmpty) {
+                                          List<String> newMediaUrls = [];
+
+                                          for (XFile xfile in medias) {
+                                            File originalFile = File(
+                                              xfile.path,
+                                            );
+                                            File compressedFile =
+                                                await compressImage(
+                                                  originalFile,
+                                                );
+                                            newMediaUrls.add(
+                                              compressedFile.path,
+                                            );
+                                          }
+
+                                          setState(() {
+                                            mediaUrl = newMediaUrls;
+                                          });
+                                        }
+                                      },
+                                      icon: Icon(
+                                        Icons.file_upload_rounded,
+                                        color: Palette.concreteGrey,
+                                        size: 48,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        SizedBox(height: 8),
+                        (mediaUrl != null && mediaUrl!.isNotEmpty)
+                            ? Center(
+                              child: TextButton(
+                                onPressed:
+                                    () => setState(() {
+                                      mediaUrl!.clear();
+                                    }),
+                                child: Text(
+                                  AppLocale.removeImages.getString(context),
+                                  style: TextStyle(
+                                    color: Palette.alarmRed.o(0.7),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            )
+                            : SizedBox.shrink(),
+                        SizedBox(height: 36),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocale.info.getString(context),
+                              style: GoogleFonts.sometypeMono(
+                                textStyle: TextStyle(
+                                  color: Palette.glazedWhite,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Palette.glazedWhite,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                                color: Palette.glazedWhite.o(0.2),
+                              ),
+                              child: TextFormField(
+                                onEditingComplete: () {
+                                  setState(() => info = _infoController.text);
+                                },
+
+                                minLines: 1,
+                                maxLines: 7,
+                                maxLength: 250,
+                                cursorColor: Palette.forgedGold,
+
+                                style: TextStyle(
+                                  color: Palette.glazedWhite,
+                                  fontSize: 14,
+                                  overflow: TextOverflow.visible,
+                                ),
+                                controller: _infoController,
+                                decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Palette.forgedGold,
+                                      width: 3,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Palette.forgedGold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Center(
+                          child: SizedBox(
+                            height: 100,
+                            child: OutlinedButton(
+                              onPressed: () async {
+                                if (_nameController.text.isEmpty ||
+                                    _nameController.text == '' ||
+                                    _nameController.text == 'Name' ||
+                                    _nameController.text == 'name' ||
+                                    _nameController.text ==
+                                        AppLocale.yourName.getString(context) ||
+                                    _aboutController.text == '' ||
+                                    _aboutController.text.isEmpty ||
+                                    _infoController.text == '' ||
+                                    _infoController.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Palette.forgedGold,
+                                      content: Center(
+                                        child: Text(
+                                          AppLocale.fillOutAllFields.getString(
+                                            context,
+                                          ),
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                  return;
+                                }
+                                if (headUrl == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Palette.forgedGold,
+                                      content: Center(
+                                        child: Text(
+                                          AppLocale.addHeadImage.getString(
+                                            context,
+                                          ),
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                  return;
+                                }
+                                // Check if SoundCloud is connected
+                                if (!isSoundcloudConnected) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Palette.alarmRed,
+                                      content: Center(
+                                        child: Text(
+                                          'please connect your SoundCloud account first.',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                  return;
+                                }
+                                // Check if both tracks are selected
+                                if (selectedTrackOne == null ||
+                                    selectedTrackTwo == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Palette.alarmRed,
+                                      content: Center(
+                                        child: Text(
+                                          'please select 2 tracks from your SoundCloud.',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                  return;
+                                }
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                FocusManager.instance.primaryFocus?.unfocus();
+
+                                if (headUrl?.isNotEmpty == true &&
+                                    bpmMin?.isNotEmpty == true &&
+                                    bpmMax?.isNotEmpty == true &&
+                                    _infoController.text.isNotEmpty &&
+                                    _aboutController.text.isNotEmpty &&
+                                    _locationController.text.isNotEmpty &&
+                                    _nameController.text.isNotEmpty) {
+                                  try {
+                                    User? firebaseUser;
+
+                                    // Check if user is already authenticated (social login)
+                                    final currentUser =
+                                        FirebaseAuth.instance.currentUser;
+                                    if (currentUser != null &&
+                                        widget.pw.isEmpty) {
+                                      // Social login case - user is already authenticated
+                                      firebaseUser = currentUser;
+                                    } else {
+                                      // Email/password signup case
+                                      final UserCredential userCredential =
+                                          await FirebaseAuth.instance
+                                              .createUserWithEmailAndPassword(
+                                                email: widget.email,
+                                                password: widget.pw,
+                                              );
+                                      firebaseUser = userCredential.user;
+                                    }
+
+                                    if (firebaseUser == null) {
+                                      throw Exception("user creation failed");
+                                    }
+
+                                    String uploadedHeadImageUrl = headUrl!;
+                                    String headImageBlurHash =
+                                        BlurHashService.defaultBlurHash;
+
+                                    if (!headUrl!.startsWith('http')) {
+                                      final headFile = File(headUrl!);
+
+                                      // Generate BlurHash for head image
+                                      headImageBlurHash =
+                                          await BlurHashService.generateBlurHash(
+                                            headFile,
+                                          );
+
+                                      final headStorageRef = FirebaseStorage
+                                          .instance
+                                          .ref()
+                                          .child(
+                                            'head_images/${firebaseUser.uid}.jpg',
+                                          );
+                                      await headStorageRef.putFile(headFile);
+                                      uploadedHeadImageUrl =
+                                          await headStorageRef.getDownloadURL();
+                                    }
+
+                                    List<String> uploadedMediaUrls = [];
+                                    List<String> mediaImageBlurHashes = [];
+
+                                    if (mediaUrl != null &&
+                                        mediaUrl!.isNotEmpty) {
+                                      for (
+                                        int i = 0;
+                                        i < mediaUrl!.length;
+                                        i++
+                                      ) {
+                                        final mediaPath = mediaUrl![i];
+                                        if (mediaPath.startsWith('http')) {
+                                          uploadedMediaUrls.add(mediaPath);
+                                          mediaImageBlurHashes.add(
+                                            BlurHashService.defaultBlurHash,
+                                          );
+                                        } else {
+                                          final mediaFile = File(mediaPath);
+
+                                          // Generate BlurHash for media image
+                                          final blurHash =
+                                              await BlurHashService.generateBlurHash(
+                                                mediaFile,
+                                              );
+                                          mediaImageBlurHashes.add(blurHash);
+
+                                          final mediaStorageRef = FirebaseStorage
+                                              .instance
+                                              .ref()
+                                              .child(
+                                                'media_images/${firebaseUser.uid}_$i.jpg',
+                                              );
+                                          await mediaStorageRef.putFile(
+                                            mediaFile,
+                                          );
+                                          final downloadUrl =
+                                              await mediaStorageRef
+                                                  .getDownloadURL();
+                                          uploadedMediaUrls.add(downloadUrl);
+                                        }
+                                      }
+                                    }
+                                    final dj = DJ(
+                                      id: firebaseUser.uid,
+                                      genres: genres,
+                                      headImageUrl: uploadedHeadImageUrl,
+                                      headImageBlurHash: headImageBlurHash,
+                                      avatarImageUrl:
+                                          'https://firebasestorage.googleapis.com/v0/b/gig-hub-8ac24.firebasestorage.app/o/default%2Fdefault_avatar.jpg?alt=media&token=9c48f377-736e-4a9a-bf31-6ffc3ed020f7',
+                                      bpm: [
+                                        int.parse(bpmMin!),
+                                        int.parse(bpmMax!),
+                                      ],
+                                      about: _aboutController.text,
+                                      streamingUrls: [
+                                        if (selectedTrackOne?.streamUrl != null)
+                                          selectedTrackOne!.streamUrl!,
+                                        if (selectedTrackTwo?.streamUrl != null)
+                                          selectedTrackTwo!.streamUrl!,
+                                      ],
+                                      trackTitles: [
+                                        selectedTrackOne!.title,
+                                        selectedTrackTwo!.title,
+                                      ],
+                                      trackUrls: [
+                                        selectedTrackOne!.permalinkUrl,
+                                        selectedTrackTwo!.permalinkUrl,
+                                      ],
+                                      mediaImageUrls: uploadedMediaUrls,
+                                      mediaImageBlurHashes:
+                                          mediaImageBlurHashes,
+                                      info: _infoController.text,
+                                      name: _nameController.text,
+                                      avgRating: 0,
+                                      ratingCount: 0,
+                                      city: _locationController.text,
+                                      favoriteUIds: [],
+                                    );
+                                    await db.createDJ(dj);
+                                    final newUser = await db.getCurrentUser();
+                                    if (!context.mounted) return;
+
+                                    // Check if legal agreements are needed
+                                    final hasAcceptedAllAgreements =
+                                        await LegalAgreementService.hasAcceptedAllAgreements(
+                                          newUser,
+                                        );
+
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                                hasAcceptedAllAgreements
+                                                    ? MainScreen(
+                                                      initialUser: newUser,
+                                                    )
+                                                    : LegalAgreementWrapper(
+                                                      user: newUser,
+                                                    ),
+                                      ),
+                                    );
+                                  } catch (e) {
+                                    if (!context.mounted) return;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Palette.forgedGold,
+                                        content: Center(
+                                          child: Text(
+                                            AppLocale.profileCreationFailed
+                                                .getString(context),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
+                              style: ButtonStyle(
+                                splashFactory: NoSplash.splashFactory,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Palette.forgedGold,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Row(
+                                    spacing: 4,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        AppLocale.done.getString(context),
+                                        style: GoogleFonts.sometypeMono(
+                                          textStyle: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
+                                            color: Palette.glazedWhite,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor:
+                                                Palette.glazedWhite,
+                                          ),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.done,
+                                        size: 14,
+                                        color: Palette.glazedWhite,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

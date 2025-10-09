@@ -1,5 +1,5 @@
 import 'package:gig_hub/src/Data/app_imports.dart';
-import 'package:gig_hub/src/Features/legal/services/legal_agreement_service.dart';
+
 import 'package:gig_hub/src/Features/legal/presentation/legal_agreement_wrapper.dart';
 
 class RouteObserverProvider extends InheritedWidget {
@@ -29,12 +29,21 @@ class App extends StatefulWidget {
 
   @override
   State<App> createState() => _AppState();
+
+  static _AppState? _appState;
+
+  static void refreshUserData() {
+    _appState?._refreshUserData();
+  }
 }
 
 class _AppState extends State<App> {
   final FlutterLocalization localization = FlutterLocalization.instance;
+  final ValueNotifier<int> _userRefreshTrigger = ValueNotifier<int>(0);
+
   @override
   void initState() {
+    App._appState = this;
     localization.init(
       mapLocales: [
         const MapLocale('en', AppLocale.en),
@@ -60,6 +69,17 @@ class _AppState extends State<App> {
 
   void _onTranslatedLanguage(Locale? locale) {
     setState(() {});
+  }
+
+  void _refreshUserData() {
+    _userRefreshTrigger.value++;
+  }
+
+  @override
+  void dispose() {
+    App._appState = null;
+    _userRefreshTrigger.dispose();
+    super.dispose();
   }
 
   @override
@@ -98,62 +118,16 @@ class _AppState extends State<App> {
               return LoginScreen();
             }
 
-            return FutureBuilder<AppUser>(
-              future: db.getCurrentUser(),
-              builder: (context, userSnap) {
-                if (userSnap.connectionState == ConnectionState.waiting) {
-                  return Scaffold(
-                    backgroundColor: Palette.primalBlack,
-                    body: Center(
-                      child: CircularProgressIndicator(
-                        color: Palette.forgedGold,
-                        strokeWidth: 1.65,
-                      ),
-                    ),
-                  );
-                }
-
-                if (userSnap.hasError || userSnap.data == null) {
-                  // If user is authenticated but no document exists, they might be completing social signup
-                  // Show a brief loading state before returning to LoginScreen to allow social login flow to complete
-                  return FutureBuilder(
-                    future: Future.delayed(Duration(milliseconds: 500)),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Scaffold(
-                          backgroundColor: Palette.primalBlack,
-                          body: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircularProgressIndicator(
-                                  color: Palette.forgedGold,
-                                  strokeWidth: 1.65,
-                                ),
-                                SizedBox(height: 20),
-                                Text(
-                                  'Completing setup...',
-                                  style: TextStyle(
-                                    color: Palette.glazedWhite,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-                      return LoginScreen();
-                    },
-                  );
-                }
-                // Check legal agreements before proceeding to main screen
-                return FutureBuilder<bool>(
-                  future: LegalAgreementService.hasAcceptedAllAgreements(
-                    userSnap.data!,
-                  ),
-                  builder: (context, legalSnap) {
-                    if (legalSnap.connectionState == ConnectionState.waiting) {
+            return ValueListenableBuilder<int>(
+              valueListenable: _userRefreshTrigger,
+              builder: (context, trigger, child) {
+                return FutureBuilder<AppUser>(
+                  key: ValueKey(
+                    trigger,
+                  ), // This forces rebuild when trigger changes
+                  future: db.getCurrentUser(),
+                  builder: (context, userSnap) {
+                    if (userSnap.connectionState == ConnectionState.waiting) {
                       return Scaffold(
                         backgroundColor: Palette.primalBlack,
                         body: Center(
@@ -165,13 +139,51 @@ class _AppState extends State<App> {
                       );
                     }
 
-                    final hasAcceptedAgreements = legalSnap.data ?? false;
+                    if (userSnap.hasError || userSnap.data == null) {
+                      // If user is authenticated but no document exists, they might be completing social signup
+                      // Show a brief loading state before returning to LoginScreen to allow social login flow to complete
+                      return FutureBuilder(
+                        future: Future.delayed(Duration(milliseconds: 500)),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Scaffold(
+                              backgroundColor: Palette.primalBlack,
+                              body: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CircularProgressIndicator(
+                                      color: Palette.forgedGold,
+                                      strokeWidth: 1.65,
+                                    ),
+                                    SizedBox(height: 20),
+                                    Text(
+                                      'Completing setup...',
+                                      style: TextStyle(
+                                        color: Palette.glazedWhite,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                          return LoginScreen();
+                        },
+                      );
+                    }
+                    // Check legal agreements before proceeding to main screen
+                    final currentUser = userSnap.data!;
+                    final hasAcceptedAgreements =
+                        currentUser.hasAcceptedAllAgreements;
 
                     if (!hasAcceptedAgreements) {
-                      return LegalAgreementWrapper(user: userSnap.data!);
+                      return LegalAgreementWrapper(user: currentUser);
                     }
 
-                    return MainScreen(initialUser: userSnap.data!);
+                    return MainScreen(initialUser: currentUser);
                   },
                 );
               },

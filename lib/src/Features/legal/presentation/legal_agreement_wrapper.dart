@@ -4,6 +4,7 @@ import 'package:gig_hub/src/Theme/palette.dart';
 import 'package:gig_hub/src/Common/pages/main_screen.dart';
 import 'package:gig_hub/src/Features/legal/presentation/legal_agreement_dialog.dart';
 import 'package:gig_hub/src/Features/legal/services/legal_agreement_service.dart';
+import 'package:gig_hub/src/app.dart';
 
 class LegalAgreementWrapper extends StatefulWidget {
   final AppUser user;
@@ -36,13 +37,16 @@ class _LegalAgreementWrapperState extends State<LegalAgreementWrapper> {
           (context) => LegalAgreementDialog(
             isRequired: true,
             onAccept: () async {
-              // Save acceptance to SharedPreferences
-              await LegalAgreementService.acceptAllAgreements();
+              // Save acceptance to Firestore
+              await LegalAgreementService.acceptAllAgreements(widget.user);
 
               if (mounted) {
                 setState(() {
                   _showDialog = false;
                 });
+
+                // Trigger app.dart to refresh user data
+                App.refreshUserData();
               }
             },
           ),

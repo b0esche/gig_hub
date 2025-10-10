@@ -326,8 +326,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               top: 128,
               right: 8,
               child: IconButton(
-                onPressed:
-                    () => launchUrlString('https://gig-hub-8ac24.web.app/#/qa'),
+                onPressed: () async {
+                  // Request tracking permission before opening web content
+                  await AppTrackingService.requestTrackingPermission();
+                  launchUrlString('https://gig-hub-8ac24.web.app/#/qa');
+                },
                 icon: Icon(
                   Icons.help_outline_rounded,
                   size: 36,
@@ -407,10 +410,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap:
-                        () => launchUrlString(
-                          'https://gig-hub-8ac24.web.app/#/portfolio',
-                        ),
+                    onTap: () async {
+                      // Request tracking permission before opening web content
+                      await AppTrackingService.requestTrackingPermission();
+                      launchUrlString(
+                        'https://gig-hub-8ac24.web.app/#/portfolio',
+                      );
+                    },
                     child: SizedBox.square(
                       dimension: 142,
                       child: Image.asset("assets/images/icon_full.png"),
@@ -759,10 +765,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: GestureDetector(
-                      onTap:
-                          () => launchUrlString(
-                            'https://gig-hub-8ac24.web.app/#/contribute',
-                          ),
+                      onTap: () async {
+                        // Request tracking permission before opening web content
+                        await AppTrackingService.requestTrackingPermission();
+                        launchUrlString(
+                          'https://gig-hub-8ac24.web.app/#/contribute',
+                        );
+                      },
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 24, 12),
                         child: Text(

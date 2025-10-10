@@ -409,10 +409,11 @@ class _MainScreenState extends State<MainScreen> {
                         Align(
                           alignment: Alignment.center,
                           child: GestureDetector(
-                            onLongPress:
-                                () => launchUrlString(
-                                  'https://gig-hub-8ac24.web.app/',
-                                ),
+                            onLongPress: () async {
+                              // Request tracking permission before opening web content
+                              await AppTrackingService.requestTrackingPermission();
+                              launchUrlString('https://gig-hub-8ac24.web.app/');
+                            },
                             child: SizedBox(
                               height: 160,
                               width: 160,

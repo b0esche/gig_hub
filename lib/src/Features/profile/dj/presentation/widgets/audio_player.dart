@@ -127,12 +127,18 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
 
   Future<void> _init() async {
     try {
-      // Try to use the shared background player first
+      // Enhanced iPad compatibility: Try background service first, with better fallback
       try {
         final backgroundService = BackgroundAudioService.instance;
         _audioPlayer = backgroundService.getSharedPlayer();
+        if (kDebugMode) {
+          print('Using background audio service for enhanced playback');
+        }
       } catch (e) {
-        // Fallback: Create a standalone AudioPlayer for iPad
+        // Fallback: Create a standalone AudioPlayer for iPad Air compatibility
+        if (kDebugMode) {
+          print('Background service unavailable, using standalone player: $e');
+        }
         _audioPlayer = AudioPlayer();
       }
 
@@ -445,12 +451,29 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
         await _audioPlayer!.play();
       }
     } catch (e) {
-      // Show error feedback for iPad debugging
+      // Enhanced error feedback for iPad Air debugging
+      if (kDebugMode) {
+        print(
+          'Audio playback error on ${Platform.isIOS ? "iOS/iPad" : "other"}: $e',
+        );
+      }
+
       if (mounted) {
         setState(() {
           _isLoading = false;
           _isPlaying = false;
         });
+
+        // Show user-friendly error on iPad for debugging
+        if (Platform.isIOS) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Audio playback temporarily unavailable'),
+              duration: Duration(seconds: 2),
+              backgroundColor: Palette.shadowGrey,
+            ),
+          );
+        }
       }
     }
   }
@@ -479,8 +502,20 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
                 children: [
                   GestureDetector(
                     onTap: () async {
+                      // Enhanced iPad responsiveness
+                      if (kDebugMode) {
+                        print(
+                          'Play button tapped - Loading: $_isLoading, Playing: $_isPlaying',
+                        );
+                      }
+
+                      // Prevent multiple taps during loading
+                      if (_isLoading) return;
+
                       await _togglePlayPause();
                     },
+                    // Increase tap area for iPad compatibility
+                    behavior: HitTestBehavior.opaque,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 12),
                       child: Container(

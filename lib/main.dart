@@ -1,9 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:gig_hub/src/Data/app_imports.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:gig_hub/src/Data/services/notification_service.dart';
-import 'package:gig_hub/src/Data/services/group_chat_cleanup_service.dart';
-import 'package:gig_hub/src/Data/services/background_audio_service.dart';
 
 /// Main entry point for the GigHub application
 ///
@@ -79,10 +78,17 @@ Future<void> main() async {
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   // Initialize background audio service for DJ track playback
+  // This enables background audio for DJ track previews and music playback
   try {
     await BackgroundAudioService.initialize();
+    if (kDebugMode) {
+      print('Background audio service initialized successfully');
+    }
   } catch (e) {
-    // Continue without background audio support
+    if (kDebugMode) {
+      print('Background audio service initialization failed: $e');
+    }
+    // Continue without background audio support - app will use foreground-only audio
   }
 
   GroupChatCleanupService().startCleanupService();

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:gig_hub/src/data/services/soundcloud_authentication_service.dart';
+import 'package:gig_hub/src/Data/services/soundcloud_authentication_service.dart';
 import 'package:http/http.dart' as http;
 
 class SoundcloudTrack {

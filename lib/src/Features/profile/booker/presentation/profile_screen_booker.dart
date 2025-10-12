@@ -485,8 +485,8 @@ class _ProfileScreenBookerState extends State<ProfileScreenBooker> {
                 if (!(_currentUser != null &&
                     _currentUser!.id == widget.booker.id))
                   Positioned(
-                    top: 8,
-                    right: 8,
+                    top: 36,
+                    right: -10,
                     child: ContentReportButton(
                       contentType: 'profile',
                       contentId: widget.booker.id,

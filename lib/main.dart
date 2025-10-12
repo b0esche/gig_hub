@@ -93,6 +93,15 @@ Future<void> main() async {
 
   GroupChatCleanupService().startCleanupService();
 
+  // Initialize App Tracking Transparency on app start
+  // This ensures Apple reviewers can see the permission request
+  if (Platform.isIOS) {
+    // Delay to ensure app is fully loaded before showing dialog
+    Future.delayed(Duration(seconds: 2), () {
+      AppTrackingService.requestTrackingPermission();
+    });
+  }
+
   runApp(
     MultiProvider(
       providers: [

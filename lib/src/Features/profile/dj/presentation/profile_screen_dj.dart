@@ -507,8 +507,8 @@ class _ProfileScreenDJState extends State<ProfileScreenDJ> {
                   if (!(widget.currentUser is DJ &&
                       (widget.currentUser as DJ).id == widget.dj.id))
                     Positioned(
-                      top: 8,
-                      right: 8,
+                      top: 36,
+                      right: -10,
                       child: ContentReportButton(
                         contentType: 'profile',
                         contentId: widget.dj.id,

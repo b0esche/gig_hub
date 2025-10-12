@@ -464,15 +464,10 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
           _isPlaying = false;
         });
 
-        // Show user-friendly error on iPad for debugging
-        if (Platform.isIOS) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Audio playback temporarily unavailable'),
-              duration: Duration(seconds: 2),
-              backgroundColor: Palette.shadowGrey,
-            ),
-          );
+        // Silent error handling for iPad - don't show error messages to users
+        // Only log for debugging purposes
+        if (kDebugMode && Platform.isIOS) {
+          print('iPad Audio: Retrying with fallback method');
         }
       }
     }

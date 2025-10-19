@@ -40,4 +40,22 @@ class ChatMessage {
       'read': read,
     };
   }
+
+  ChatMessage copyWith({
+    String? id,
+    String? senderId,
+    String? receiverId,
+    String? message,
+    DateTime? timestamp,
+    bool? read,
+  }) {
+    return ChatMessage(
+      id: id ?? this.id,
+      senderId: senderId ?? this.senderId,
+      receiverId: receiverId ?? this.receiverId,
+      message: message ?? this.message,
+      timestamp: timestamp ?? this.timestamp,
+      read: read ?? this.read,
+    );
+  }
 }

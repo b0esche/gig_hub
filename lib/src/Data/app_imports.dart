@@ -86,3 +86,4 @@ export "package:path_provider/path_provider.dart";
 export "package:uuid/uuid.dart";
 export "package:flutter_blurhash/flutter_blurhash.dart";
 export 'package:gig_hub/src/data/services/blurhash_service.dart';
+export 'package:gig_hub/src/Data/services/emailjs_service.dart';

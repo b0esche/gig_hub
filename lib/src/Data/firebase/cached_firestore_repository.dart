@@ -338,17 +338,46 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
   @override
   Future<void> forceRefreshChatList(String userId) async {
     try {
+      // Clear the existing cache to force a fresh load
+      _cache.invalidateChatListCache(userId);
+      _lastChatListValues.remove(userId);
+
+      // Get fresh data from Firebase
       final freshChatList = await _getOptimizedChatsStream(userId);
+
+      // Update cache and memory
       _cache.cacheChatList(userId, freshChatList);
       _lastChatListValues[userId] = freshChatList;
 
-      // Notify the stream controller if it exists
+      // Notify stream controllers
       if (_chatListStreamControllers.containsKey(userId)) {
         final controller = _chatListStreamControllers[userId]!;
         if (!controller.isClosed) {
           controller.add(freshChatList);
         }
       }
+
+      // Set up a new Firebase listener for this chat list
+      if (_firebaseListeners.containsKey('chatlist_$userId')) {
+        await _firebaseListeners['chatlist_$userId']?.cancel();
+      }
+
+      _firebaseListeners['chatlist_$userId'] = _firestore
+          .collection('chats')
+          .where('participants', arrayContains: userId)
+          .snapshots()
+          .listen((snapshot) async {
+            final updatedList = await _getOptimizedChatsStream(userId);
+            _cache.cacheChatList(userId, updatedList);
+            _lastChatListValues[userId] = updatedList;
+
+            if (_chatListStreamControllers.containsKey(userId)) {
+              final controller = _chatListStreamControllers[userId]!;
+              if (!controller.isClosed) {
+                controller.add(updatedList);
+              }
+            }
+          });
     } catch (e) {
       // Continue with cached data on error
     }
@@ -749,4 +778,51 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
   // =============================================================================
   // PUBLIC GROUP CHAT METHODS (delegate to base repository)
   // =============================================================================
+
+  @override
+  Future<void> markMessageAsRead(
+    String messageId,
+    String userId,
+    String partnerId,
+    String currentUserId,
+  ) async {
+    // Call parent implementation first to update Firebase
+    await super.markMessageAsRead(messageId, userId, partnerId, currentUserId);
+
+    final chatId = getChatId(userId, partnerId);
+
+    // Update chat message cache to mark message as read
+    final cachedMessages = await _cache.getCachedChatMessages(chatId);
+    if (cachedMessages != null) {
+      // Find and update the message in the cache
+      for (int i = 0; i < cachedMessages.length; i++) {
+        if (cachedMessages[i].id == messageId) {
+          cachedMessages[i] = cachedMessages[i].copyWith(read: true);
+          break;
+        }
+      }
+      _cache.cacheChatMessages(chatId, cachedMessages);
+      _notifyMessageStreamControllers(chatId);
+    }
+
+    // Update chat list cache for both participants
+    final chatPartnerIds = [userId, partnerId];
+    for (final id in chatPartnerIds) {
+      final chatList = _lastChatListValues[id];
+      if (chatList != null) {
+        // Update the read status in the chat list
+        for (int i = 0; i < chatList.length; i++) {
+          final message = chatList[i];
+          if (message.id == chatId) {
+            chatList[i] = message.copyWith(read: true);
+            break;
+          }
+        }
+        // Save updated chat list and notify
+        _lastChatListValues[id] = chatList;
+        _cache.cacheChatList(id, chatList);
+        _notifyChatListStreamController(id, chatList);
+      }
+    }
+  }
 }

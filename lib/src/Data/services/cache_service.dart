@@ -373,6 +373,12 @@ class CacheService {
     _storage.delete(key: 'user_$userId');
   }
 
+  /// Invalidate chat list cache (when chat list needs refresh)
+  void invalidateChatListCache(String userId) {
+    _chatListCache.remove(userId);
+    _storage.delete(key: 'chat_list_$userId');
+  }
+
   // =============================================================================
   // PRIVATE HELPER METHODS
   // =============================================================================

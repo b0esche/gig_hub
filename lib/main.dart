@@ -73,6 +73,9 @@ Future<void> main() async {
 
   await dotenv.load(fileName: ".env");
 
+  // Initialize EmailJS service
+  await EmailJSService.initialize();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseMessaging.instance.requestPermission();
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);

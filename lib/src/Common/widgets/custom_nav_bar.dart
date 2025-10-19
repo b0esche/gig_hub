@@ -37,6 +37,9 @@ class _CustomNavBarState extends State<CustomNavBar> with RouteAware {
 
   @override
   void didPopNext() {
+    // When returning to the screen (e.g., from chat), force refresh chat list
+    final db = context.read<DatabaseRepository>();
+    db.forceRefreshChatList(widget.currentUser.id);
     setState(() {});
   }
 

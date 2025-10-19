@@ -18,93 +18,207 @@ _GigHub_ is a cross-platform mobile app that connects DJs and bookers. Users can
 - 📞 **Deep linking** and social login support
 - 🖼️ **Image zoom, shimmer loading, splash screens**
 
----
+# 🎧 GigHub
 
-## 🛠️ Tech Stack & Dependencies
-
-### 📱 Core
-
-| Package              | Purpose                       |
-|----------------------|-------------------------------|
-| `flutter`            | App SDK                       |
-| `provider`           | State management              |
-| `intl`               | Date/time formatting          |
-| `uuid`               | Unique ID generation          |
-
-### 🔥 Firebase
-
-| Package                  | Purpose                                |
-|--------------------------|----------------------------------------|
-| `firebase_core`          | Core Firebase SDK                      |
-| `firebase_auth`          | User authentication                   |
-| `cloud_firestore`        | Realtime database                      |
-| `firebase_storage`       | File & image uploads                   |
-| `cloud_functions`        | Callable cloud functions               |
-| `google_sign_in`         | Google auth                            |
-| `flutter_facebook_auth`  | Facebook auth                          |
-
-### 🔐 Security & Encryption
-
-| Package                | Purpose                     |
-|------------------------|-----------------------------|
-| `encrypt`              | AES-256 chat encryption     |
-| `crypto`               | Hashing & HMAC              |
-| `flutter_secure_storage` | Encrypted local storage    |
-| `flutter_dotenv`       | Load secret `.env` configs  |
-
-### 🎨 UI / UX & Visuals
-
-| Package                   | Purpose                          |
-|---------------------------|----------------------------------|
-| `google_fonts`            | Custom fonts                     |
-| `flutter_svg`             | Scalable vector graphics         |
-| `flutter_rating_stars`    | Rating widget                    |
-| `shimmer`                 | Loading shimmer effect           |
-| `liquid_glass_renderer`*   | Fancy glassmorphism              |
-| `flutter_image_slideshow` | Slideshow view                   |
-| `pinch_zoom`              | Zoomable images                  |
-* only on iOS
-
-### 🔊 Audio & Media
-
-| Package                   | Purpose                           |
-|---------------------------|-----------------------------------|
-| `image_picker`            | Pick images from device           |
-| `flutter_image_compress`  | Reduce image sizes                |
-| `just_audio`              | High-performance audio playback   |
-| `just_waveform`           | Efficient waveform visualization  |
-
-
-### 🌍 Navigation & Links
-
-| Package         | Purpose                        |
-|-----------------|--------------------------------|
-| `url_launcher`  | Open external URLs             |
-| `app_links`     | Handle deep links              |
-
-### 🧪 Development Tools
-
-| Package           | Purpose                     |
-|-------------------|-----------------------------|
-| `flutter_native_splash` | Launch screen generation |
-| `flutter_launcher_icons` | App icon automation   |
+GigHub is a cross-platform Flutter app that connects DJs and bookers. Users create profiles, stream SoundCloud previews, chat in real-time, manage bookings and uploads, and collaborate around gigs — all from a single app.
 
 ---
 
-## ⚡ Performance Optimizations
+## 🚀 Highlights
 
-### 🎵 Audio Player
-- **Instant Loading**: Streams audio directly without downloading first
-- **Long Track Support**: Optimized for 1:30h+ tracks without UI freezing
-- **Background Playback**: Continues playing when app is minimized or phone locked
-- **Media Controls**: System notification with play/pause controls
-- **Smart Waveform**: Custom rendering with automatic fallbacks for large files
-- **Background Processing**: File operations in isolates to keep UI responsive
-- **Memory Efficient**: Downsampled waveforms and streaming downloads
+- Cross-platform Flutter app (Android & iOS)
+- DJ & Booker profiles with SoundCloud previews and waveform visualization
+- Realtime chat using Firebase Firestore
+- Background audio playback with system/media controls
+- Reporting via EmailJS (with system-email fallback)
+- Modern UI with SVGs, custom fonts and visual polish
 
 ---
 
-## 🔐 Chat Encryption
+## �️ Quick Start
 
-GigHub uses AES-256 encryption with a static 32-character key stored in a `.env` file.
+1. Clone the repository and open it:
+
+```bash
+git clone <repo-url>
+cd gig_hub
+```
+
+2. Add environment variables to `.env` (see `.env.example` if present). Important keys used by the app:
+
+- `SOUNDCLOUD_CLIENT_ID`, `SOUNDCLOUD_CLIENT_SECRET`
+- `ENCRYPTION_KEY` (32 chars)
+- `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, `EMAILJS_PUBLIC_KEY` (optional)
+
+3. Install dependencies and run:
+
+```bash
+flutter pub get
+flutter analyze
+flutter run -d <device>
+```
+
+---
+
+## � Tech stack & dependencies (summary)
+
+Below is a grouped summary of the key packages used in the project. Exact versions and the complete list are in `pubspec.yaml`.
+
+### App bootstrap
+
+- `flutter_launcher_icons` — generate platform launcher icons
+- `flutter_native_splash` — native splash screen generation
+
+### UI & visuals
+
+- `flutter_image_slideshow` — simple image/carousel slideshow
+- `flutter_rating_stars` — star rating widgets
+- `flutter_svg` — SVG rendering
+- `google_fonts` — Google Fonts integration
+- `liquid_glass_renderer` — glassmorphism effects (experimental)
+- `pinch_zoom` — image pinch/zoom
+- `shimmer` — shimmer loading placeholders
+
+### Audio & media
+
+- `cached_network_image` — cached image loading
+- `flutter_blurhash` — blurhash decoding for placeholders
+- `flutter_image_compress` — image compression
+- `image` — pure Dart image manipulation
+- `image_picker` — pick images from device
+- `just_audio` — audio playback engine
+- `just_audio_background` — background playback & media controls
+- `just_waveform` — waveform extraction & rendering
+
+### Data & storage
+
+- `blurhash_dart` — blurhash support
+- `flutter_secure_storage` — secure key/value storage
+- `path_provider` — platform paths for files
+- `uuid` — generate unique IDs
+
+### Network & utilities
+
+- `app_tracking_transparency` — iOS ATT support
+- `crypto` — cryptographic helpers
+- `encrypt` — AES encryption helper
+- `flutter_dotenv` — environment variable loader
+- `flutter_email_sender` — system email fallback
+- `geolocator` — device location services
+- `http` — HTTP client
+- `intl` — internationalization / date formatting
+- `mailer` — SMTP mail helper (dev/alternative)
+- `provider` — state management
+
+### Firebase & auth
+
+- `firebase_core` — Firebase core SDK
+- `firebase_auth` — authentication
+- `cloud_firestore` — Firestore database
+- `firebase_storage` — file storage
+- `cloud_functions` — callable cloud functions
+- `google_sign_in` — Google sign-in
+- `sign_in_with_apple` — Apple sign-in
+
+### Links & notifications
+
+- `app_links` — app deep linking helpers
+- `firebase_analytics` — analytics
+- `firebase_crashlytics` — crash reporting
+- `firebase_messaging` — push notifications
+- `firebase_performance` — performance monitoring
+- `flutter_local_notifications` — local notifications
+- `flutter_localization` — localization helpers
+- `url_launcher` — open URLs / deep links
+
+### Dev & test
+
+- `flutter_test` — Flutter testing framework
+- `flutter_lints` — lint rules
+- `mockito`, `mocktail` — mocking in tests
+- `build_runner` — code generation
+- `fake_cloud_firestore`, `firebase_auth_mocks` — test helpers for Firebase
+
+---
+
+For a complete, versioned list, open `pubspec.yaml` — it is the source of truth.
+
+---
+
+## �️ Overview
+
+Key pieces worth knowing while developing in this repo:
+
+- Audio: `just_audio` + `just_audio_background` handle playback and lock-screen controls; `just_waveform` extracts waveforms (runs in an isolate for performance).
+- Reporting: `EmailJS` HTTP integration (configured via `.env`) is the primary reporting channel; the app falls back to the device email client using `flutter_email_sender` if needed.
+- Auth & realtime data: Firebase (Auth / Firestore / Storage / Cloud Functions) for user data, messaging, and uploads.
+- Environment: `.env` is read at startup with `flutter_dotenv`.
+
+---
+
+## �🔁 Recent changes & developer notes
+
+- Implemented EmailJS-based reporting service (primary) with a system-email fallback. Add `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, and `EMAILJS_PUBLIC_KEY` to your `.env` to enable.
+- Reverted the previously over-complex loading-spinner logic in the audio player and simplified initialization to restore per-track responsiveness. If you still see waveform seeking affecting other tracks, see the troubleshooting section.
+- Removed console `print()` debug logging from the audio player code to reduce noise.
+
+---
+
+## 🐞 Troubleshooting & rolling back changes
+
+If a recent change broke audio behavior and you want to restore a previous commit, choose one of these safe options:
+
+1) Inspect git history and pick a commit:
+
+```bash
+git fetch --all
+git log --oneline --graph --decorate --all
+```
+
+2) Create a branch from a known-good commit (recommended):
+
+```bash
+# replace <commit-hash> with the commit you want
+git checkout -b restore/audio-player-fix <commit-hash>
+```
+
+3) To move `main` back (destructive; rewrites history):
+
+```bash
+git checkout main
+git reset --hard <commit-hash>
+git push --force-with-lease origin main
+```
+
+4) To undo a single bad commit without rewriting history (safe):
+
+```bash
+git checkout main
+git revert <bad-commit-hash>
+git push origin main
+```
+
+Notes:
+
+- Stash local changes first if you want to preserve them: `git stash`
+- Prefer creating a branch to test fixes before pushing to `main`.
+
+---
+
+## ✅ Quick testing checklist
+
+1. Ensure `.env` contains any required keys (SoundCloud, EmailJS, encryption key).
+2. Run:
+
+```bash
+flutter pub get
+flutter analyze
+flutter run -d <device>
+```
+
+3. Test audio on a real device or macOS target. Simulators can have audio quirks.
+
+---
+
+If you want, I can add an automated integration test that asserts multiple audio player widgets operate independently (seek/play isolation). Would you like me to add that on a feature branch?
 

@@ -36,19 +36,28 @@ class ChatScreenState extends State<ChatScreen>
       widget.currentUser.id,
       widget.chatPartner.id,
     );
-    if (messages.isNotEmpty) {
-      final lastMsg = messages.last;
-      if (!lastMsg.read && lastMsg.senderId != widget.currentUser.id) {
-        await db.markMessageAsRead(
-          lastMsg.id,
-          widget.currentUser.id,
-          widget.chatPartner.id,
-          widget.currentUser.id,
-        );
 
-        // Force refresh the chat list cache to update unread indicators
-        db.forceRefreshChatList(widget.currentUser.id);
-      }
+    // Find all unread messages from chat partner
+    final unreadMessages =
+        messages
+            .where((msg) => !msg.read && msg.senderId != widget.currentUser.id)
+            .toList();
+
+    if (unreadMessages.isNotEmpty) {
+      // Mark each unread message as read
+      await Future.wait(
+        unreadMessages.map(
+          (msg) => db.markMessageAsRead(
+            msg.id,
+            widget.currentUser.id,
+            widget.chatPartner.id,
+            widget.currentUser.id,
+          ),
+        ),
+      );
+
+      // Force refresh the chat list cache to update unread indicators
+      db.forceRefreshChatList(widget.currentUser.id);
     }
   }
 

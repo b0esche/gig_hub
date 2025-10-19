@@ -3,8 +3,13 @@ enum UserType { guest, dj, booker }
 abstract class AppUser {
   final String id;
   final UserType type;
+  final String? email; // Optional email field for all user types
 
-  const AppUser({required this.id, required this.type});
+  const AppUser({
+    required this.id,
+    required this.type,
+    this.email, // Made optional since it might not be available for all users
+  });
 
   factory AppUser.fromJson(String id, Map<String, dynamic> json) {
     final typeString = json['type'] as String?;
@@ -44,7 +49,8 @@ class Guest extends AppUser {
     this.hasAcceptedPrivacy = false,
     this.termsAcceptedAt,
     this.privacyAcceptedAt,
-  }) : super(type: UserType.guest);
+    String? email,
+  }) : super(type: UserType.guest, email: email);
 
   Map<String, dynamic> toJson() => {
     'type': type.name,
@@ -56,6 +62,7 @@ class Guest extends AppUser {
     'hasAcceptedPrivacy': hasAcceptedPrivacy,
     'termsAcceptedAt': termsAcceptedAt,
     'privacyAcceptedAt': privacyAcceptedAt,
+    'email': email,
   };
 
   factory Guest.fromJson(String id, Map<String, dynamic> json) => Guest(
@@ -68,6 +75,7 @@ class Guest extends AppUser {
     hasAcceptedPrivacy: json['hasAcceptedPrivacy'] as bool? ?? false,
     termsAcceptedAt: json['termsAcceptedAt'] as String?,
     privacyAcceptedAt: json['privacyAcceptedAt'] as String?,
+    email: json['email'] as String?,
   );
 }
 
@@ -122,7 +130,8 @@ class DJ extends AppUser {
     this.hasAcceptedPrivacy = false,
     this.termsAcceptedAt,
     this.privacyAcceptedAt,
-  }) : super(type: UserType.dj);
+    String? email,
+  }) : super(type: UserType.dj, email: email);
 
   Map<String, dynamic> toJson() => {
     'type': type.name,
@@ -147,6 +156,7 @@ class DJ extends AppUser {
     'hasAcceptedPrivacy': hasAcceptedPrivacy,
     'termsAcceptedAt': termsAcceptedAt,
     'privacyAcceptedAt': privacyAcceptedAt,
+    'email': email,
   };
 
   factory DJ.fromJson(String id, Map<String, dynamic> json) => DJ(
@@ -172,6 +182,7 @@ class DJ extends AppUser {
     hasAcceptedPrivacy: json['hasAcceptedPrivacy'] as bool? ?? false,
     termsAcceptedAt: json['termsAcceptedAt'] as String?,
     privacyAcceptedAt: json['privacyAcceptedAt'] as String?,
+    email: json['email'] as String?,
   );
 }
 
@@ -215,7 +226,8 @@ class Booker extends AppUser {
     this.hasAcceptedPrivacy = false,
     this.termsAcceptedAt,
     this.privacyAcceptedAt,
-  }) : super(type: UserType.booker);
+    String? email,
+  }) : super(type: UserType.booker, email: email);
 
   Map<String, dynamic> toJson() => {
     'type': type.name,
@@ -236,6 +248,7 @@ class Booker extends AppUser {
     'hasAcceptedPrivacy': hasAcceptedPrivacy,
     'termsAcceptedAt': termsAcceptedAt,
     'privacyAcceptedAt': privacyAcceptedAt,
+    'email': email,
   };
 
   factory Booker.fromJson(String id, Map<String, dynamic> json) => Booker(
@@ -257,6 +270,7 @@ class Booker extends AppUser {
     hasAcceptedPrivacy: json['hasAcceptedPrivacy'] as bool? ?? false,
     termsAcceptedAt: json['termsAcceptedAt'] as String?,
     privacyAcceptedAt: json['privacyAcceptedAt'] as String?,
+    email: json['email'] as String?,
   );
 }
 
@@ -294,6 +308,8 @@ extension AppUserView on AppUser {
   }
 
   bool get hasAcceptedAllAgreements => hasAcceptedTerms && hasAcceptedPrivacy;
+
+  String? get userEmail => email; // Convenience getter for the email field
 
   String? get termsAcceptedAt {
     if (this is DJ) return (this as DJ).termsAcceptedAt;

@@ -131,14 +131,9 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
       try {
         final backgroundService = BackgroundAudioService.instance;
         _audioPlayer = backgroundService.getSharedPlayer();
-        if (kDebugMode) {
-          print('Using background audio service for enhanced playback');
-        }
       } catch (e) {
         // Fallback: Create a standalone AudioPlayer for iPad Air compatibility
-        if (kDebugMode) {
-          print('Background service unavailable, using standalone player: $e');
-        }
+
         _audioPlayer = AudioPlayer();
       }
 
@@ -452,11 +447,6 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
       }
     } catch (e) {
       // Enhanced error feedback for iPad Air debugging
-      if (kDebugMode) {
-        print(
-          'Audio playback error on ${Platform.isIOS ? "iOS/iPad" : "other"}: $e',
-        );
-      }
 
       if (mounted) {
         setState(() {
@@ -466,9 +456,6 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
 
         // Silent error handling for iPad - don't show error messages to users
         // Only log for debugging purposes
-        if (kDebugMode && Platform.isIOS) {
-          print('iPad Audio: Retrying with fallback method');
-        }
       }
     }
   }
@@ -498,11 +485,6 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
                   GestureDetector(
                     onTap: () async {
                       // Enhanced iPad responsiveness
-                      if (kDebugMode) {
-                        print(
-                          'Play button tapped - Loading: $_isLoading, Playing: $_isPlaying',
-                        );
-                      }
 
                       // Prevent multiple taps during loading
                       if (_isLoading) return;

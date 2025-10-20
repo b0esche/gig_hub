@@ -12,6 +12,10 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
   final CacheService _cache = CacheService();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Stream controller for DJ list changes
+  final StreamController<void> _djListChangeController =
+      StreamController<void>.broadcast();
+
   // Stream controllers for cached data with real-time updates
   final Map<String, StreamController<List<ChatMessage>>>
   _messageStreamControllers = {};
@@ -619,6 +623,33 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
   // CACHE INVALIDATION & CLEANUP
   // =============================================================================
 
+  /// Stream that emits when the DJ list should be refreshed
+  Stream<void> get onDjListChange => _djListChangeController.stream;
+
+  @override
+  Future<void> blockUser(String currentUid, String targetUid) async {
+    // Block in Firebase first
+    await super.blockUser(currentUid, targetUid);
+
+    // Invalidate all DJ list caches to remove blocked user
+    _cache.invalidateAllDJListCaches();
+
+    // Notify listeners that DJ list should be refreshed
+    _djListChangeController.add(null);
+  }
+
+  @override
+  Future<void> unblockUser(String currentUid, String targetUid) async {
+    // Unblock in Firebase first
+    await super.unblockUser(currentUid, targetUid);
+
+    // Invalidate all DJ list caches to show unblocked user
+    _cache.invalidateAllDJListCaches();
+
+    // Notify listeners that DJ list should be refreshed
+    _djListChangeController.add(null);
+  }
+
   @override
   Future<void> deleteMessage(
     String chatId,
@@ -753,6 +784,9 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
       controller.close();
     }
     _chatListStreamControllers.clear();
+
+    // Close DJ list change controller
+    _djListChangeController.close();
 
     // Clear expired cache entries
     _cache.clearExpiredEntries();

@@ -27,9 +27,6 @@ class AppTrackingService {
 
       return status == TrackingStatus.authorized;
     } catch (e) {
-      if (kDebugMode) {
-        print('App Tracking Transparency error: $e');
-      }
       // If tracking transparency fails, allow web content access
       // but don't use any tracking features
       return false;
@@ -41,9 +38,6 @@ class AppTrackingService {
     try {
       return await AppTrackingTransparency.trackingAuthorizationStatus;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error getting tracking status: $e');
-      }
       return TrackingStatus.notDetermined;
     }
   }
@@ -58,9 +52,6 @@ class AppTrackingService {
       }
       return null;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error getting advertising identifier: $e');
-      }
       return null;
     }
   }

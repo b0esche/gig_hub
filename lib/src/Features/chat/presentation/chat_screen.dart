@@ -338,6 +338,24 @@ class ChatScreenState extends State<ChatScreen>
                                           (context) => ReportUserDialog(
                                             reportedUser: widget.chatPartner,
                                             currentUser: widget.currentUser,
+                                            onReportComplete: () async {
+                                              await db.blockUser(
+                                                widget.currentUser.id,
+                                                widget.chatPartner.id,
+                                              );
+                                              await db.deleteChat(
+                                                widget.currentUser.id,
+                                                widget.chatPartner.id,
+                                              );
+                                              if (context.mounted) {
+                                                Navigator.of(
+                                                  context,
+                                                ).pop(); // Close block dialog
+                                                Navigator.of(
+                                                  context,
+                                                ).pop(); // Close chat screen
+                                              }
+                                            },
                                           ),
                                     );
                                   },

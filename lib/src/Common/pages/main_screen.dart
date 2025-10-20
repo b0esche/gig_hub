@@ -18,11 +18,12 @@ class _MainScreenState extends State<MainScreen> {
 
   List<int>? _currentSearchBpmRange;
   List<String>? _currentSearchGenres;
-  final db = CachedFirestoreRepository();
   AppUser? _loggedInUser;
+  DatabaseRepository? _db;
 
   late AppLinks _appLinks;
   StreamSubscription<Uri>? _sub;
+  StreamSubscription<void>? _djListSub;
   final SoundcloudAuth _soundcloudAuth = SoundcloudAuth();
 
   @override
@@ -31,11 +32,22 @@ class _MainScreenState extends State<MainScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+
+      // Get the repository from provider
+      _db = Provider.of<DatabaseRepository>(context, listen: false);
+
       _appLinks = AppLinks();
       _initDeepLinks();
       _checkGuestAndShowDialog();
       _loadLoggedInUser();
       _fetchDJs();
+
+      // Subscribe to DJ list changes
+      _djListSub = _db?.onDjListChange.listen((_) {
+        if (mounted) {
+          _fetchDJs();
+        }
+      });
     });
   }
 
@@ -147,7 +159,7 @@ class _MainScreenState extends State<MainScreen> {
 
     try {
       // Use cached repository for faster loading
-      final users = await db.getDJs();
+      final users = await _db?.getDJs() ?? [];
 
       if (mounted) {
         setState(() {
@@ -288,7 +300,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _loadLoggedInUser() async {
-    final user = await db.getCurrentUser();
+    final user = await _db?.getCurrentUser();
     if (!mounted) return;
     setState(() {
       _loggedInUser = user;
@@ -298,9 +310,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     _sub?.cancel();
+    _djListSub?.cancel();
 
     // Clean up cached repository resources
-    db.dispose();
+    _db?.dispose();
 
     super.dispose();
   }

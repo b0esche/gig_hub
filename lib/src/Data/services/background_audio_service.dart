@@ -31,16 +31,9 @@ class BackgroundAudioService {
         // iOS background audio is enabled by default with just_audio_background
       );
       _isInitialized = true;
-
-      if (Platform.isIOS) {
-        print('Background audio initialized for iOS/iPadOS');
-      } else {
-        print('Background audio initialized for Android');
-      }
     } catch (e) {
       // Even if initialization fails, mark as initialized to prevent retry loops
       _isInitialized = true;
-      print('Background audio initialization failed: $e');
     }
   }
 
@@ -53,9 +46,6 @@ class BackgroundAudioService {
                 Platform.isAndroid ? [AndroidLoudnessEnhancer()] : [],
           ),
         );
-        if (Platform.isIOS) {
-          _configureIOSAudioSession();
-        }
       } catch (e) {
         // Fallback for iPad issues
         _sharedPlayer = AudioPlayer();
@@ -65,19 +55,6 @@ class BackgroundAudioService {
   }
 
   // Configure iOS audio session for background playback
-  static void _configureIOSAudioSession() async {
-    try {
-      // Force enable background audio capabilities for iOS/iPadOS
-      // This ensures audio continues when app is backgrounded
-      if (Platform.isIOS) {
-        // The just_audio plugin handles the audio session configuration
-        // but we need to ensure it's set up for background playback
-        print('iOS Audio Session configured for background playback');
-      }
-    } catch (e) {
-      print('iOS Audio Session configuration error: $e');
-    }
-  }
 
   Future<void> switchToNewAudio({
     required String sessionId,

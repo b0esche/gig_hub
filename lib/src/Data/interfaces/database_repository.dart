@@ -1,6 +1,9 @@
 import 'package:gig_hub/src/Data/app_imports.dart';
 
 abstract class DatabaseRepository with ChangeNotifier {
+  /// Stream that emits when the DJ list should be refreshed
+  Stream<void> get onDjListChange => const Stream.empty();
+
   // create user ###
   Future<void> createGuest(Guest guest);
   Future<void> createDJ(DJ user);

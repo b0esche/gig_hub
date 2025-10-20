@@ -861,6 +861,7 @@ class _CreateProfileScreenBookerState extends State<CreateProfileScreenBooker> {
                                           mediaImageBlurHashes,
                                       avgRating: 0.0,
                                       ratingCount: 0,
+                                      email: firebaseUser.email,
                                     );
                                     await db.createBooker(booker);
                                     final newUser = await db.getCurrentUser();

@@ -46,6 +46,9 @@ class CacheService {
     minutes: 5,
   ); // Messages need fresher data
 
+  // Keep track of all DJ list cache keys
+  final Set<String> _djListCacheKeys = {};
+
   // Cache usage tracking for cost optimization analytics
   int _hitCount = 0;
   int _missCount = 0;
@@ -62,6 +65,7 @@ class CacheService {
     'groupChatsCacheSize': _groupChatsCache.length,
     'usersCacheSize': _usersCache.length,
     'djListCacheSize': _djListCache.length,
+    'djListCacheKeys': _djListCacheKeys.toList(),
   };
 
   // =============================================================================
@@ -287,6 +291,7 @@ class CacheService {
       ttl: _userCacheTtl, // DJs don't change often
     );
     _persistDJList(cacheKey, djs);
+    _djListCacheKeys.add(cacheKey); // Track the cache key
   }
 
   /// Get cached DJ search results
@@ -305,6 +310,7 @@ class CacheService {
         ttl: _userCacheTtl,
       );
       _hitCount++;
+      _djListCacheKeys.add(cacheKey); // Track the cache key
       return persistentResult;
     }
 
@@ -336,6 +342,7 @@ class CacheService {
     _groupChatsCache.clear();
     _usersCache.clear();
     _djListCache.clear();
+    _djListCacheKeys.clear();
 
     // Clear persistent storage
     await _storage.deleteAll();
@@ -377,6 +384,21 @@ class CacheService {
   void invalidateChatListCache(String userId) {
     _chatListCache.remove(userId);
     _storage.delete(key: 'chat_list_$userId');
+  }
+
+  /// Invalidate DJ list cache (when block status changes)
+  void invalidateDJListCache(String cacheKey) {
+    _djListCache.remove(cacheKey);
+    _storage.delete(key: 'dj_list_$cacheKey');
+    _djListCacheKeys.remove(cacheKey);
+  }
+
+  /// Invalidate all DJ list caches (when global changes affect DJ lists)
+  void invalidateAllDJListCaches() {
+    final keys = List.from(_djListCacheKeys);
+    for (final key in keys) {
+      invalidateDJListCache(key);
+    }
   }
 
   // =============================================================================

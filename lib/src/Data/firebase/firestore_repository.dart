@@ -15,6 +15,12 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  final StreamController<void> _djListChangeController =
+      StreamController<void>.broadcast();
+
+  @override
+  Stream<void> get onDjListChange => _djListChangeController.stream;
+
   // =============================================================================
   // USER MANAGEMENT SECTION
   // =============================================================================
@@ -331,6 +337,7 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
         .doc(targetUid);
 
     await currentUserBlockRef.set({'timestamp': now});
+    _djListChangeController.add(null);
   }
 
   @override
@@ -344,6 +351,7 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
         .doc(targetUid);
 
     await currentUserBlockRef.delete();
+    _djListChangeController.add(null);
   }
 
   @override
@@ -556,6 +564,12 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
     } catch (_) {
       // Don't rethrow - this is not critical for app functionality
     }
+  }
+
+  @override
+  void dispose() {
+    _djListChangeController.close();
+    super.dispose();
   }
 
   /// STATUS MESSAGES ###

@@ -84,13 +84,7 @@ Future<void> main() async {
   // This enables background audio for DJ track previews and music playback
   try {
     await BackgroundAudioService.initialize();
-    if (kDebugMode) {
-      print('Background audio service initialized successfully');
-    }
   } catch (e) {
-    if (kDebugMode) {
-      print('Background audio service initialization failed: $e');
-    }
     // Continue without background audio support - app will use foreground-only audio
   }
 

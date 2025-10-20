@@ -1014,6 +1014,7 @@ class _CreateProfileScreenDJState extends State<CreateProfileScreenDJ> {
                                       ratingCount: 0,
                                       city: _locationController.text,
                                       favoriteUIds: [],
+                                      email: firebaseUser.email,
                                     );
                                     await db.createDJ(dj);
                                     final newUser = await db.getCurrentUser();

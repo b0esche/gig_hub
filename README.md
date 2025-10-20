@@ -44,9 +44,9 @@ git clone <repo-url>
 cd gig_hub
 ```
 
-2. Add environment variables to `.env` (see `.env.example` if present). Important keys used by the app:
+2. Add environment variables to `.env`. Important keys used by the app:
 
-- `SOUNDCLOUD_CLIENT_ID`, `SOUNDCLOUD_CLIENT_SECRET`
+- `SOUNDCLOUD_CLIENT_ID`, `SOUNDCLOUD_CLIENT_SECRET`, `SOUNDCLOUD_REDIRECT_URI`
 - `ENCRYPTION_KEY` (32 chars)
 - `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, `EMAILJS_PUBLIC_KEY` (optional)
 
@@ -154,71 +154,4 @@ Key pieces worth knowing while developing in this repo:
 - Auth & realtime data: Firebase (Auth / Firestore / Storage / Cloud Functions) for user data, messaging, and uploads.
 - Environment: `.env` is read at startup with `flutter_dotenv`.
 
----
-
-## �🔁 Recent changes & developer notes
-
-- Implemented EmailJS-based reporting service (primary) with a system-email fallback. Add `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, and `EMAILJS_PUBLIC_KEY` to your `.env` to enable.
-- Reverted the previously over-complex loading-spinner logic in the audio player and simplified initialization to restore per-track responsiveness. If you still see waveform seeking affecting other tracks, see the troubleshooting section.
-- Removed console `print()` debug logging from the audio player code to reduce noise.
-
----
-
-## 🐞 Troubleshooting & rolling back changes
-
-If a recent change broke audio behavior and you want to restore a previous commit, choose one of these safe options:
-
-1) Inspect git history and pick a commit:
-
-```bash
-git fetch --all
-git log --oneline --graph --decorate --all
-```
-
-2) Create a branch from a known-good commit (recommended):
-
-```bash
-# replace <commit-hash> with the commit you want
-git checkout -b restore/audio-player-fix <commit-hash>
-```
-
-3) To move `main` back (destructive; rewrites history):
-
-```bash
-git checkout main
-git reset --hard <commit-hash>
-git push --force-with-lease origin main
-```
-
-4) To undo a single bad commit without rewriting history (safe):
-
-```bash
-git checkout main
-git revert <bad-commit-hash>
-git push origin main
-```
-
-Notes:
-
-- Stash local changes first if you want to preserve them: `git stash`
-- Prefer creating a branch to test fixes before pushing to `main`.
-
----
-
-## ✅ Quick testing checklist
-
-1. Ensure `.env` contains any required keys (SoundCloud, EmailJS, encryption key).
-2. Run:
-
-```bash
-flutter pub get
-flutter analyze
-flutter run -d <device>
-```
-
-3. Test audio on a real device or macOS target. Simulators can have audio quirks.
-
----
-
-If you want, I can add an automated integration test that asserts multiple audio player widgets operate independently (seek/play isolation). Would you like me to add that on a feature branch?
 

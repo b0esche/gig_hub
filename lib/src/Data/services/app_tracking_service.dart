@@ -1,5 +1,4 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-import 'package:flutter/foundation.dart';
 
 /// Service to handle App Tracking Transparency compliance
 ///

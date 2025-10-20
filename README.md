@@ -37,7 +37,7 @@ _GigHub_ is a cross-platform mobile app that connects DJs and bookers. Users can
 1. Clone the repository and open it:
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/b0esche/gig_hub
 cd gig_hub
 ```
 

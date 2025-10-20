@@ -289,6 +289,11 @@ class _MainScreenState extends State<MainScreen> {
           case 'location':
             sortedList.sort((a, b) => a.city.compareTo(b.city));
             break;
+          case 'rating':
+            sortedList.sort(
+              (a, b) => b.avgRating.compareTo(a.avgRating),
+            ); // Sort by rating in descending order
+            break;
           default:
             _sortedUsersDJ = List.from(_usersDJ);
             return;

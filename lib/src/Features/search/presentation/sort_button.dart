@@ -22,6 +22,7 @@ class SortButtonsWidget extends StatelessWidget {
       children: <Widget>[
         _buildSortButton('genre', selectedColor, defaultColor, context),
         _buildSortButton('bpm', selectedColor, defaultColor, context),
+        _buildSortButton('rating', selectedColor, defaultColor, context),
         //  _buildSortButton('location', selectedColor, defaultColor, context),
       ],
     );

@@ -17,12 +17,8 @@ class LocationAutocompleteField extends StatefulWidget {
 
 class _LocationAutocompleteFieldState extends State<LocationAutocompleteField> {
   late TextEditingController _internalController;
-  // ignore: unused_field
-  String? _validationMessage;
   String? _suggestedCity;
-  Timer? _debounceTimer;
-  // ignore: unused_field
-  bool _isValidating = false;
+  Timer? _validationDebouncer;
 
   @override
   void initState() {
@@ -34,7 +30,7 @@ class _LocationAutocompleteFieldState extends State<LocationAutocompleteField> {
   @override
   void dispose() {
     _internalController.removeListener(_onControllerTextChanged);
-    _debounceTimer?.cancel();
+    _validationDebouncer?.cancel();
     if (widget.controller == null) {
       _internalController.dispose();
     }
@@ -42,81 +38,66 @@ class _LocationAutocompleteFieldState extends State<LocationAutocompleteField> {
   }
 
   void _onControllerTextChanged() {
-    final input = _internalController.text.trim();
-
-    if (input.isEmpty) {
+    final text = _internalController.text;
+    if (text.isEmpty) {
       setState(() {
-        _validationMessage = null;
-        _isValidating = false;
-      });
-      widget.onCitySelected('');
-      return;
-    }
-
-    // Call the callback immediately with the input
-    widget.onCitySelected(input);
-
-    // Cancel previous validation timer
-    _debounceTimer?.cancel();
-
-    // Set validating state
-    setState(() {
-      _isValidating = true;
-      _validationMessage = null;
-    });
-
-    // Start new validation timer
-    _debounceTimer = Timer(const Duration(milliseconds: 800), () {
-      _validateCity(input);
-    });
-  }
-
-  Future<void> _validateCity(String input) async {
-    if (input.isEmpty) {
-      setState(() {
-        _validationMessage = null;
         _suggestedCity = null;
-        _isValidating = false;
       });
       return;
     }
 
-    try {
-      final result = await PlacesValidationService.validateCityWithSuggestion(
-        input,
-      );
+    // Don't trigger validation if there's an exact match between input and suggestion
+    if (_suggestedCity != null && text == _suggestedCity) {
+      return;
+    }
 
-      if (mounted) {
+    if (_validationDebouncer != null) {
+      _validationDebouncer?.cancel();
+    }
+
+    _validationDebouncer = Timer(const Duration(milliseconds: 500), () async {
+      if (!mounted) return;
+
+      setState(() {
+        _suggestedCity = null; // Clear previous suggestion while validating
+      });
+
+      try {
+        final result = await PlacesValidationService.validateCityWithSuggestion(
+          text,
+        );
+        if (!mounted) return;
+
         setState(() {
-          _isValidating = false;
-          if (result.isValid) {
-            _validationMessage = "✓ City found";
+          // Only set suggestion if it's different from current input
+          if (result.isValid && result.suggestedName != text) {
             _suggestedCity = result.suggestedName;
-          } else {
-            _validationMessage = "City not found";
-            _suggestedCity = null;
           }
         });
-      }
-    } catch (e) {
-      if (mounted) {
+      } catch (e) {
+        if (!mounted) return;
+
         setState(() {
-          _isValidating = false;
-          _validationMessage = "Unable to validate city";
           _suggestedCity = null;
         });
       }
-    }
+    });
   }
 
   void _applySuggestion() {
     if (_suggestedCity != null) {
+      // Prevent the onControllerTextChanged callback from triggering another validation
+      _internalController.removeListener(_onControllerTextChanged);
+
       _internalController.text = _suggestedCity!;
       widget.onCitySelected(_suggestedCity!);
+
       setState(() {
         _suggestedCity = null;
-        _validationMessage = "✓ City selected";
       });
+
+      // Re-add the listener after applying the suggestion
+      _internalController.addListener(_onControllerTextChanged);
     }
   }
 

@@ -49,8 +49,8 @@ class Guest extends AppUser {
     this.hasAcceptedPrivacy = false,
     this.termsAcceptedAt,
     this.privacyAcceptedAt,
-    String? email,
-  }) : super(type: UserType.guest, email: email);
+    super.email,
+  }) : super(type: UserType.guest);
 
   Map<String, dynamic> toJson() => {
     'type': type.name,
@@ -130,8 +130,8 @@ class DJ extends AppUser {
     this.hasAcceptedPrivacy = false,
     this.termsAcceptedAt,
     this.privacyAcceptedAt,
-    String? email,
-  }) : super(type: UserType.dj, email: email);
+    super.email,
+  }) : super(type: UserType.dj);
 
   Map<String, dynamic> toJson() => {
     'type': type.name,
@@ -226,8 +226,8 @@ class Booker extends AppUser {
     this.hasAcceptedPrivacy = false,
     this.termsAcceptedAt,
     this.privacyAcceptedAt,
-    String? email,
-  }) : super(type: UserType.booker, email: email);
+    super.email,
+  }) : super(type: UserType.booker);
 
   Map<String, dynamic> toJson() => {
     'type': type.name,

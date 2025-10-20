@@ -14,6 +14,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // ignore: unused_field
+  bool _isPasskeySupported = false;
+
   final TextEditingController _loginEmailController = TextEditingController();
   final TextEditingController _loginPasswordController =
       TextEditingController();
@@ -46,8 +49,19 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    _checkPasskeySupport();
     _currentLanguage =
         FlutterLocalization.instance.currentLocale?.languageCode ?? 'en';
+  }
+
+  Future<void> _checkPasskeySupport() async {
+    final auth = context.read<AuthRepository>();
+    final isSupported = await auth.isPasskeySupported();
+    if (mounted) {
+      setState(() {
+        _isPasskeySupported = isSupported;
+      });
+    }
   }
 
   @override

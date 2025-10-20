@@ -1,4 +1,5 @@
 import 'package:gig_hub/src/Data/app_imports.dart';
+import 'package:gig_hub/src/Data/services/passkey_service.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
   // sign up w/ email ###
@@ -178,26 +179,43 @@ class FirebaseAuthRepository implements AuthRepository {
     return FirebaseAuth.instance.authStateChanges();
   }
 
-  // Passkey support (placeholder for future implementation)
+  final PasskeyService _passkeyService = PasskeyService();
+
   @override
   Future<bool> isPasskeySupported() async {
-    // Native passkey support would require platform-specific implementation
-    // For now, we rely on iOS/Android native password management
-    return false;
+    return await _passkeyService.isPasskeyAvailable();
   }
 
   @override
   Future<void> signUpWithPasskey(String email) async {
-    throw UnimplementedError('Native passkey support not yet implemented');
+    final password = _passkeyService.generateStrongPassword();
+
+    // Create Firebase user with generated password
+    final userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+
+    if (userCredential.user != null) {
+      // Save passkey if user creation was successful
+      await _passkeyService.savePasskey(email: email, password: password);
+    }
   }
 
   @override
   Future<void> signInWithPasskey() async {
-    throw UnimplementedError('Native passkey support not yet implemented');
+    final user = FirebaseAuth.instance.currentUser;
+    if (user?.email == null) return;
+
+    final password = await _passkeyService.getPasskey(user!.email!);
+    if (password != null) {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: user.email!,
+        password: password,
+      );
+    }
   }
 
   @override
   Future<String> generateStrongPassword() async {
-    throw UnimplementedError('Use native system password generation instead');
+    return _passkeyService.generateStrongPassword();
   }
 }

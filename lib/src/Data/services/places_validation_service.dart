@@ -95,12 +95,9 @@ class PlacesValidationService {
 
               // If we found a city, it's valid regardless of exact name match
               // Google's geocoding handles international names beautifully
-              if (primaryCityName != null) {
-                // For international cities, show both the input and resolved name
-                final suggestedName =
-                    primaryCityName.toLowerCase() != trimmedValue.toLowerCase()
-                        ? '$primaryCityName ($trimmedValue)'
-                        : primaryCityName;
+              if (primaryCityName != null && countryName != null) {
+                // Format it as "City (Country)"
+                final suggestedName = '$primaryCityName ($countryName)';
 
                 return CityValidationResult(
                   isValid: true,

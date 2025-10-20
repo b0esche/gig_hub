@@ -624,6 +624,7 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
   // =============================================================================
 
   /// Stream that emits when the DJ list should be refreshed
+  @override
   Stream<void> get onDjListChange => _djListChangeController.stream;
 
   @override

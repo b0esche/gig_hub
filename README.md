@@ -18,9 +18,6 @@ _GigHub_ is a cross-platform mobile app that connects DJs and bookers. Users can
 - 📞 **Deep linking** and social login support
 - 🖼️ **Image zoom, shimmer loading, splash screens**
 
-# 🎧 GigHub
-
-GigHub is a cross-platform Flutter app that connects DJs and bookers. Users create profiles, stream SoundCloud previews, chat in real-time, manage bookings and uploads, and collaborate around gigs — all from a single app.
 
 ---
 

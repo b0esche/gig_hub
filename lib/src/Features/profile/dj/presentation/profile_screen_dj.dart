@@ -105,7 +105,30 @@ class _ProfileScreenDJState extends State<ProfileScreenDJ> {
     _locationFocusNode.addListener(_onLocationFocusChange);
     _locationController.addListener(_onLocationChanged);
 
-    _loadTracksIfAvailable();
+    _loadTracksIfAvailable().then((_) {
+      if (widget.dj.streamingUrls.isNotEmpty && userTrackList.isNotEmpty) {
+        // Try to find the tracks in the user's track list that match the current profile tracks
+        try {
+          selectedTrackOne = userTrackList.firstWhere(
+            (track) =>
+                track.streamUrl == widget.dj.streamingUrls[0] ||
+                track.title == widget.dj.trackTitles[0],
+          );
+        } catch (_) {}
+
+        if (widget.dj.streamingUrls.length > 1 &&
+            widget.dj.trackTitles.length > 1) {
+          try {
+            selectedTrackTwo = userTrackList.firstWhere(
+              (track) =>
+                  track.streamUrl == widget.dj.streamingUrls[1] ||
+                  track.title == widget.dj.trackTitles[1],
+            );
+          } catch (_) {}
+        }
+        if (mounted) setState(() {});
+      }
+    });
     _loadStatusMessage();
   }
 

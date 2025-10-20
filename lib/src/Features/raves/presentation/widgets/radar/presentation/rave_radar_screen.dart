@@ -61,7 +61,21 @@ class _RaveRadarScreenState extends State<RaveRadarScreen> {
           await FirebaseFirestore.instance.collection('raves').get();
 
       final raves =
-          ravesSnapshot.docs.map((doc) => Rave.fromJson(doc.data())).toList();
+          ravesSnapshot.docs
+              .map((doc) {
+                final data = doc.data();
+                // Skip any raves that are missing required fields or have default values
+                if (!data.containsKey('name') ||
+                    !data.containsKey('startDate') ||
+                    !data.containsKey('location') ||
+                    !data.containsKey('organizerId')) {
+                  return null;
+                }
+                return Rave.fromJson(data);
+              })
+              .where((rave) => rave != null)
+              .cast<Rave>()
+              .toList();
 
       // Filter out expired raves (ended more than 24 hours ago)
       final activeRaves =

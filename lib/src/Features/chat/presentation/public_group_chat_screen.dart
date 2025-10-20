@@ -2,6 +2,7 @@ import '../../../Data/app_imports.dart';
 import '../../auth/presentation/guest_username_dialog.dart';
 import 'package:gig_hub/src/Common/widgets/safe_pinch_zoom.dart';
 import 'package:gig_hub/src/Data/services/image_compression_service.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 /// Screen for public group chat associated with a rave
 /// Allows all rave attendees to communicate in an open chat
@@ -28,6 +29,11 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
   bool _isFlinta = false; // Track FLINTA* status in state
   late AppUser _currentUser; // Local copy of current user
 
+  // Encryption
+  late encrypt.Encrypter _encrypter;
+  late encrypt.Key _aesKey;
+  bool _encryptionReady = false;
+
   // Cache for user data to avoid repeated database calls
   final Map<String, AppUser> _userCache = {};
 
@@ -39,6 +45,9 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
     _messagesStream = context
         .read<DatabaseRepository>()
         .getPublicGroupMessagesStream(widget.publicGroupChat.id);
+
+    // Initialize encryption
+    _initEncryption();
 
     // Initialize FLINTA* status and refresh guest data if needed
     if (_currentUser is Guest) {
@@ -70,6 +79,20 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
     }
   }
 
+  Future<void> _initEncryption() async {
+    final keyString = dotenv.env['ENCRYPTION_KEY'];
+    if (keyString == null || keyString.length != 32) {
+      return;
+    }
+
+    _aesKey = encrypt.Key.fromUtf8(keyString);
+    _encrypter = encrypt.Encrypter(encrypt.AES(_aesKey));
+
+    setState(() {
+      _encryptionReady = true;
+    });
+  }
+
   @override
   void dispose() {
     _messageController.dispose();
@@ -90,6 +113,28 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
     } catch (e) {
       return null;
     }
+  }
+
+  String _decryptMessage(String text) {
+    if (!_encryptionReady) return '[loading key...]';
+
+    if (text.startsWith('enc::')) {
+      try {
+        final encryptedPart = text.substring(5);
+
+        final parts = encryptedPart.split(':');
+        if (parts.length != 2) return '[invalid format]';
+
+        final iv = encrypt.IV.fromBase64(parts[0]);
+        final encryptedData = parts[1];
+
+        return _encrypter.decrypt64(encryptedData, iv: iv);
+      } catch (e) {
+        return '[decoding error]';
+      }
+    }
+
+    return text;
   }
 
   /// Load member information for the group info dialog
@@ -151,10 +196,15 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
 
   Future<void> _sendMessage() async {
     final messageText = _messageController.text.trim();
-    if (messageText.isEmpty) return;
+    if (messageText.isEmpty || !_encryptionReady) return;
 
     try {
       final db = context.read<DatabaseRepository>();
+
+      // Encrypt the message
+      final iv = encrypt.IV.fromLength(16);
+      final encrypted = _encrypter.encrypt(messageText, iv: iv);
+      final encryptedText = 'enc::${iv.base64}:${encrypted.base64}';
 
       // Get user display name and type
       String senderName = _currentUser.displayName;
@@ -185,7 +235,7 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
         senderId: _currentUser.id,
         senderName: senderName,
         senderType: senderType,
-        content: messageText,
+        content: encryptedText,
         timestamp: DateTime.now(),
         isFlinta: isFlinta,
       );
@@ -556,7 +606,7 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
                             right: showSenderInfo && !isOwnMessage ? 0 : 60,
                           ),
                           child: Text(
-                            message.content,
+                            _decryptMessage(message.content),
                             style: TextStyle(
                               color: Palette.primalBlack,
                               fontSize: 15,

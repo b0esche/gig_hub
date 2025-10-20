@@ -318,7 +318,7 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
           children: [
             if (publicGroupChat.lastMessage != null) ...[
               Text(
-                publicGroupChat.lastMessage!,
+                _decryptPreview(publicGroupChat.lastMessage!),
                 style: TextStyle(
                   color: Palette.glazedWhite.o(0.7),
                   fontSize: 14,

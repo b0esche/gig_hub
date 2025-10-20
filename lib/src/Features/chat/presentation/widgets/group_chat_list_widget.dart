@@ -213,14 +213,29 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (groupChat.lastMessage != null) ...[
-              Text(
-                _decryptPreview(groupChat.lastMessage!),
-                style: TextStyle(
-                  color: Palette.glazedWhite.o(0.7),
-                  fontSize: 14,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      _decryptPreview(groupChat.lastMessage!),
+                      style: TextStyle(
+                        color: Palette.glazedWhite.o(0.7),
+                        fontSize: 14,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  if (groupChat.lastMessageTimestamp != null)
+                    Text(
+                      _formatTimestamp(groupChat.lastMessageTimestamp!),
+                      style: TextStyle(
+                        color: Palette.glazedWhite.o(0.5),
+                        fontSize: 11,
+                      ),
+                    ),
+                ],
               ),
             ] else ...[
               Text(
@@ -233,23 +248,19 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
               ),
             ],
             const SizedBox(height: 4),
-            Text(
-              '${groupChat.memberIds.length} members',
-              style: TextStyle(color: Palette.glazedWhite.o(0.5), fontSize: 12),
-            ),
-          ],
-        ),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (groupChat.lastMessageTimestamp != null)
-              Text(
-                _formatTimestamp(groupChat.lastMessageTimestamp!),
-                style: TextStyle(
-                  color: Palette.glazedWhite.o(0.5),
-                  fontSize: 11,
+            Row(
+              children: [
+                Icon(Icons.people, color: Palette.glazedWhite.o(0.5), size: 12),
+                const SizedBox(width: 4),
+                Text(
+                  '${groupChat.memberIds.length} members',
+                  style: TextStyle(
+                    color: Palette.glazedWhite.o(0.5),
+                    fontSize: 12,
+                  ),
                 ),
-              ),
+              ],
+            ),
           ],
         ),
         onTap: () async {
@@ -317,14 +328,29 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (publicGroupChat.lastMessage != null) ...[
-              Text(
-                _decryptPreview(publicGroupChat.lastMessage!),
-                style: TextStyle(
-                  color: Palette.glazedWhite.o(0.7),
-                  fontSize: 14,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      _decryptPreview(publicGroupChat.lastMessage!),
+                      style: TextStyle(
+                        color: Palette.glazedWhite.o(0.7),
+                        fontSize: 14,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  if (publicGroupChat.lastMessageTimestamp != null)
+                    Text(
+                      _formatTimestamp(publicGroupChat.lastMessageTimestamp!),
+                      style: TextStyle(
+                        color: Palette.glazedWhite.o(0.5),
+                        fontSize: 11,
+                      ),
+                    ),
+                ],
               ),
             ] else ...[
               Text(
@@ -347,15 +373,6 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
                     fontSize: 12,
                   ),
                 ),
-                const Spacer(),
-                if (publicGroupChat.lastMessageTimestamp != null)
-                  Text(
-                    _formatTimestamp(publicGroupChat.lastMessageTimestamp!),
-                    style: TextStyle(
-                      color: Palette.glazedWhite.o(0.5),
-                      fontSize: 12,
-                    ),
-                  ),
               ],
             ),
           ],

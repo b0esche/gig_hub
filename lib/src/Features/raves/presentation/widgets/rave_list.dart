@@ -389,6 +389,7 @@ class _RaveListState extends State<RaveList> {
                 collaborators: collaboratorUsers,
                 organizerName: organizerName,
                 organizerAvatarUrl: organizerAvatarUrl,
+                organizer: organizerUser,
               ),
         );
       }

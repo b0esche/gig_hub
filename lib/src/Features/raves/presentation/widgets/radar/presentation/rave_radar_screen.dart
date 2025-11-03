@@ -540,6 +540,7 @@ class _RaveRadarScreenState extends State<RaveRadarScreen> {
                 collaborators: collaboratorUsers,
                 organizerName: organizerName,
                 organizerAvatarUrl: organizerAvatarUrl,
+                organizer: organizerUser,
               ),
         );
       }

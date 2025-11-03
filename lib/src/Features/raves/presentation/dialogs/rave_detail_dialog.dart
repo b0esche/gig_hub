@@ -11,6 +11,7 @@ class RaveDetailDialog extends StatefulWidget {
   final List<AppUser> collaborators;
   final String organizerName;
   final String? organizerAvatarUrl;
+  final AppUser? organizer;
 
   const RaveDetailDialog({
     super.key,
@@ -21,6 +22,7 @@ class RaveDetailDialog extends StatefulWidget {
     this.collaborators = const [],
     this.organizerName = 'Unknown',
     this.organizerAvatarUrl,
+    this.organizer,
   });
 
   @override
@@ -99,10 +101,7 @@ class _RaveDetailDialogState extends State<RaveDetailDialog> {
               ],
 
               const SizedBox(height: 16),
-              _buildSection(
-                AppLocale.organizer.getString(context),
-                widget.organizerName,
-              ),
+              _buildOrganizerSection(),
 
               if (widget.djs.isNotEmpty) ...[
                 const SizedBox(height: 16),
@@ -192,6 +191,36 @@ class _RaveDetailDialogState extends State<RaveDetailDialog> {
         Text(
           content,
           style: const TextStyle(color: Colors.white, fontSize: 14),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildOrganizerSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppLocale.organizer.getString(context),
+          style: const TextStyle(
+            color: Color(0xFFD4AF37),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 4),
+        GestureDetector(
+          onTap: widget.organizer != null
+              ? () => _navigateToUserProfile(widget.organizer!, context)
+              : null,
+          child: Text(
+            widget.organizerName,
+            style: TextStyle(
+              color: widget.organizer != null ? const Color(0xFFD4AF37) : Colors.white,
+              fontSize: 14,
+              decoration: widget.organizer != null ? TextDecoration.underline : null,
+            ),
+          ),
         ),
       ],
     );

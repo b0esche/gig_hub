@@ -779,10 +779,8 @@ class _ProfileScreenDJState extends State<ProfileScreenDJ> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             LiquidGlass(
-                              shape: LiquidRoundedRectangle(
-                                borderRadius: Radius.circular(8),
-                              ),
-                              settings: LiquidGlassSettings(thickness: 8),
+                              shape: LiquidRoundedRectangle(borderRadius: 8),
+
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Palette.shadowGrey.o(0.4),
@@ -816,10 +814,7 @@ class _ProfileScreenDJState extends State<ProfileScreenDJ> {
                               ),
                             ),
                             LiquidGlass(
-                              shape: LiquidRoundedRectangle(
-                                borderRadius: Radius.circular(8),
-                              ),
-                              settings: LiquidGlassSettings(thickness: 8),
+                              shape: LiquidRoundedRectangle(borderRadius: 8),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Palette.shadowGrey.o(0.4),

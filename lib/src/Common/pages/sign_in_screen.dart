@@ -524,14 +524,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 48,
                         width: 270,
                         child: LiquidGlass(
-                          shape: LiquidRoundedRectangle(
-                            borderRadius: Radius.circular(16),
-                          ),
-                          settings: LiquidGlassSettings(
-                            thickness: 30,
-                            refractiveIndex: 1.1,
-                            chromaticAberration: 1.3,
-                          ),
+                          shape: LiquidRoundedRectangle(borderRadius: 16),
+
                           child: SegmentedButton<String>(
                             showSelectedIcon: false,
                             segments: const [
@@ -828,15 +822,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(height: 8),
 
                               LiquidGlass(
-                                shape: LiquidRoundedRectangle(
-                                  borderRadius: Radius.circular(16),
-                                ),
-                                settings: LiquidGlassSettings(
-                                  thickness: 28,
-                                  refractiveIndex: 1.1,
-                                  chromaticAberration: 0.35,
-                                  glassColor: Palette.forgedGold.o(0.025),
-                                ),
+                                shape: LiquidRoundedRectangle(borderRadius: 16),
+
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     padding: WidgetStateProperty.all<
@@ -953,7 +940,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           backgroundColor: Palette.forgedGold,
                                           content: Center(
                                             child: Text(
-                                              AppLocale.accessFailed.getString(context),
+                                              AppLocale.accessFailed.getString(
+                                                context,
+                                              ),
                                               style: TextStyle(fontSize: 16),
                                             ),
                                           ),
@@ -979,14 +968,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(height: 16),
                       LiquidGlass(
-                        shape: LiquidRoundedRectangle(
-                          borderRadius: Radius.circular(16),
-                        ),
-                        settings: LiquidGlassSettings(
-                          thickness: 24,
-                          refractiveIndex: 1.1,
-                          chromaticAberration: 0.35,
-                        ),
+                        shape: LiquidRoundedRectangle(borderRadius: 16),
+
                         child: Shimmer.fromColors(
                           period: Duration(milliseconds: 2600),
                           baseColor: Palette.glazedWhite,

@@ -98,7 +98,9 @@ class _MainScreenState extends State<MainScreen> {
                       widget.initialUser is Guest ||
                               widget.initialUser is Booker
                           ? AppLocale.welcomeToGigHub.getString(context)
-                          : AppLocale.lostConnectionToSoundCloud.getString(context),
+                          : AppLocale.lostConnectionToSoundCloud.getString(
+                            context,
+                          ),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.sometypeMono(
                         fontSize: 18,
@@ -604,13 +606,10 @@ class _MainScreenState extends State<MainScreen> {
                                 child: IgnorePointer(
                                   child: LiquidGlass(
                                     shape: LiquidRoundedRectangle(
-                                      borderRadius: Radius.circular(0),
+                                      borderRadius: 0,
                                     ),
                                     glassContainsChild: false,
-                                    settings: LiquidGlassSettings(
-                                      thickness: 17,
-                                      blur: 1.7,
-                                    ),
+
                                     child: Container(
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(

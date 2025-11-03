@@ -103,15 +103,10 @@ class GenreBubble extends StatelessWidget {
     return Stack(
       children: [
         LiquidGlass(
-          shape: LiquidRoundedRectangle(borderRadius: Radius.circular(16)),
+          shape: LiquidRoundedRectangle(borderRadius: 16),
           clipBehavior: Clip.hardEdge,
           glassContainsChild: true,
-          settings: LiquidGlassSettings(
-            blur: 1,
-            refractiveIndex: 1,
-            thickness: 10,
-            lightIntensity: 8,
-          ),
+
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),

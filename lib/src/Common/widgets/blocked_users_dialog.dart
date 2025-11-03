@@ -83,8 +83,7 @@ class _BlockedUsersDialogState extends State<BlockedUsersDialog> {
         children: [
           SizedBox(height: 12),
           LiquidGlass(
-            shape: LiquidRoundedRectangle(borderRadius: Radius.circular(24)),
-            settings: LiquidGlassSettings(thickness: 16, refractiveIndex: 1.2),
+            shape: LiquidRoundedRectangle(borderRadius: 24),
             child: SizedBox(
               height: 400,
               width: 320,
@@ -269,9 +268,7 @@ class _BlockedUsersDialogState extends State<BlockedUsersDialog> {
                 ),
                 child: Center(
                   child: LiquidGlass(
-                    shape: LiquidRoundedSuperellipse(
-                      borderRadius: Radius.circular(24),
-                    ),
+                    shape: LiquidRoundedSuperellipse(borderRadius: 24),
                     glassContainsChild: false,
                     child: IconButton(
                       onPressed: () {

@@ -203,13 +203,9 @@ class _SearchListTileState extends State<SearchListTile> {
                                   children: [
                                     LiquidGlass(
                                       shape: LiquidRoundedRectangle(
-                                        borderRadius: Radius.circular(10),
+                                        borderRadius: 10,
                                       ),
-                                      settings: LiquidGlassSettings(
-                                        thickness: 8,
-                                        chromaticAberration: 1.2,
-                                        refractiveIndex: 1.1,
-                                      ),
+
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -255,13 +251,9 @@ class _SearchListTileState extends State<SearchListTile> {
                                     ),
                                     LiquidGlass(
                                       shape: LiquidRoundedRectangle(
-                                        borderRadius: Radius.circular(10),
+                                        borderRadius: 10,
                                       ),
-                                      settings: LiquidGlassSettings(
-                                        thickness: 8,
-                                        chromaticAberration: 1.2,
-                                        refractiveIndex: 1.1,
-                                      ),
+
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(

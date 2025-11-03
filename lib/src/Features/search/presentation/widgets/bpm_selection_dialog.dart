@@ -65,8 +65,7 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
         children: [
           SizedBox(height: 12),
           LiquidGlass(
-            shape: LiquidRoundedRectangle(borderRadius: Radius.circular(24)),
-            settings: LiquidGlassSettings(thickness: 16, refractiveIndex: 1.2),
+            shape: LiquidRoundedRectangle(borderRadius: 24),
             child: SizedBox(
               height: 240,
               width: 300,
@@ -98,17 +97,8 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
                           showValueIndicator: ShowValueIndicator.never,
                         ),
                         child: LiquidGlass(
-                          shape: LiquidRoundedRectangle(
-                            borderRadius: Radius.circular(24),
-                          ),
-                          settings: LiquidGlassSettings(
-                            thickness: 10,
-                            blur: 20,
-                            lightIntensity: 1.2,
-                            glassColor: Palette.forgedGold.o(0.25),
-                            refractiveIndex: 1.3,
-                            chromaticAberration: 16,
-                          ),
+                          shape: LiquidRoundedRectangle(borderRadius: 24),
+
                           child: RangeSlider(
                             min: 60,
                             max: 200,
@@ -123,8 +113,10 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
                             onChanged: (RangeValues values) {
                               setState(() {
                                 bpmRange = values;
-                                _minBpmController.text = values.start.round().toString();
-                                _maxBpmController.text = values.end.round().toString();
+                                _minBpmController.text =
+                                    values.start.round().toString();
+                                _maxBpmController.text =
+                                    values.end.round().toString();
                               });
                             },
                           ),
@@ -239,9 +231,7 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
                 ),
                 child: Center(
                   child: LiquidGlass(
-                    shape: LiquidRoundedSuperellipse(
-                      borderRadius: Radius.circular(24),
-                    ),
+                    shape: LiquidRoundedSuperellipse(borderRadius: 24),
                     glassContainsChild: false,
 
                     child: IconButton(

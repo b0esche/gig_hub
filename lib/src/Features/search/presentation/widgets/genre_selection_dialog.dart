@@ -32,8 +32,7 @@ class _GenreSelectionDialogState extends State<GenreSelectionDialog> {
         children: [
           SizedBox(height: 14),
           LiquidGlass(
-            settings: LiquidGlassSettings(thickness: 16, refractiveIndex: 1.2),
-            shape: LiquidRoundedRectangle(borderRadius: Radius.circular(28)),
+            shape: LiquidRoundedRectangle(borderRadius: 28),
             child: SizedBox(
               height: 318,
               width: 300,
@@ -149,9 +148,7 @@ class _GenreSelectionDialogState extends State<GenreSelectionDialog> {
                     ),
                     child: Center(
                       child: LiquidGlass(
-                        shape: LiquidRoundedSuperellipse(
-                          borderRadius: Radius.circular(24),
-                        ),
+                        shape: LiquidRoundedSuperellipse(borderRadius: 24),
                         glassContainsChild: false,
 
                         child: IconButton(

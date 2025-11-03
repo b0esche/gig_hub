@@ -102,12 +102,15 @@ class _AppState extends State<App> {
           stream: auth.authStateChanges(),
           builder: (context, authSnap) {
             if (authSnap.connectionState == ConnectionState.waiting) {
-              return Scaffold(
-                backgroundColor: Palette.primalBlack,
-                body: Center(
-                  child: CircularProgressIndicator(
-                    color: Palette.forgedGold,
-                    strokeWidth: 1.65,
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Scaffold(
+                  backgroundColor: Palette.primalBlack,
+                  body: Center(
+                    child: CircularProgressIndicator(
+                      color: Palette.forgedGold,
+                      strokeWidth: 1.65,
+                    ),
                   ),
                 ),
               );
@@ -115,7 +118,10 @@ class _AppState extends State<App> {
 
             final fbUser = authSnap.data;
             if (fbUser == null) {
-              return LoginScreen();
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: LoginScreen(),
+              );
             }
 
             return ValueListenableBuilder<int>(
@@ -128,12 +134,15 @@ class _AppState extends State<App> {
                   future: db.getCurrentUser(),
                   builder: (context, userSnap) {
                     if (userSnap.connectionState == ConnectionState.waiting) {
-                      return Scaffold(
-                        backgroundColor: Palette.primalBlack,
-                        body: Center(
-                          child: CircularProgressIndicator(
-                            color: Palette.forgedGold,
-                            strokeWidth: 1.65,
+                      return GestureDetector(
+                        onTap: () => FocusScope.of(context).unfocus(),
+                        child: Scaffold(
+                          backgroundColor: Palette.primalBlack,
+                          body: Center(
+                            child: CircularProgressIndicator(
+                              color: Palette.forgedGold,
+                              strokeWidth: 1.65,
+                            ),
                           ),
                         ),
                       );
@@ -147,30 +156,36 @@ class _AppState extends State<App> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Scaffold(
-                              backgroundColor: Palette.primalBlack,
-                              body: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    CircularProgressIndicator(
-                                      color: Palette.forgedGold,
-                                      strokeWidth: 1.65,
-                                    ),
-                                    SizedBox(height: 20),
-                                    Text(
-                                      'Completing setup...',
-                                      style: TextStyle(
-                                        color: Palette.glazedWhite,
-                                        fontSize: 16,
+                            return GestureDetector(
+                              onTap: () => FocusScope.of(context).unfocus(),
+                              child: Scaffold(
+                                backgroundColor: Palette.primalBlack,
+                                body: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(
+                                        color: Palette.forgedGold,
+                                        strokeWidth: 1.65,
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(height: 20),
+                                      Text(
+                                        'completing setup...',
+                                        style: TextStyle(
+                                          color: Palette.glazedWhite,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
                           }
-                          return LoginScreen();
+                          return GestureDetector(
+                            onTap: () => FocusScope.of(context).unfocus(),
+                            child: LoginScreen(),
+                          );
                         },
                       );
                     }
@@ -180,10 +195,16 @@ class _AppState extends State<App> {
                         currentUser.hasAcceptedAllAgreements;
 
                     if (!hasAcceptedAgreements) {
-                      return LegalAgreementWrapper(user: currentUser);
+                      return GestureDetector(
+                        onTap: () => FocusScope.of(context).unfocus(),
+                        child: LegalAgreementWrapper(user: currentUser),
+                      );
                     }
 
-                    return MainScreen(initialUser: currentUser);
+                    return GestureDetector(
+                      onTap: () => FocusScope.of(context).unfocus(),
+                      child: MainScreen(initialUser: currentUser),
+                    );
                   },
                 );
               },

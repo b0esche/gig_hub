@@ -175,30 +175,36 @@ class ChatScreenState extends State<ChatScreen>
                 border: Border.all(color: Palette.primalBlack, width: 1.5),
               ),
               child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) {
-                        if (widget.chatPartner is DJ) {
-                          return ProfileScreenDJ(
-                            dj: widget.chatPartner as DJ,
-                            showChatButton: false,
-                            showEditButton: true,
-                            showFavoriteIcon: true,
-                            currentUser: widget.currentUser,
+                onTap:
+                    widget.chatPartner is Guest
+                        ? null
+                        : () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                if (widget.chatPartner is DJ) {
+                                  return ProfileScreenDJ(
+                                    dj: widget.chatPartner as DJ,
+                                    showChatButton: false,
+                                    showEditButton: true,
+                                    showFavoriteIcon: true,
+                                    currentUser: widget.currentUser,
+                                  );
+                                } else if (widget.chatPartner is Booker) {
+                                  return ProfileScreenBooker(
+                                    booker: widget.chatPartner as Booker,
+                                    showEditButton: true,
+                                    db: db,
+                                  );
+                                }
+                                throw Exception(
+                                  'Guest users don\'t have profiles!',
+                                );
+                              },
+                            ),
                           );
-                        } else {
-                          return ProfileScreenBooker(
-                            booker: widget.chatPartner as Booker,
-                            showEditButton: true,
-                            db: db,
-                          );
-                        }
-                      },
-                    ),
-                  );
-                },
+                        },
                 child: CircleAvatar(
                   backgroundImage:
                       partnerAvatarUrl.isNotEmpty

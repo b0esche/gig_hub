@@ -1072,11 +1072,6 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
             'lastMessage': message.content,
             'lastMessageSenderId': message.senderId,
             'lastMessageTimestamp': Timestamp.fromDate(message.timestamp),
-            'autoDeleteAt': Timestamp.fromDate(
-              DateTime.now().add(
-                Duration(hours: 24),
-              ), // Reset auto-delete timer
-            ),
           });
     } catch (e) {
       rethrow;

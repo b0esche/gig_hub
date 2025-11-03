@@ -11,6 +11,8 @@ class BpmSelectionDialog extends StatefulWidget {
 
 class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
   RangeValues bpmRange = const RangeValues(80, 140);
+  final TextEditingController _minBpmController = TextEditingController();
+  final TextEditingController _maxBpmController = TextEditingController();
 
   @override
   void initState() {
@@ -22,6 +24,33 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
         widget.intialSelectedBpm![1].toDouble(),
       );
     }
+    _minBpmController.text = bpmRange.start.round().toString();
+    _maxBpmController.text = bpmRange.end.round().toString();
+  }
+
+  @override
+  void dispose() {
+    _minBpmController.dispose();
+    _maxBpmController.dispose();
+    super.dispose();
+  }
+
+  void _updateBpmRangeFromText() {
+    final minBpm = int.tryParse(_minBpmController.text) ?? 60;
+    final maxBpm = int.tryParse(_maxBpmController.text) ?? 200;
+
+    // Ensure min is not greater than max and within bounds
+    final clampedMin = minBpm.clamp(60, 200);
+    final clampedMax = maxBpm.clamp(60, 200);
+
+    final finalMin = clampedMin < clampedMax ? clampedMin : clampedMax;
+    final finalMax = clampedMax > clampedMin ? clampedMax : clampedMin;
+
+    setState(() {
+      bpmRange = RangeValues(finalMin.toDouble(), finalMax.toDouble());
+      _minBpmController.text = finalMin.toString();
+      _maxBpmController.text = finalMax.toString();
+    });
   }
 
   @override
@@ -39,7 +68,7 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
             shape: LiquidRoundedRectangle(borderRadius: Radius.circular(24)),
             settings: LiquidGlassSettings(thickness: 16, refractiveIndex: 1.2),
             child: SizedBox(
-              height: 160,
+              height: 240,
               width: 300,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -94,10 +123,99 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
                             onChanged: (RangeValues values) {
                               setState(() {
                                 bpmRange = values;
+                                _minBpmController.text = values.start.round().toString();
+                                _maxBpmController.text = values.end.round().toString();
                               });
                             },
                           ),
                         ),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: _minBpmController,
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.sometypeMono(
+                                textStyle: TextStyle(
+                                  color: Palette.primalBlack,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Min BPM',
+                                labelStyle: TextStyle(
+                                  color: Palette.primalBlack.o(0.7),
+                                  fontSize: 12,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: Palette.forgedGold.o(0.5),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: Palette.forgedGold,
+                                    width: 2,
+                                  ),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 8,
+                                ),
+                              ),
+                              onChanged: (value) {
+                                _updateBpmRangeFromText();
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _maxBpmController,
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.sometypeMono(
+                                textStyle: TextStyle(
+                                  color: Palette.primalBlack,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Max BPM',
+                                labelStyle: TextStyle(
+                                  color: Palette.primalBlack.o(0.7),
+                                  fontSize: 12,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: Palette.forgedGold.o(0.5),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: Palette.forgedGold,
+                                    width: 2,
+                                  ),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 8,
+                                ),
+                              ),
+                              onChanged: (value) {
+                                _updateBpmRangeFromText();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

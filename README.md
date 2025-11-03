@@ -1,12 +1,13 @@
 # 🎧 GigHub
 
-_GigHub_ is a cross-platform mobile app that connects DJs and bookers. Users can create profiles, stream SoundCloud tracks, chat in real-time with encryption, and collaborate around gigs and bookings – all from one App.
+_GigHub_ is a cross-platform app built with Flutter that connects DJs and bookers. Users can create profiles, stream SoundCloud tracks, chat in real-time with encryption, and collaborate around gigs and bookings – all from one app. Supports Android, iOS, Web, Linux, macOS, and Windows.
 
 ---
 
 ## 🚀 Features
 
-- 📱 **Cross-platform Flutter app** (Android & iOS)
+- 📱 **Cross-platform Flutter app** (Android, iOS)
+- 🌍 **Multi-language support** (14 languages: English, German, Spanish, Italian, Portuguese, French, Dutch, Polish, Ukrainian, Arabic, Turkish, Japanese, Korean, Chinese)
 - 🔐 **End-to-end encrypted messaging** using AES-256
 - 👤 **DJ & Booker profiles** with SoundCloud track streaming, bios, images, and customizable info
 - 🎵 **High-performance audio player** optimized for long tracks (1:30h+) with instant loading
@@ -17,18 +18,60 @@ _GigHub_ is a cross-platform mobile app that connects DJs and bookers. Users can
 - 🎨 **Modern UI** with custom fonts, SVGs, and visual effects
 - 📞 **Deep linking** and social login support
 - 🖼️ **Image zoom, shimmer loading, splash screens**
-
+- ⚖️ **Legal agreements** with review and acceptance tracking
+- 📍 **Rave radar** with location-based alerts for new events
+- 🧪 **Comprehensive testing** with unit and integration tests
 
 ---
 
 ## 🚀 Highlights
 
-- Cross-platform Flutter app (Android & iOS)
+- Cross-platform Flutter app (Android, iOS, Web, Linux, macOS, Windows)
 - DJ & Booker profiles with SoundCloud previews and waveform visualization
 - Realtime chat using Firebase Firestore
 - Background audio playback with system/media controls
+- Multi-language localization for global reach
 - Reporting via EmailJS (with system-email fallback)
 - Modern UI with SVGs, custom fonts and visual polish
+
+---
+
+## 🌍 Localization
+
+GigHub supports 14 languages for a global user experience:
+
+- English (en)
+- German (de)
+- Spanish (es)
+- Italian (it)
+- Portuguese (pt)
+- French (fr)
+- Dutch (nl)
+- Polish (pl)
+- Ukrainian (uk)
+- Arabic (ar)
+- Turkish (tr)
+- Japanese (ja)
+- Korean (ko)
+- Chinese (zh)
+
+Language can be switched in-app via settings.
+
+---
+
+## 🧪 Testing
+
+The project includes comprehensive tests:
+
+- Unit tests for models and services
+- Integration tests for app functionality
+- Widget tests for UI components
+
+Run tests with:
+
+```bash
+flutter test
+```
 
 ---
 
@@ -52,7 +95,7 @@ cd gig_hub
 ```bash
 flutter pub get
 flutter analyze
-flutter run -d <device>
+flutter run -d <device>  # Supports Android, iOS, Web, Linux, macOS, Windows
 ```
 
 ---
@@ -142,13 +185,16 @@ For a complete, versioned list, open `pubspec.yaml` — it is the source of trut
 
 ---
 
-## �️ Overview
+## 📋 Overview
 
 Key pieces worth knowing while developing in this repo:
 
-- Audio: `just_audio` + `just_audio_background` handle playback and lock-screen controls; `just_waveform` extracts waveforms (runs in an isolate for performance).
-- Reporting: `EmailJS` HTTP integration (configured via `.env`) is the primary reporting channel; the app falls back to the device email client using `flutter_email_sender` if needed.
-- Auth & realtime data: Firebase (Auth / Firestore / Storage / Cloud Functions) for user data, messaging, and uploads.
-- Environment: `.env` is read at startup with `flutter_dotenv`.
+- **Platforms**: Supports Android, iOS, Web, Linux, macOS, Windows via Flutter.
+- **Audio**: `just_audio` + `just_audio_background` handle playback and lock-screen controls; `just_waveform` extracts waveforms (runs in an isolate for performance).
+- **Reporting**: `EmailJS` HTTP integration (configured via `.env`) is the primary reporting channel; the app falls back to the device email client using `flutter_email_sender` if needed.
+- **Auth & realtime data**: Firebase (Auth / Firestore / Storage / Cloud Functions) for user data, messaging, uploads, and server-side logic (see `functions/` for Firebase Cloud Functions).
+- **Localization**: Multi-language support using `intl` and custom localization service with 14 languages.
+- **Environment**: `.env` is read at startup with `flutter_dotenv`.
+- **Testing**: Unit, integration, and widget tests ensure code quality.
 
 

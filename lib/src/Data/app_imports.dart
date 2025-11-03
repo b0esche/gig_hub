@@ -49,6 +49,7 @@ export 'package:gig_hub/src/Data/firebase/firestore_repository.dart';
 export 'package:gig_hub/src/Data/firebase/firebase_auth_repository.dart';
 export 'package:gig_hub/src/Data/firebase/cached_firestore_repository.dart';
 export 'package:gig_hub/src/Data/models/users.dart';
+export 'package:gig_hub/src/Data/models/notification_preferences.dart';
 export 'package:gig_hub/src/Data/models/status_message.dart';
 export 'package:gig_hub/src/Data/models/group_chat.dart';
 export 'package:gig_hub/src/Data/models/group_message.dart';

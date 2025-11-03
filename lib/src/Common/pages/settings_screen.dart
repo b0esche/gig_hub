@@ -1,6 +1,8 @@
 import 'package:gig_hub/src/Data/app_imports.dart';
 import 'package:gig_hub/src/Common/widgets/blocked_users_dialog.dart';
 import 'package:gig_hub/src/Features/legal/presentation/legal_status_widget.dart';
+import 'package:gig_hub/src/Common/widgets/notification_settings_dialog.dart';
+import 'package:gig_hub/src/Data/services/notification_preferences_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -15,6 +17,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   late DatabaseRepository db;
+  NotificationPreferences _notificationPreferences =
+      const NotificationPreferences();
 
   final List<Map<String, String>> _languages = [
     {'code': 'en', 'name': 'English', 'flag': '🇺🇸'},
@@ -46,8 +50,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _loadCurrentUser() async {
     final user = await db.getCurrentUser();
+
+    final preferences = await NotificationPreferencesService.getPreferences(
+      user.id,
+    );
     setState(() {
       _user = user;
+      _notificationPreferences = preferences;
       _emailController.text = FirebaseAuth.instance.currentUser?.email ?? '';
     });
   }
@@ -293,6 +302,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       }
     }
+  }
+
+  Future<void> _showNotificationSettings() async {
+    if (_user == null) return;
+
+    await showDialog(
+      context: context,
+      builder:
+          (context) => NotificationSettingsDialog(
+            initialPreferences: _notificationPreferences,
+            onPreferencesChanged: (preferences) async {
+              setState(() {
+                _notificationPreferences = preferences;
+              });
+              await NotificationPreferencesService.savePreferences(
+                _user!.id,
+                preferences,
+              );
+            },
+          ),
+    );
   }
 
   @override
@@ -594,6 +624,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                     ),
+
+                  Container(
+                    height: 48,
+                    width: MediaQuery.of(context).size.width / 1.4,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Palette.shadowGrey.o(0.1),
+                        foregroundColor: Palette.glazedWhite,
+                        elevation: 0,
+                        splashFactory: NoSplash.splashFactory,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: BorderSide(
+                            color: Palette.glazedWhite.o(0.7),
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                      onPressed: _showNotificationSettings,
+                      child: Text(
+                        'notifications',
+                        style: GoogleFonts.outfit(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
 
                   // Legal Agreements Status
                   LegalStatusWidget(),

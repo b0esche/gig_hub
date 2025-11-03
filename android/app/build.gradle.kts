@@ -30,7 +30,7 @@ android {
 
     defaultConfig {
         applicationId = "com.gighub.gighub"
-        minSdk = 23
+        minSdk = flutter.minSdkVersion
         targetSdk = 35  // Updated for latest Android features
         versionCode = flutter.versionCode
         versionName = flutter.versionName

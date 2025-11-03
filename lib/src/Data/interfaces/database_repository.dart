@@ -73,6 +73,11 @@ abstract class DatabaseRepository with ChangeNotifier {
     String messageId,
     String userId,
   );
+  Future<void> deleteGroupMessage(
+    String groupChatId,
+    String messageId,
+    String currentUserId,
+  );
   Future<void> deleteExpiredGroupChats();
   Future<void> updateGroupChatLastMessage(
     String groupChatId,
@@ -91,6 +96,11 @@ abstract class DatabaseRepository with ChangeNotifier {
   Future<void> sendPublicGroupMessage(PublicGroupMessage message);
   Stream<List<PublicGroupMessage>> getPublicGroupMessagesStream(
     String publicGroupChatId,
+  );
+  Future<void> deletePublicGroupMessage(
+    String publicGroupChatId,
+    String messageId,
+    String currentUserId,
   );
   Future<void> deleteExpiredPublicGroupChats();
   Future<void> updatePublicGroupChatLastMessage(

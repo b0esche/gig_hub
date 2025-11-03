@@ -794,6 +794,24 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
   }
 
   @override
+  Future<void> deleteGroupMessage(
+    String groupChatId,
+    String messageId,
+    String currentUserId,
+  ) async {
+    try {
+      await _firestore
+          .collection('group_chats')
+          .doc(groupChatId)
+          .collection('messages')
+          .doc(messageId)
+          .delete();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> updateGroupChatLastMessage(
     String groupChatId,
     GroupMessage message,
@@ -1057,6 +1075,24 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
                   .map((doc) => PublicGroupMessage.fromJson(doc.id, doc.data()))
                   .toList(),
         );
+  }
+
+  @override
+  Future<void> deletePublicGroupMessage(
+    String publicGroupChatId,
+    String messageId,
+    String currentUserId,
+  ) async {
+    try {
+      await _firestore
+          .collection('public_group_chats')
+          .doc(publicGroupChatId)
+          .collection('messages')
+          .doc(messageId)
+          .delete();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override

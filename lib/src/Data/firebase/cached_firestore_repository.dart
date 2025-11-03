@@ -445,6 +445,24 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
   }
 
   @override
+  Future<void> deleteGroupMessage(
+    String groupChatId,
+    String messageId,
+    String currentUserId,
+  ) async {
+    // Delete from Firebase first
+    await super.deleteGroupMessage(groupChatId, messageId, currentUserId);
+
+    // Remove from cache
+    final cachedMessages = await _cache.getCachedGroupMessages(groupChatId);
+    if (cachedMessages != null) {
+      final updatedMessages = cachedMessages.where((msg) => msg.id != messageId).toList();
+      _cache.cacheGroupMessages(groupChatId, updatedMessages);
+      _notifyGroupMessageStreamControllers(groupChatId);
+    }
+  }
+
+  @override
   Stream<List<GroupMessage>> getGroupMessagesStream(String groupChatId) {
     if (_groupMessageStreamControllers.containsKey(groupChatId)) {
       return _groupMessageStreamControllers[groupChatId]!.stream;
@@ -859,5 +877,16 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
         _notifyChatListStreamController(id, chatList);
       }
     }
+  }
+
+  @override
+  Future<void> deletePublicGroupMessage(
+    String publicGroupChatId,
+    String messageId,
+    String currentUserId,
+  ) async {
+    // Delete from Firebase
+    await super.deletePublicGroupMessage(publicGroupChatId, messageId, currentUserId);
+    // Note: Public group messages are not cached yet, so no cache update needed
   }
 }

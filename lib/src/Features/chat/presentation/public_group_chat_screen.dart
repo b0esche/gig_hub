@@ -29,6 +29,8 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
   bool _isFlinta = false; // Track FLINTA* status in state
   late AppUser _currentUser; // Local copy of current user
 
+  final Set<String> _deleteModeMessages = {};
+
   // Encryption
   late encrypt.Encrypter _encrypter;
   late encrypt.Key _aesKey;
@@ -432,213 +434,266 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
     bool isOwnMessage,
     bool showSenderInfo,
   ) {
+    final inDeleteMode = isOwnMessage && _deleteModeMessages.contains(message.id);
+
     return Align(
       alignment: isOwnMessage ? Alignment.centerRight : Alignment.centerLeft,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (!isOwnMessage && showSenderInfo) ...[
-            GestureDetector(
-              onTap: () => _onAvatarTapped(message.senderId),
-              child: FutureBuilder<AppUser?>(
-                future: _getCachedUser(message.senderId),
-                builder: (context, snapshot) {
-                  final user = snapshot.data;
-                  return CircleAvatar(
-                    radius: 18,
-                    backgroundColor: Palette.forgedGold,
-                    backgroundImage:
-                        (user != null && user.avatarUrl.isNotEmpty)
-                            ? NetworkImage(user.avatarUrl)
-                            : null,
-                    child:
-                        (user == null || user.avatarUrl.isEmpty)
-                            ? Icon(
-                              Icons.person,
-                              color: Palette.primalBlack,
-                              size: 18,
-                            )
-                            : null,
-                  );
-                },
-              ),
-            ),
-            const SizedBox(width: 8),
-          ],
-          if (!isOwnMessage && !showSenderInfo) const SizedBox(width: 44),
-          Flexible(
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.75,
-              ),
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              child: Stack(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: showSenderInfo && !isOwnMessage ? 6 : 10,
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            transform: inDeleteMode
+                ? Matrix4.translationValues(-48, 0, 0)
+                : Matrix4.identity(),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                if (!isOwnMessage && showSenderInfo) ...[
+                  GestureDetector(
+                    onTap: () => _onAvatarTapped(message.senderId),
+                    child: FutureBuilder<AppUser?>(
+                      future: _getCachedUser(message.senderId),
+                      builder: (context, snapshot) {
+                        final user = snapshot.data;
+                        return CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Palette.forgedGold,
+                          backgroundImage:
+                              (user != null && user.avatarUrl.isNotEmpty)
+                                  ? NetworkImage(user.avatarUrl)
+                                  : null,
+                          child:
+                              (user == null || user.avatarUrl.isEmpty)
+                                  ? Icon(
+                                    Icons.person,
+                                    color: Palette.primalBlack,
+                                    size: 18,
+                                  )
+                                  : null,
+                        );
+                      },
                     ),
-                    decoration: BoxDecoration(
-                      color:
-                          isOwnMessage
-                              ? Palette.forgedGold
-                              : Palette.glazedWhite,
-                      borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(16),
-                        topRight: const Radius.circular(16),
-                        bottomLeft: Radius.circular(isOwnMessage ? 16 : 4),
-                        bottomRight: Radius.circular(isOwnMessage ? 4 : 16),
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                if (!isOwnMessage && !showSenderInfo) const SizedBox(width: 44),
+                Flexible(
+                  child: GestureDetector(
+                    onLongPress: isOwnMessage
+                        ? () {
+                            setState(() {
+                              if (inDeleteMode) {
+                                _deleteModeMessages.remove(message.id);
+                              } else {
+                                _deleteModeMessages.add(message.id);
+                              }
+                            });
+                          }
+                        : null,
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.75,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Palette.primalBlack.o(0.1),
-                          blurRadius: 3,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment:
-                          isOwnMessage
-                              ? CrossAxisAlignment.end
-                              : CrossAxisAlignment.start,
-                      children: [
-                        if (showSenderInfo && !isOwnMessage)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    message.senderName,
-                                    style: TextStyle(
-                                      color: Palette.primalBlack.o(0.7),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      child: Stack(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: showSenderInfo && !isOwnMessage ? 6 : 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  isOwnMessage
+                                      ? Palette.forgedGold
+                                      : Palette.glazedWhite,
+                              borderRadius: BorderRadius.only(
+                                topLeft: const Radius.circular(16),
+                                topRight: const Radius.circular(16),
+                                bottomLeft: Radius.circular(isOwnMessage ? 16 : 4),
+                                bottomRight: Radius.circular(isOwnMessage ? 4 : 16),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Palette.primalBlack.o(0.1),
+                                  blurRadius: 3,
+                                  offset: const Offset(0, 1),
                                 ),
-                                if (message.isFlinta == true) ...[
-                                  const SizedBox(width: 4),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.deepPurple,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          'FL*',
-                                          style: TextStyle(
-                                            color: Palette.glazedWhite,
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.bold,
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment:
+                                  isOwnMessage
+                                      ? CrossAxisAlignment.end
+                                      : CrossAxisAlignment.start,
+                              children: [
+                                if (showSenderInfo && !isOwnMessage)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 4),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            message.senderName,
+                                            style: TextStyle(
+                                              color: Palette.primalBlack.o(0.7),
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                                if (message.senderType == 'DJ') ...[
-                                  const SizedBox(width: 4),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Palette.forgedGold,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          'DJ',
+                                        if (message.isFlinta == true) ...[
+                                          const SizedBox(width: 4),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.deepPurple,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(2.0),
+                                                child: Text(
+                                                  'FL*',
+                                                  style: TextStyle(
+                                                    color: Palette.glazedWhite,
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        if (message.senderType == 'DJ') ...[
+                                          const SizedBox(width: 4),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Palette.forgedGold,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(2.0),
+                                                child: Text(
+                                                  'DJ',
+                                                  style: TextStyle(
+                                                    color: Palette.primalBlack,
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        if (message.senderType == 'Booker') ...[
+                                          const SizedBox(width: 4),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Palette.primalBlack,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(2.0),
+                                                child: Text(
+                                                  'B',
+                                                  style: TextStyle(
+                                                    color: Palette.glazedWhite,
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          '${message.timestamp.hour.toString().padLeft(2, '0')}:${message.timestamp.minute.toString().padLeft(2, '0')}',
                                           style: TextStyle(
-                                            color: Palette.primalBlack,
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Palette.primalBlack.o(0.8),
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                                if (message.senderType == 'Booker') ...[
-                                  const SizedBox(width: 4),
-                                  Container(
-                                    decoration: BoxDecoration(
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 2,
+                                    bottom: 2,
+                                    right: showSenderInfo && !isOwnMessage ? 0 : 60,
+                                  ),
+                                  child: Text(
+                                    _decryptMessage(message.content),
+                                    style: TextStyle(
                                       color: Palette.primalBlack,
-                                      shape: BoxShape.circle,
+                                      fontSize: 15,
+                                      wordSpacing: -0.15,
                                     ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          'B',
-                                          style: TextStyle(
-                                            color: Palette.glazedWhite,
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                                const SizedBox(width: 8),
-                                Text(
-                                  '${message.timestamp.hour.toString().padLeft(2, '0')}:${message.timestamp.minute.toString().padLeft(2, '0')}',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: Palette.primalBlack.o(0.8),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 2,
-                            bottom: 2,
-                            right: showSenderInfo && !isOwnMessage ? 0 : 60,
-                          ),
-                          child: Text(
-                            _decryptMessage(message.content),
-                            style: TextStyle(
-                              color: Palette.primalBlack,
-                              fontSize: 15,
-                              wordSpacing: -0.15,
+                          // Only show positioned timestamp for own messages or when sender info is not shown
+                          if (isOwnMessage || !showSenderInfo)
+                            Positioned(
+                              top: 8,
+                              right: 10,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '${message.timestamp.hour.toString().padLeft(2, '0')}:${message.timestamp.minute.toString().padLeft(2, '0')}',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Palette.primalBlack.o(0.8),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Only show positioned timestamp for own messages or when sender info is not shown
-                  if (isOwnMessage || !showSenderInfo)
-                    Positioned(
-                      top: 8,
-                      right: 10,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '${message.timestamp.hour.toString().padLeft(2, '0')}:${message.timestamp.minute.toString().padLeft(2, '0')}',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Palette.primalBlack.o(0.8),
-                            ),
-                          ),
                         ],
                       ),
                     ),
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
           ),
+          if (inDeleteMode)
+            AnimatedOpacity(
+              opacity: 1.0,
+              duration: const Duration(milliseconds: 180),
+              child: IconButton(
+                style: ButtonStyle(
+                  tapTargetSize: MaterialTapTargetSize.padded,
+                ),
+                icon: Icon(
+                  Icons.delete_sweep_outlined,
+                  color: Palette.alarmRed.o(0.85),
+                  size: 32,
+                ),
+                onPressed: () async {
+                  final db = context.read<DatabaseRepository>();
+                  await db.deletePublicGroupMessage(
+                    widget.publicGroupChat.id,
+                    message.id,
+                    _currentUser.id,
+                  );
+                  setState(() {
+                    _deleteModeMessages.remove(message.id);
+                  });
+                },
+              ),
+            ),
         ],
       ),
     );

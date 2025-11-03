@@ -19,7 +19,7 @@ dependencies:
   flutter_rating_stars: ^1.1.0
   flutter_svg: ^2.2.0
   google_fonts: ^6.2.1
-  liquid_glass_renderer: ^0.1.1-dev.10
+  liquid_glass_renderer: ^0.2.0-dev.2
   pinch_zoom: ^2.0.1
   shimmer: ^3.0.0
   

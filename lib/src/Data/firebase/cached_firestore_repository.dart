@@ -189,22 +189,16 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
               ? cachedMessages!.last.timestamp
               : null;
 
-      final firebaseStream =
-          lastMessageTime != null
-              ? _getMessagesStreamAfterTimestamp(
-                senderId,
-                receiverId,
-                lastMessageTime,
-              )
-              : super.getMessagesStream(senderId, receiverId);
+      final firebaseStream = _getMessagesStreamAfterTimestamp(
+        senderId,
+        receiverId,
+        lastMessageTime!,
+      );
 
       _firebaseListeners[chatId] = firebaseStream.listen((newMessages) {
         // Always process the result, even if empty
         // For new chats, empty result should be shown immediately
-        if (lastMessageTime == null) {
-          // First time loading - replace cache entirely
-          _cache.cacheChatMessages(chatId, newMessages);
-        } else if (newMessages.isNotEmpty) {
+        if (newMessages.isNotEmpty) {
           // Incremental update - merge with existing cache
           _mergeAndCacheMessages(chatId, newMessages);
         }
@@ -456,7 +450,8 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
     // Remove from cache
     final cachedMessages = await _cache.getCachedGroupMessages(groupChatId);
     if (cachedMessages != null) {
-      final updatedMessages = cachedMessages.where((msg) => msg.id != messageId).toList();
+      final updatedMessages =
+          cachedMessages.where((msg) => msg.id != messageId).toList();
       _cache.cacheGroupMessages(groupChatId, updatedMessages);
       _notifyGroupMessageStreamControllers(groupChatId);
     }
@@ -492,13 +487,10 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
             ? cachedMessages!.last.timestamp
             : null;
 
-    final firebaseStream =
-        lastMessageTime != null
-            ? _getGroupMessagesStreamAfterTimestamp(
-              groupChatId,
-              lastMessageTime,
-            )
-            : super.getGroupMessagesStream(groupChatId);
+    final firebaseStream = _getGroupMessagesStreamAfterTimestamp(
+      groupChatId,
+      lastMessageTime!,
+    );
 
     firebaseStream.listen((newMessages) {
       if (newMessages.isNotEmpty) {
@@ -886,7 +878,11 @@ class CachedFirestoreRepository extends FirestoreDatabaseRepository {
     String currentUserId,
   ) async {
     // Delete from Firebase
-    await super.deletePublicGroupMessage(publicGroupChatId, messageId, currentUserId);
+    await super.deletePublicGroupMessage(
+      publicGroupChatId,
+      messageId,
+      currentUserId,
+    );
     // Note: Public group messages are not cached yet, so no cache update needed
   }
 }

@@ -189,10 +189,6 @@ class _CreateRaveDialogState extends State<CreateRaveDialog> {
         apiKey = dotenv.env['GOOGLE_API_KEY'];
       }
 
-      if (apiKey == null) {
-        return const _LocationResult(isValid: false);
-      }
-
       final url = Uri.parse(
         'https://maps.googleapis.com/maps/api/geocode/json'
         '?address=${Uri.encodeComponent(location)}'

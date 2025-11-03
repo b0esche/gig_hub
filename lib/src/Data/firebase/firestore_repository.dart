@@ -546,7 +546,7 @@ class FirestoreDatabaseRepository extends DatabaseRepository {
 
       String? token = await messaging.getToken();
       final user = FirebaseAuth.instance.currentUser;
-      if (user != null && token != null) {
+      if (user != null) {
         await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
           'fcmToken': token,
         }, SetOptions(merge: true));

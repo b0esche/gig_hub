@@ -583,23 +583,20 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
                                 audioDuration ??=
                                     await _audioPlayer!.durationStream.first;
 
-                                if (audioDuration != null) {
-                                  final position = Duration(
-                                    milliseconds:
-                                        (audioDuration.inMilliseconds *
-                                                progress)
-                                            .round(),
-                                  );
-                                  await _audioPlayer!.seek(position);
+                                final position = Duration(
+                                  milliseconds:
+                                      (audioDuration!.inMilliseconds * progress)
+                                          .round(),
+                                );
+                                await _audioPlayer!.seek(position);
 
-                                  // Update local position immediately after seeking
-                                  if (mounted) {
-                                    setState(() {
-                                      _position = position;
-                                      _duration = audioDuration;
-                                    });
-                                  }
-                                } else {}
+                                // Update local position immediately after seeking
+                                if (mounted) {
+                                  setState(() {
+                                    _position = position;
+                                    _duration = audioDuration;
+                                  });
+                                }
                               }
                             } else {
                               // Session is already active, seek directly
@@ -608,44 +605,20 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget>
                                 Duration? seekDuration =
                                     _duration ?? _audioPlayer!.duration;
 
-                                if (seekDuration != null) {
-                                  final position = Duration(
-                                    milliseconds:
-                                        (seekDuration.inMilliseconds * progress)
-                                            .round(),
-                                  );
+                                final position = Duration(
+                                  milliseconds:
+                                      (seekDuration!.inMilliseconds * progress)
+                                          .round(),
+                                );
 
-                                  await _audioPlayer!.seek(position);
+                                await _audioPlayer!.seek(position);
 
-                                  // Update local position immediately after seeking
-                                  if (mounted) {
-                                    setState(() {
-                                      _position = position;
-                                      _duration ??= seekDuration;
-                                    });
-                                  }
-                                } else {
-                                  // Wait for duration to become available
-                                  final playerDuration =
-                                      await _audioPlayer!.durationStream.first;
-                                  if (playerDuration != null) {
-                                    final position = Duration(
-                                      milliseconds:
-                                          (playerDuration.inMilliseconds *
-                                                  progress)
-                                              .round(),
-                                    );
-
-                                    await _audioPlayer!.seek(position);
-
-                                    // Update local position immediately after seeking
-                                    if (mounted) {
-                                      setState(() {
-                                        _position = position;
-                                        _duration = playerDuration;
-                                      });
-                                    }
-                                  } else {}
+                                // Update local position immediately after seeking
+                                if (mounted) {
+                                  setState(() {
+                                    _position = position;
+                                    _duration ??= seekDuration;
+                                  });
                                 }
                               } else {}
                             }

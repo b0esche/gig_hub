@@ -32,7 +32,7 @@ class PlacesValidationService {
 
     final trimmedValue = value.trim();
 
-    if (trimmedValue.isEmpty || apiKey == null) {
+    if (trimmedValue.isEmpty) {
       return CityValidationResult(isValid: false);
     }
 
@@ -114,13 +114,13 @@ class PlacesValidationService {
           (data['status'] == 'ZERO_RESULTS' ||
               data['status'] == 'PARTIAL_MATCH')) {
         // Try a more permissive search as fallback
-        return await _fallbackValidation(trimmedValue, apiKey);
+        return await _fallbackValidation(trimmedValue, apiKey!);
       }
 
       return CityValidationResult(isValid: false);
     } catch (e) {
       // If the API fails, try fallback validation
-      return await _fallbackValidation(trimmedValue, apiKey);
+      return await _fallbackValidation(trimmedValue, apiKey!);
     }
   }
 

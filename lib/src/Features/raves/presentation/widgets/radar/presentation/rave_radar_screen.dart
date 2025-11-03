@@ -225,11 +225,9 @@ class _RaveRadarScreenState extends State<RaveRadarScreen> {
   String _getUserDisplayName(AppUser user) {
     if (user is DJ) return user.name;
     if (user is Booker) return user.name;
-    if (user is Guest) {
-      return AppLocale.guest.getString(
-        context,
-      ); // Guest doesn't have a name field
-    }
+    if (user is Guest) return user.name;
+    // Guest doesn't have a name field
+
     return AppLocale.unknown.getString(context);
   }
 

@@ -50,6 +50,8 @@ mixin AppLocale {
   static const String deleteChatMsg = 'delete chat for you and ';
   static const String areYouSure = 'are you sure?';
   static const String chats = 'chats';
+  static const String directChats = 'direct chats';
+  static const String groupChats = 'group chats';
   static const String today = 'today';
   static const String msg = 'message...';
   static const String editProfile = 'edit profile';
@@ -69,11 +71,16 @@ mixin AppLocale {
   static const String pwNecessary = 'password necessary';
   static const String noBlockedUsers = 'no blocked users';
   static const String noChats = 'no chats. start now!';
+  static const String noGroupChatsYet = 'no group chats yet';
+  static const String groupChatsWillAppearHere =
+      'group chats will appear here when you create raves with group chat enabled';
+  static const String errorLoadingGroupChats = 'error loading group chats';
   static const String loadingChatsError = 'couldn\'t load chats';
   static const String updateStatusFailed =
       'failed to update status message. please check your connection.';
   static const String startTalking = 'start talking!';
   static const String removeImages = 'remove all images';
+  static const String uploadingImage = 'uploading image...';
   static const String selectCategory = 'please select a category';
   static const String selectTrack = 'select track';
   static const String selectFive = 'select up to 5!';
@@ -178,15 +185,70 @@ mixin AppLocale {
   static const String joinedRave = 'joined';
   static const String retry = 'retry';
 
+  // UI elements
+  static const String close = 'close';
+  static const String leaveEvent = 'leave event';
+  static const String attendEvent = 'attend event';
+  static const String djs = 'djs';
+  static const String moreInfo = 'more info';
+
+  // Loading and error messages
+  // Loading and error messages
+  static const String failedToSendMessage = 'failed to send message';
+  static const String errorLoadingMessages = 'error loading messages';
+  static const String errorLoadingMembers = 'error loading members';
+  static const String failedToUpdateFlintaStatus =
+      'failed to update flinta* status';
+  static const String invalidCredentials =
+      'invalid credentials. please try again.';
+  static const String failedToContinueAsGuest = 'failed to continue as guest';
+  static const String appleSignInError = 'Apple Sign In Error';
+  static const String cantBeEmpty = "can't be empty";
+  static const String enterFullAddress = "enter full address";
+  static const String invalidInput = "invalid input";
+  static const String cantContainSpace = "can't contain space";
+  static const String invalidDomain = "invalid domain";
+  static const String version = "version 1.0.0";
+  static const String welcomeToGigHub = "welcome to Gig Hub!";
+  static const String lostConnectionToSoundCloud =
+      "lost connection to SoundCloud!";
+  static const String connectSoundCloudToContinue =
+      "connect your SoundCloud to continue:";
+  static const String failedToUploadImage = 'failed to upload image';
+  static const String upcomingGigs = ' upcoming gigs';
+  static const String noUpcomingGigsYet =
+      'no upcoming gigs yet. create your first one!';
+  static const String noUpcomingGigs = 'no upcoming gigs';
+  static const String noMembersFound = 'no members found';
+  static const String noMessagesYet = 'no messages yet';
+  static const String startChattingHint =
+      'start chatting by visiting profiles and tapping the chat button';
+  static const String failedToGetUserInformation =
+      'failed to get user information';
+  static const String failedToUnblockUser =
+      'failed to unblock user. please try again.';
+  static const String failedToLeaveChat = 'failed to leave chat';
+  static const String leftGroupChatSuccessfully =
+      'left group chat successfully';
+
+  // Validation messages
+  static const String pleaseSelectStartDate = 'please select a start date';
+  static const String pleaseWaitValidatingLocation =
+      'please wait while we validate the location';
+  static const String pleaseEnterValidLocation =
+      'please enter a valid location';
+
+  // Report dialog
+  static const String failedToAddScreenshot = 'failed to add screenshot';
+  static const String pleaseDescribeIssue = 'please describe the issue';
+
   // general ui
   static const String error = 'error';
-  static const String close = 'close';
   static const String unknown = 'unknown';
-  static const String guest = 'guest';
   static const String km = 'km';
 
   // ENGLISH
-  static const Map<String, dynamic> en = {
+  static const Map<String, String> en = {
     title: 'localization',
     dj: 'dj',
     booker: 'booker',
@@ -229,6 +291,8 @@ mixin AppLocale {
     deleteChatMsg: 'delete chat for you and ',
     areYouSure: 'are you sure?',
     chats: 'chats',
+    directChats: 'direct chats',
+    groupChats: 'group chats',
     today: 'today',
     msg: 'message...',
     editProfile: 'edit profile',
@@ -249,8 +313,13 @@ mixin AppLocale {
     unblockedSuccess: 'user unblocked successfully',
     unblockedFail: 'failed to unblock user',
     noChats: 'no chats. start now!',
+    noGroupChatsYet: 'no group chats yet',
+    groupChatsWillAppearHere:
+        'group chats will appear here when you create raves with group chat enabled',
+    errorLoadingGroupChats: 'error loading group chats',
     startTalking: 'start talking!',
     removeImages: 'remove all images',
+    uploadingImage: 'uploading image...',
     selectCategory: 'please select a category',
     selectTrack: 'select track',
     addGenres: '__add genres__',
@@ -351,16 +420,64 @@ mixin AppLocale {
     joinedRave: 'joined',
     retry: 'retry',
 
+    // UI elements
+    close: 'close',
+    leaveEvent: 'leave event',
+    attendEvent: 'attend event',
+    djs: 'djs',
+    moreInfo: 'more info',
+
+    // Loading and error messages
+    failedToSendMessage: 'failed to send message',
+    errorLoadingMessages: 'error loading messages',
+    errorLoadingMembers: 'error loading members',
+    failedToUpdateFlintaStatus: 'failed to update flinta* status',
+    failedToLeaveChat: 'failed to leave chat',
+    invalidCredentials: 'invalid credentials. please try again.',
+    failedToContinueAsGuest: 'failed to continue as guest',
+    appleSignInError: 'Apple Sign In Error',
+    cantBeEmpty: "can't be empty",
+    enterFullAddress: "enter full address",
+    invalidInput: "invalid input",
+    cantContainSpace: "can't contain space",
+    invalidDomain: "invalid domain",
+    version: "version 1.0.0",
+    welcomeToGigHub: "welcome to Gig Hub!",
+    lostConnectionToSoundCloud: "lost connection to SoundCloud!",
+    connectSoundCloudToContinue: "connect your SoundCloud to continue:",
+    failedToUploadImage: 'failed to upload image',
+    startChattingHint:
+        'start chatting by visiting profiles and tapping the chat button',
+    leftGroupChatSuccessfully: 'left group chat successfully',
+
+    // Validation messages
+    pleaseSelectStartDate: 'please select a start date',
+    pleaseWaitValidatingLocation: 'please wait while we validate the location',
+    pleaseEnterValidLocation: 'please enter a valid location',
+
+    // Report dialog
+    failedToAddScreenshot: 'failed to add screenshot',
+    pleaseDescribeIssue: 'please describe the issue',
+
     // general ui
     error: 'error',
-    close: 'close',
     unknown: 'unknown',
-    guest: 'guest',
     km: 'km',
+    pwResetLinkSent: 'password reset link sent',
+    loadingChatsError: 'couldn\'t load chats',
+    accessFailed: 'access failed, please retry!',
+    invalidCred: 'invalid password or email!',
+    upcomingGigs: ' upcoming gigs',
+    noUpcomingGigsYet: 'no upcoming gigs yet. create your first one!',
+    noUpcomingGigs: 'no upcoming gigs',
+    noMembersFound: 'no members found',
+    noMessagesYet: 'no messages yet',
+    failedToGetUserInformation: 'failed to get user information',
+    failedToUnblockUser: 'failed to unblock user. please try again.',
   };
 
   // GERMAN
-  static const Map<String, dynamic> de = {
+  static const Map<String, String> de = {
     title: 'lokalisierung',
     dj: 'dj',
     booker: 'buchender',
@@ -381,6 +498,7 @@ mixin AppLocale {
     genre: 'genre',
     genres: 'genres',
     editGenres: 'genres bearbeiten',
+    close: 'schließen',
     city: 'stadt',
     email: 'e-mail',
     changeEmail: ' e-mail ändern',
@@ -405,6 +523,8 @@ mixin AppLocale {
     deleteChatMsg: 'chat löschen für dich und ',
     areYouSure: 'bist du sicher?',
     chats: 'chats',
+    directChats: 'direkte chats',
+    groupChats: 'gruppenchats',
     today: 'heute',
     msg: 'nachricht...',
     editProfile: 'profil bearbeiten',
@@ -425,9 +545,14 @@ mixin AppLocale {
     unblockedSuccess: 'nutzer erfolgreich entsperrt',
     unblockedFail: 'nutzer konnte nicht entsperrt werden',
     noChats: 'keine chats. starte jetzt!',
+    noGroupChatsYet: 'noch keine gruppenchats',
+    groupChatsWillAppearHere:
+        'gruppenchats erscheinen hier, wenn du raves mit aktivierter gruppenchat erstellst',
+    errorLoadingGroupChats: 'fehler beim laden der gruppenchats',
     loadingChatsError: 'chats konnten nicht geladen werden',
     startTalking: 'fang an zu reden!',
     removeImages: 'alle bilder entfernen',
+    uploadingImage: 'bild wird hochgeladen...',
     selectCategory: 'bitte wähle eine kategorie',
     selectTrack: 'track auswählen',
     addGenres: 'genres hinzufügen',
@@ -533,17 +658,297 @@ mixin AppLocale {
     joinedRave: 'teilgenommen',
     retry: 'wiederholen',
 
+    // UI elements
+    leaveEvent: 'event verlassen',
+    attendEvent: 'am event teilnehmen',
+    djs: 'djs',
+    moreInfo: 'mehr info',
+
+    // Loading and error messages
+    failedToSendMessage: 'nachricht konnte nicht gesendet werden',
+    errorLoadingMessages: 'fehler beim laden der nachrichten',
+    errorLoadingMembers: 'fehler beim laden der mitglieder',
+    failedToUpdateFlintaStatus:
+        'flinta*-status konnte nicht aktualisiert werden',
+    failedToLeaveChat: 'chat konnte nicht verlassen werden',
+    invalidCredentials: 'ungültige anmeldedaten. bitte versuche es erneut.',
+    failedToContinueAsGuest: 'fehler beim fortfahren als gast',
+    appleSignInError: 'Apple Anmeldungsfehler',
+    cantBeEmpty: 'darf nicht leer sein',
+    enterFullAddress: 'vollständige adresse eingeben',
+    invalidInput: 'ungültige eingabe',
+    cantContainSpace: 'darf kein leerzeichen enthalten',
+    invalidDomain: 'ungültige domain',
+    version: 'version 1.0.0',
+    welcomeToGigHub: 'willkommen bei Gig Hub!',
+    lostConnectionToSoundCloud: 'verbindung zu SoundCloud verloren!',
+    connectSoundCloudToContinue: 'verbinde deinen SoundCloud um fortzufahren:',
+    failedToUploadImage: 'bild hochladen fehlgeschlagen',
+    startChattingHint:
+        'beginne zu chatten, indem du profile besuchst und auf die chat-schaltfläche tippst',
+    leftGroupChatSuccessfully: 'gruppenchat erfolgreich verlassen',
+
+    // Validation messages
+    pleaseSelectStartDate: 'bitte wähle ein startdatum aus',
+    pleaseWaitValidatingLocation: 'bitte warte, während wir den ort validieren',
+    pleaseEnterValidLocation: 'bitte gib einen gültigen ort ein',
+
+    // Report dialog
+    failedToAddScreenshot: 'screenshot konnte nicht hinzugefügt werden',
+    pleaseDescribeIssue: 'bitte beschreibe das problem',
+
     // general ui
     error: 'fehler',
-    close: 'schließen',
     unknown: 'unbekannt',
-    guest: 'gast',
     km: 'km',
-    organizer: 'veranstalter',
+    upcomingGigs: ' bevorstehende gigs',
+    noUpcomingGigsYet:
+        'noch keine bevorstehenden gigs. erstelle deinen ersten!',
+    noUpcomingGigs: 'keine bevorstehenden gigs',
+    noMembersFound: 'keine mitglieder gefunden',
+    noMessagesYet: 'noch keine nachrichten',
+    failedToGetUserInformation:
+        'Benutzerinformationen konnten nicht abgerufen werden',
+    failedToUnblockUser:
+        'Benutzer konnte nicht entsperrt werden. Bitte versuchen Sie es erneut.',
+  };
+
+  // POLISH
+  static const Map<String, String> pl = {
+    title: 'lokalizacja',
+    dj: 'DJ',
+    booker: 'rezerwujący',
+    rating: 'ocena',
+    cancel: 'anuluj',
+    scontinue: 'kontynuuj',
+    continueAsGuest: 'kontynuuj jako gość',
+    search: 'szukaj',
+    clear: 'wyczyść',
+    done: 'gotowe',
+    next: 'dalej',
+    or: '   lub   ',
+    about: ' o',
+    info: ' info / wymagania',
+    yourName: 'twoje imię',
+    yourCity: 'twoje miasto',
+    yourTempo: 'twoje tempo',
+    genre: 'gatunek',
+    genres: 'gatunki',
+    editGenres: 'edytuj gatunki',
+    addGenres: 'dodaj gatunki',
+    city: 'miasto',
+    email: 'email',
+    changeEmail: ' zmień email',
+    changePwMsg: 'śledź link w swoich emailach, aby zresetować hasło!',
+    changeEmailMsg:
+        'link resetowania email został wysłany na twój obecny email!',
+    pw: 'hasło',
+    confirmPw: 'potwierdź hasło',
+    changePw: 'zmień hasło',
+    forgotPw: 'zapomniałeś hasła?',
+    enterPw: 'wprowadź swoje hasło',
+    forgotPwText: 'wpisz swój email',
+    sendPwReset: 'wyślij link resetowania hasła',
+    pwResetLinkSent: 'link resetowania hasła wysłany',
+    block: 'blokuj',
+    unblock: 'odblokuj',
+    blockAndDelete: 'blokuj i usuń',
+    blockUser: 'zablokować użytkownika i usunąć czat?',
+    blocks: 'zablokowani użytkownicy',
+    unblockedSuccess: 'użytkownik odblokowany pomyślnie',
+    unblockedFail: 'nie udało się odblokować użytkownika',
+    report: 'zgłoś',
+    deleteAcc: 'usuń konto',
+    deleteChat: 'usuń czat',
+    deleteChatMsg: 'usuń czat dla ciebie i ',
+    areYouSure: 'jesteś pewny?',
+    chats: 'czaty',
+    directChats: 'bezpośrednie czaty',
+    groupChats: 'czaty grupowe',
+    today: 'dzisiaj',
+    msg: 'wiadomość...',
+    editProfile: 'edytuj profil',
+    edit: 'edytuj',
+    logIn: 'zaloguj się',
+    logOut: 'wyloguj się',
+    signUp: 'Zarejestruj się',
+    signUpLowerCase: 'zarejestruj się',
+    sortBy: 'sortuj według ',
+    firstSoundcloud: 'pierwszy utwór SoundCloud',
+    secondSoundcloud: 'drugi utwór SoundCloud',
+    dontHaveAnAccount: '  nie masz konta?',
+    pressEnterFinish: 'naciśnij enter po zakończeniu',
+    pressEnterDone: 'naciśnij enter gdy gotowe',
+    imgCompressionFailed: 'kompresja obrazu nie powiodła się',
+    proceed: 'kontynuuj',
+    pwNecessary: 'hasło konieczne',
+    noBlockedUsers: 'brak zablokowanych użytkowników',
+    noChats: 'brak czatów. zacznij teraz!',
+    noGroupChatsYet: 'jeszcze brak czatów grupowych',
+    groupChatsWillAppearHere:
+        'czaty grupowe pojawią się tutaj, gdy utworzysz rave z włączonym czatem grupowym',
+    errorLoadingGroupChats: 'błąd ładowania czatów grupowych',
+    loadingChatsError: 'nie udało się załadować czatów',
+    updateStatusFailed:
+        'nie udało się zaktualizować wiadomości statusowej. sprawdź swoje połączenie.',
+    startTalking: 'zacznij rozmawiać!',
+    removeImages: 'usuń wszystkie obrazy',
+    uploadingImage: 'przesyłanie obrazu...',
+    selectCategory: 'wybierz kategorię',
+    selectTrack: 'wybierz utwór',
+    selectFive: 'wybierz do 5!',
+    addImages: 'dodaj obrazy do swojego profilu!',
+    accessFailed: 'dostęp nie powiódł się, spróbuj ponownie!',
+    invalidCred: 'nieprawidłowe hasło lub email!',
+    addHeadImage: 'dodaj obraz okładki do swojego profilu!',
+    profileCreationFailed:
+        'nie udało się utworzyć profilu, spróbuj ponownie później!',
+    fillOutAllFields: 'wypełnij wszystkie pola! (imię, o, info)',
+    postStatus: 'opublikuj status',
+    statusMessage: 'wiadomość statusowa',
+    displayFor: 'wyświetlaj przez:',
+    day1: '1 dzień',
+    days7: '7 dni',
+    days30: '30 dni',
+    enterStatusMsg: 'wprowadź swoją wiadomość statusową...',
+    reportUser: 'zgłoś użytkownika',
+    reportMessage: 'zgłoś wiadomość',
+    reportReason: 'opisz problem...',
+    addScreenshots: 'dodaj zrzuty ekranu',
+    reportAndBlock: 'zgłoś i zablokuj',
+    reportSent: 'zgłoszenie wysłane pomyślnie',
+    reportFailed: 'nie udało się wysłać zgłoszenia',
+    maxTwoScreenshots: 'maksymalnie 2 zrzuty ekranu',
+    removeScreenshot: 'usuń zrzut ekranu',
+    createRave: 'utwórz rave',
+    editRave: 'edytuj rave',
+    deleteRave: 'usuń rave',
+    raveUpdated: 'rave zaktualizowany pomyślnie',
+    raveUpdateFailed: 'nie udało się zaktualizować rave',
+    raveDeleted: 'rave usunięty pomyślnie',
+    raveDeleteFailed: 'nie udało się usunąć rave',
+    confirmDeleteRave: 'czy na pewno chcesz usunąć ten rave?',
+    deleteRaveWarning:
+        'tej akcji nie można cofnąć. rave i jego czat grupowy zostaną trwale usunięte.',
+    raveName: 'nazwa rave',
+    raveDate: 'data rave',
+    startTime: 'otwarcie drzwi',
+    raveLocation: 'lokalizacja rave',
+    raveDescription: 'opis',
+    ticketShop: 'link do sklepu z biletami',
+    additionalLink: 'dodatkowy link',
+    addDJs: 'dodaj DJ-ów',
+    addCollaborators: 'dodaj współpracowników',
+    createGroupChat: 'utwórz czat grupowy',
+    raveCreated: 'rave utworzony pomyślnie',
+    raveCreationFailed: 'nie udało się utworzyć rave',
+    attending: 'uczestniczę',
+    raveDetails: 'szczegóły rave',
+    organizer: 'organizator',
+    collaborators: 'współpracownicy',
+    lineup: 'lineup',
+    selectDate: 'wybierz datę',
+    selectTime: 'wybierz czas',
+    searchDJs: 'szukaj DJ-ów...',
+    searchBookers: 'szukaj bookerów...',
+    multiDay: 'wielodniowe wydarzenie',
+    endDate: 'data zakończenia',
+
+    // radar and alerts
+    raveRadar: 'radar rave',
+    raveAlerts: 'powiadomienia rave',
+    setupRaveAlert: 'ustaw powiadomienie rave',
+    getNotifiedNewRaves:
+        'otrzymuj powiadomienia, gdy nowe rave są tworzone w pobliżu ciebie',
+    location: 'lokalizacja',
+    currentLocationSelected: 'wybrano bieżącą lokalizację',
+    useCurrentLocation: 'użyj bieżącej lokalizacji',
+    orEnterCityName: 'lub wprowadź nazwę miasta',
+    alertRadius: 'promień powiadomienia',
+    createAlert: 'utwórz powiadomienie',
+    raveAlertCreatedSuccess: 'powiadomienie rave utworzone pomyślnie!',
+    raveAlertCreationFailed: 'nie udało się utworzyć powiadomienia rave',
+    locationNotFound:
+        'lokalizacja nie znaleziona. spróbuj innego miasta lub adresu.',
+    failedValidateLocation:
+        'nie udało się zweryfikować lokalizacji. sprawdź swoje połączenie internetowe.',
+    failedCurrentLocation: 'nie udało się uzyskać bieżącej lokalizacji',
+    locationPermissionsDenied: 'uprawnienia do lokalizacji zostały odrzucone',
+    locationPermissionsPermanentlyDenied:
+        'uprawnienia do lokalizacji zostały trwale odrzucone',
+
+    // search and loading
+    searchRavesDjsGenres: 'szukaj rave, dj, gatunków, lokalizacji...',
+    loadingRaves: 'ładowanie rave...',
+    loadingDetails: 'ładowanie szczegółów...',
+    noRavesFound: 'nie znaleziono rave',
+    tryDifferentKeywords: 'spróbuj innych słów kluczowych',
+    noRavesAvailable: 'brak dostępnych rave',
+    checkBackLater: 'sprawdź później nowe wydarzenia',
+    failedLoadRaves: 'nie udało się załadować rave',
+    failedLoadRaveDetails: 'nie udało się załadować szczegółów rave',
+    failedUpdateAttendance: 'nie udało się zaktualizować uczestnictwa',
+    leftRave: 'opuścił',
+    joinedRave: 'dołączył',
+    retry: 'spróbuj ponownie',
+
+    // UI elements
+    close: 'zamknij',
+    leaveEvent: 'opuść wydarzenie',
+    attendEvent: 'uczestnicz w wydarzeniu',
+    djs: 'dj',
+    moreInfo: 'więcej info',
+
+    // Loading and error messages
+    failedToSendMessage: 'nie udało się wysłać wiadomości',
+    errorLoadingMessages: 'błąd ładowania wiadomości',
+    errorLoadingMembers: 'błąd ładowania członków',
+    failedToUpdateFlintaStatus: 'nie udało się zaktualizować statusu flinta*',
+    invalidCredentials: 'nieprawidłowe dane logowania. spróbuj ponownie.',
+    failedToContinueAsGuest: 'nie udało się kontynuować jako gość',
+    appleSignInError: 'Błąd logowania Apple',
+    cantBeEmpty: 'nie może być puste',
+    enterFullAddress: 'wprowadź pełny adres',
+    invalidInput: 'nieprawidłowe wejście',
+    cantContainSpace: 'nie może zawierać spacji',
+    invalidDomain: 'nieprawidłowa domena',
+    version: 'wersja 1.0.0',
+    welcomeToGigHub: 'witaj w Gig Hub!',
+    lostConnectionToSoundCloud: 'utracono połączenie z SoundCloud!',
+    connectSoundCloudToContinue: 'podłącz swój SoundCloud, aby kontynuować:',
+    failedToUploadImage: 'nie udało się przesłać obrazu',
+    upcomingGigs: ' nadchodzące koncerty',
+    noUpcomingGigsYet:
+        'jeszcze nie ma nadchodzących koncertów. stwórz swój pierwszy!',
+    noUpcomingGigs: 'brak nadchodzących koncertów',
+    noMembersFound: 'nie znaleziono członków',
+    noMessagesYet: 'jeszcze nie ma wiadomości',
+    startChattingHint:
+        'rozpocznij czat, odwiedzając profile i naciskając przycisk czatu',
+    failedToGetUserInformation:
+        'nie udało się uzyskać informacji o użytkowniku',
+    failedToUnblockUser:
+        'nie udało się odblokować użytkownika. spróbuj ponownie.',
+    failedToLeaveChat: 'nie udało się opuścić czatu',
+    leftGroupChatSuccessfully: 'pomyślnie opuszczono czat grupowy',
+
+    // Validation messages
+    pleaseSelectStartDate: 'wybierz datę rozpoczęcia',
+    pleaseWaitValidatingLocation: 'poczekaj, aż zweryfikujemy lokalizację',
+    pleaseEnterValidLocation: 'wprowadź prawidłową lokalizację',
+
+    // Report dialog
+    failedToAddScreenshot: 'nie udało się dodać zrzutu ekranu',
+    pleaseDescribeIssue: 'opisz problem',
+
+    // general ui
+    error: 'błąd',
+    unknown: 'nieznany',
+    km: 'km',
   };
 
   // SPANISH
-  static const Map<String, dynamic> es = {
+  static const Map<String, String> es = {
     title: 'localización',
     dj: 'DJ',
     booker: 'reservador',
@@ -588,6 +993,8 @@ mixin AppLocale {
     deleteChatMsg: 'eliminar chat para ti y ',
     areYouSure: '¿estás seguro?',
     chats: 'chats',
+    directChats: 'chats directos',
+    groupChats: 'chats grupales',
     today: 'hoy',
     msg: 'mensaje...',
     editProfile: 'editar perfil',
@@ -608,6 +1015,10 @@ mixin AppLocale {
     unblockedSuccess: 'usuario desbloqueado con éxito',
     unblockedFail: 'no se pudo desbloquear al usuario',
     noChats: 'no hay chats. ¡comienza ahora!',
+    noGroupChatsYet: 'aún no hay chats grupales',
+    groupChatsWillAppearHere:
+        'los chats grupales aparecerán aquí cuando crees raves con chat grupal habilitado',
+    errorLoadingGroupChats: 'error al cargar chats grupales',
     loadingChatsError: 'no se pudieron cargar los chats',
     startTalking: '¡comienza a hablar!',
     removeImages: 'eliminar todas las imágenes',
@@ -717,16 +1128,63 @@ mixin AppLocale {
     joinedRave: 'te uniste a',
     retry: 'reintentar',
 
+    // UI elements
+    leaveEvent: 'abandonar evento',
+    attendEvent: 'asistir al evento',
+    djs: 'djs',
+    moreInfo: 'más info',
+
+    // Loading and error messages
+    failedToUploadImage: 'falló al cargar imagen',
+    startChattingHint:
+        'comienza a chatear visitando perfiles y tocando el botón de chat',
+    failedToSendMessage: 'no se pudo enviar el mensaje',
+    errorLoadingMessages: 'error al cargar mensajes',
+    failedToUpdateFlintaStatus: 'no se pudo actualizar el estado flinta*',
+    failedToLeaveChat: 'no se pudo abandonar el chat',
+    leftGroupChatSuccessfully: 'chat grupal abandonado exitosamente',
+
+    // Validation messages
+    pleaseSelectStartDate: 'por favor selecciona una fecha de inicio',
+    pleaseWaitValidatingLocation:
+        'por favor espera mientras validamos la ubicación',
+    pleaseEnterValidLocation: 'por favor ingresa una ubicación válida',
+
+    // Report dialog
+    failedToAddScreenshot: 'no se pudo agregar la captura de pantalla',
+    pleaseDescribeIssue: 'por favor describe el problema',
+
     // general ui
     error: 'error',
-    close: 'cerrar',
     unknown: 'desconocido',
-    guest: 'invitado',
     km: 'km',
+    uploadingImage: 'subiendo imagen...',
+    close: 'cerrar',
+    errorLoadingMembers: 'error al cargar miembros',
+    invalidCredentials: 'credenciales inválidas. por favor inténtalo de nuevo.',
+    failedToContinueAsGuest: 'falló al continuar como invitado',
+    appleSignInError: 'Error de Inicio de Sesión de Apple',
+    cantBeEmpty: 'no puede estar vacío',
+    enterFullAddress: 'ingresa la dirección completa',
+    invalidInput: 'entrada inválida',
+    cantContainSpace: 'no puede contener espacio',
+    invalidDomain: 'dominio inválido',
+    version: 'versión 1.0.0',
+    welcomeToGigHub: 'bienvenido a Gig Hub!',
+    lostConnectionToSoundCloud: 'conexión perdida con SoundCloud!',
+    connectSoundCloudToContinue: 'conecta tu SoundCloud para continuar:',
+    upcomingGigs: ' próximos conciertos',
+    noUpcomingGigsYet: 'aún no hay próximos conciertos. ¡crea el tuyo primero!',
+    noUpcomingGigs: 'no hay próximos conciertos',
+    noMembersFound: 'no se encontraron miembros',
+    noMessagesYet: 'aún no hay mensajes',
+    failedToGetUserInformation: 'falló al obtener información del usuario',
+    failedToUnblockUser:
+        'falló al desbloquear usuario. por favor inténtalo de nuevo.',
   };
 
   // ITALIAN
-  static const Map<String, dynamic> it = {
+  static const Map<String, String> it = {
     title: 'localizzazione',
     dj: 'DJ',
     booker: 'prenotatore',
@@ -771,6 +1229,8 @@ mixin AppLocale {
     deleteChatMsg: 'elimina chat per te e ',
     areYouSure: 'sei sicuro?',
     chats: 'chat',
+    directChats: 'chat diretti',
+    groupChats: 'chat di gruppo',
     today: 'oggi',
     msg: 'messaggio...',
     editProfile: 'modifica profilo',
@@ -791,6 +1251,10 @@ mixin AppLocale {
     unblockedSuccess: 'utente sbloccato con successo',
     unblockedFail: 'impossibile sbloccare l\'utente',
     noChats: 'nessuna chat. inizia ora!',
+    noGroupChatsYet: 'nessuna chat di gruppo ancora',
+    groupChatsWillAppearHere:
+        'le chat di gruppo appariranno qui quando crei rave con chat di gruppo abilitato',
+    errorLoadingGroupChats: 'errore nel caricamento delle chat di gruppo',
     loadingChatsError: 'impossibile caricare le chat',
     startTalking: 'inizia a parlare!',
     removeImages: 'rimuovi tutte le immagini',
@@ -899,16 +1363,61 @@ mixin AppLocale {
     joinedRave: 'ti sei unito a',
     retry: 'riprova',
 
+    // UI elements
+    leaveEvent: 'lascia evento',
+    attendEvent: 'partecipa all\'evento',
+    djs: 'dj',
+    moreInfo: 'più info',
+
+    // Loading and error messages
+    failedToUploadImage: 'caricamento immagine fallito',
+    startChattingHint:
+        'inizia a chattare visitando i profili e toccando il pulsante chat',
+    failedToSendMessage: 'invio messaggio fallito',
+    errorLoadingMessages: 'errore nel caricamento dei messaggi',
+    failedToUpdateFlintaStatus: 'aggiornamento stato flinta* fallito',
+    failedToLeaveChat: 'uscita dal chat fallita',
+    leftGroupChatSuccessfully: 'uscita dal gruppo chat riuscita',
+
+    // Validation messages
+    pleaseSelectStartDate: 'seleziona una data di inizio',
+    pleaseWaitValidatingLocation: 'attendi mentre validiamo la posizione',
+    pleaseEnterValidLocation: 'inserisci una posizione valida',
+
+    // Report dialog
+    failedToAddScreenshot: 'aggiunta screenshot fallita',
+    pleaseDescribeIssue: 'descrivi il problema',
+
     // general ui
     error: 'errore',
-    close: 'chiudi',
     unknown: 'sconosciuto',
-    guest: 'ospite',
     km: 'km',
+    uploadingImage: 'caricamento immagine...',
+    close: 'chiudi',
+    errorLoadingMembers: 'errore nel caricamento dei membri',
+    invalidCredentials: 'credenziali non valide. per favore riprova.',
+    failedToContinueAsGuest: 'impossibile continuare come ospite',
+    appleSignInError: 'Errore Accesso Apple',
+    cantBeEmpty: 'non può essere vuoto',
+    enterFullAddress: 'inserisci indirizzo completo',
+    invalidInput: 'input non valido',
+    cantContainSpace: 'non può contenere spazio',
+    invalidDomain: 'dominio non valido',
+    version: 'versione 1.0.0',
+    welcomeToGigHub: 'benvenuto su Gig Hub!',
+    lostConnectionToSoundCloud: 'connessione persa con SoundCloud!',
+    connectSoundCloudToContinue: 'collega il tuo SoundCloud per continuare:',
+    upcomingGigs: ' prossimi concerti',
+    noUpcomingGigsYet: 'nessun prossimo concerto ancora. crea il tuo primo!',
+    noUpcomingGigs: 'nessun prossimo concerto',
+    noMembersFound: 'nessun membro trovato',
+    noMessagesYet: 'nessun messaggio ancora',
+    failedToGetUserInformation: 'impossibile ottenere informazioni utente',
+    failedToUnblockUser: 'impossibile sbloccare utente. per favore riprova.',
   };
 
   // PORTUGESE
-  static const Map<String, dynamic> pt = {
+  static const Map<String, String> pt = {
     title: 'localização',
     dj: 'DJ',
     booker: 'reservador',
@@ -952,6 +1461,8 @@ mixin AppLocale {
     deleteChatMsg: 'excluir chat para você e ',
     areYouSure: 'você tem certeza?',
     chats: 'chats',
+    directChats: 'chats diretos',
+    groupChats: 'chats em grupo',
     today: 'hoje',
     msg: 'mensagem...',
     editProfile: 'editar perfil',
@@ -972,6 +1483,10 @@ mixin AppLocale {
     unblockedSuccess: 'usuário desbloqueado com sucesso',
     unblockedFail: 'falha ao desbloquear usuário',
     noChats: 'nenhum chat. comece agora!',
+    noGroupChatsYet: 'ainda nenhum chat em grupo',
+    groupChatsWillAppearHere:
+        'chats em grupo aparecerão aqui quando você criar raves com chat em grupo habilitado',
+    errorLoadingGroupChats: 'erro ao carregar chats em grupo',
     loadingChatsError: 'não foi possível carregar os chats',
     startTalking: 'comece a falar!',
     removeImages: 'remover todas as imagens',
@@ -1080,16 +1595,62 @@ mixin AppLocale {
     joinedRave: 'juntou-se a',
     retry: 'tentar novamente',
 
+    // UI elements
+    leaveEvent: 'sair do evento',
+    attendEvent: 'participar do evento',
+    djs: 'djs',
+    moreInfo: 'mais info',
+
+    // Loading and error messages
+    failedToUploadImage: 'falha ao carregar imagem',
+    startChattingHint:
+        'comece a conversar visitando perfis e tocando no botão de chat',
+    failedToSendMessage: 'falha ao enviar mensagem',
+    errorLoadingMessages: 'erro ao carregar mensagens',
+    failedToUpdateFlintaStatus: 'falha ao atualizar status flinta*',
+    failedToLeaveChat: 'falha ao sair do chat',
+    leftGroupChatSuccessfully: 'saiu do chat em grupo com sucesso',
+
+    // Validation messages
+    pleaseSelectStartDate: 'selecione uma data de início',
+    pleaseWaitValidatingLocation: 'aguarde enquanto validamos a localização',
+    pleaseEnterValidLocation: 'digite uma localização válida',
+
+    // Report dialog
+    failedToAddScreenshot: 'falha ao adicionar captura de tela',
+    pleaseDescribeIssue: 'descreva o problema',
+
     // general ui
     error: 'erro',
-    close: 'fechar',
     unknown: 'desconhecido',
-    guest: 'convidado',
     km: 'km',
+    uploadingImage: 'carregando imagem...',
+    close: 'fechar',
+    errorLoadingMembers: 'erro ao carregar membros',
+    invalidCredentials: 'credenciais inválidas. por favor tente novamente.',
+    failedToContinueAsGuest: 'falha ao continuar como convidado',
+    appleSignInError: 'Erro de Login da Apple',
+    cantBeEmpty: 'não pode estar vazio',
+    enterFullAddress: 'digite o endereço completo',
+    invalidInput: 'entrada inválida',
+    cantContainSpace: 'não pode conter espaço',
+    invalidDomain: 'domínio inválido',
+    version: 'versão 1.0.0',
+    welcomeToGigHub: 'bem-vindo ao Gig Hub!',
+    lostConnectionToSoundCloud: 'conexão perdida com o SoundCloud!',
+    connectSoundCloudToContinue: 'conecte seu SoundCloud para continuar:',
+    upcomingGigs: ' próximos shows',
+    noUpcomingGigsYet: 'ainda não há próximos shows. crie o seu primeiro!',
+    noUpcomingGigs: 'não há próximos shows',
+    noMembersFound: 'nenhum membro encontrado',
+    noMessagesYet: 'ainda não há mensagens',
+    failedToGetUserInformation: 'falha ao obter informações do usuário',
+    failedToUnblockUser:
+        'falha ao desbloquear usuário. por favor tente novamente.',
   };
 
   //  FRENCH
-  static const Map<String, dynamic> fr = {
+  static const Map<String, String> fr = {
     title: 'localisation',
     dj: 'DJ',
     booker: 'réservateur',
@@ -1134,6 +1695,8 @@ mixin AppLocale {
     deleteChatMsg: 'supprimer la conversation pour vous et ',
     areYouSure: 'êtes-vous sûr ?',
     chats: 'conversations',
+    directChats: 'conversations directes',
+    groupChats: 'conversations de groupe',
     today: 'aujourd\'hui',
     msg: 'message...',
     editProfile: 'modifier le profil',
@@ -1154,6 +1717,11 @@ mixin AppLocale {
     unblockedSuccess: 'utilisateur débloqué avec succès',
     unblockedFail: 'échec du déblocage de l\'utilisateur',
     noChats: 'aucune conversation. commencez maintenant !',
+    noGroupChatsYet: 'aucune conversation de groupe encore',
+    groupChatsWillAppearHere:
+        'les conversations de groupe apparaîtront ici lorsque vous créerez des raves avec le chat de groupe activé',
+    errorLoadingGroupChats:
+        'erreur lors du chargement des conversations de groupe',
     loadingChatsError: 'impossible de charger les conversations',
     startTalking: 'commencez à parler !',
     removeImages: 'supprimer toutes les images',
@@ -1259,20 +1827,68 @@ mixin AppLocale {
     failedLoadRaves: 'échec du chargement des raves',
     failedLoadRaveDetails: 'échec du chargement des détails du rave',
     failedUpdateAttendance: 'échec de mise à jour de la participation',
-    leftRave: 'a quitté',
-    joinedRave: 'a rejoint',
+    leftRave: 'quitté',
+    joinedRave: 'rejoint',
     retry: 'réessayer',
+
+    // UI elements
+    leaveEvent: 'quitter l\'événement',
+    attendEvent: 'participer à l\'événement',
+    djs: 'djs',
+    moreInfo: 'plus d\'info',
+
+    // Loading and error messages
+    failedToUploadImage: 'échec de chargement de l\'image',
+    startChattingHint:
+        'commencez à chatter en visitant les profils et en appuyant sur le bouton chat',
+    failedToSendMessage: 'échec d\'envoi du message',
+    errorLoadingMessages: 'erreur de chargement des messages',
+    failedToUpdateFlintaStatus: 'échec de mise à jour du statut flinta*',
+    failedToLeaveChat: 'échec de sortie du chat',
+    leftGroupChatSuccessfully: 'sortie du chat de groupe réussie',
+
+    // Validation messages
+    pleaseSelectStartDate: 'veuillez sélectionner une date de début',
+    pleaseWaitValidatingLocation:
+        'veuillez patienter pendant que nous validons l\'emplacement',
+    pleaseEnterValidLocation: 'veuillez entrer un emplacement valide',
+
+    // Report dialog
+    failedToAddScreenshot: 'échec d\'ajout de la capture d\'écran',
+    pleaseDescribeIssue: 'veuillez décrire le problème',
 
     // general ui
     error: 'erreur',
-    close: 'fermer',
     unknown: 'inconnu',
-    guest: 'invité',
     km: 'km',
+    uploadingImage: 'téléchargement de l\'image...',
+    close: 'fermer',
+    errorLoadingMembers: 'erreur de chargement des membres',
+    invalidCredentials: 'identifiants invalides. veuillez réessayer.',
+    failedToContinueAsGuest: 'échec de la continuation en tant qu\'invité',
+    appleSignInError: 'Erreur de Connexion Apple',
+    cantBeEmpty: 'ne peut pas être vide',
+    enterFullAddress: 'entrez l\'adresse complète',
+    invalidInput: 'entrée invalide',
+    cantContainSpace: 'ne peut pas contenir d\'espace',
+    invalidDomain: 'domaine invalide',
+    version: 'version 1.0.0',
+    welcomeToGigHub: 'bienvenue sur Gig Hub !',
+    lostConnectionToSoundCloud: 'connexion perdue avec SoundCloud !',
+    connectSoundCloudToContinue: 'connectez votre SoundCloud pour continuer :',
+    upcomingGigs: ' prochains concerts',
+    noUpcomingGigsYet: 'pas encore de prochains concerts. créez le vôtre !',
+    noUpcomingGigs: 'pas de prochains concerts',
+    noMembersFound: 'aucun membre trouvé',
+    noMessagesYet: 'pas encore de messages',
+    failedToGetUserInformation:
+        'échec de l\'obtention des informations utilisateur',
+    failedToUnblockUser:
+        'échec du déblocage de l\'utilisateur. veuillez réessayer.',
   };
 
   // DUTCH
-  static const Map<String, dynamic> nl = {
+  static const Map<String, String> nl = {
     title: 'localisatie',
     dj: 'DJ',
     booker: 'boeker',
@@ -1317,6 +1933,8 @@ mixin AppLocale {
     deleteChatMsg: 'chat verwijderen voor jou en ',
     areYouSure: 'weet je het zeker?',
     chats: 'chats',
+    directChats: 'directe chats',
+    groupChats: 'groepchats',
     today: 'vandaag',
     msg: 'bericht...',
     editProfile: 'profiel bewerken',
@@ -1337,6 +1955,10 @@ mixin AppLocale {
     unblockedSuccess: 'gebruiker succesvol gedeblokkeerd',
     unblockedFail: 'deblokkeren van gebruiker mislukt',
     noChats: 'geen chats. begin nu!',
+    noGroupChatsYet: 'nog geen groepchats',
+    groupChatsWillAppearHere:
+        'groepchats verschijnen hier wanneer je raves aanmaakt met groepchat ingeschakeld',
+    errorLoadingGroupChats: 'fout bij laden groepchats',
     loadingChatsError: 'kon chats niet laden',
     startTalking: 'begin met praten!',
     removeImages: 'verwijder alle afbeeldingen',
@@ -1445,198 +2067,63 @@ mixin AppLocale {
     joinedRave: 'sloot zich aan bij',
     retry: 'opnieuw proberen',
 
+    // UI elements
+    leaveEvent: 'evenement verlaten',
+    attendEvent: 'deelnemen aan evenement',
+    djs: 'djs',
+    moreInfo: 'meer info',
+
+    // Loading and error messages
+    failedToUploadImage: 'afbeelding uploaden mislukt',
+    startChattingHint:
+        'begin met chatten door profielen te bezoeken en op de chatknop te tikken',
+    failedToSendMessage: 'bericht verzenden mislukt',
+    errorLoadingMessages: 'fout bij laden berichten',
+    failedToUpdateFlintaStatus: 'flinta*-status bijwerken mislukt',
+    failedToLeaveChat: 'chat verlaten mislukt',
+    leftGroupChatSuccessfully: 'groepchat succesvol verlaten',
+
+    // Validation messages
+    pleaseSelectStartDate: 'selecteer een startdatum',
+    pleaseWaitValidatingLocation: 'wacht terwijl we de locatie valideren',
+    pleaseEnterValidLocation: 'voer een geldige locatie in',
+
+    // Report dialog
+    failedToAddScreenshot: 'schermafbeelding toevoegen mislukt',
+    pleaseDescribeIssue: 'beschrijf het probleem',
+
     // general ui
     error: 'fout',
-    close: 'sluiten',
-    unknown: 'onbekend',
-    guest: 'gast',
-    km: 'km',
-  };
-
-  // POLISH
-  static const Map<String, dynamic> pl = {
-    title: 'lokalizacja',
-    dj: 'DJ',
-    booker: 'rezerwujący',
-    rating: 'ocena',
-    cancel: 'anuluj',
-    scontinue: 'kontynuuj',
-    continueAsGuest: 'kontynuuj jako gość',
-    search: 'szukaj',
-    clear: 'wyczyść',
-    done: 'gotowe',
-    next: 'dalej',
-    or: '   lub   ',
-    about: ' o',
-    info: ' info / wymagania',
-    yourName: 'twoje imię',
-    yourCity: 'twoje miasto',
-    yourTempo: 'twoje tempo',
-    genre: 'gatunek',
-    genres: 'gatunki',
-    editGenres: 'edytuj gatunki',
-    city: 'miasto',
-    email: 'e-mail',
-    changeEmail: ' zmień e-mail',
-    changePwMsg:
-        'postępuj zgodnie z linkiem w swoich e-mailach, aby zresetować hasło!',
-    changeEmailMsg:
-        'link do resetowania e-maila został wysłany na twój aktualny e-mail!',
-    pw: 'hasło',
-    confirmPw: 'potwierdź hasło',
-    changePw: 'zmień hasło',
-    forgotPw: 'zapomniałeś hasła?',
-    forgotPwText: 'wpisz swój e-mail',
-    sendPwReset: 'wyślij link do resetowania hasła',
-    pwResetLinkSent: 'link do resetowania hasła wysłany',
-    block: 'zablokuj',
-    blockAndDelete: 'zablokuj i usuń',
-    blockUser: 'zablokować użytkownika i usunąć czat?',
-    blocks: 'zablokowani użytkownicy',
-    report: 'zgłoś',
-    deleteAcc: 'usuń konto',
-    deleteChat: 'usuń czat',
-    deleteChatMsg: 'usuń czat dla ciebie i ',
-    areYouSure: 'czy jesteś pewien?',
-    chats: 'czaty',
-    today: 'dzisiaj',
-    msg: 'wiadomość...',
-    editProfile: 'edytuj profil',
-    logIn: 'zaloguj się',
-    logOut: 'wyloguj się',
-    signUp: 'Zarejestruj Się',
-    signUpLowerCase: 'zarejestruj się',
-    sortBy: 'sortuj według ',
-    firstSoundcloud: 'pierwszy utwór SoundCloud',
-    secondSoundcloud: 'drugi utwór SoundCloud',
-    dontHaveAnAccount: '  nie masz konta?',
-    pressEnterFinish: 'naciśnij enter, gdy skończysz',
-    pressEnterDone: 'naciśnij enter, gdy skończysz',
-    imgCompressionFailed: 'kompresja obrazu nie powiodła się',
-    proceed: 'kontynuuj',
-    pwNecessary: 'wymagane hasło',
-    noBlockedUsers: 'brak zablokowanych użytkowników',
-    unblockedSuccess: 'użytkownik pomyślnie odblokowany',
-    unblockedFail: 'nie udało się odblokować użytkownika',
-    noChats: 'brak czatów. zacznij teraz!',
-    loadingChatsError: 'nie udało się załadować czatów',
-    startTalking: 'zacznij rozmawiać!',
-    removeImages: 'usuń wszystkie obrazy',
-    selectCategory: 'proszę wybrać kategorię',
-    selectTrack: 'wybierz utwór',
-    addGenres: 'dodaj gatunki',
-    unblock: 'odblokuj',
-    selectFive: 'wybierz do 5!',
-    addImages: 'dodaj obrazy do swojego profilu!',
-    accessFailed: 'dostęp nieudany, spróbuj ponownie!',
-    invalidCred: 'nieprawidłowe hasło lub email!',
-    addHeadImage: 'dodaj obraz okładki do swojego profilu!',
-    fillOutAllFields: 'proszę wypełnić wszystkie pola! (imię, o mnie, info)',
-    profileCreationFailed:
-        'nie udało się utworzyć profilu, spróbuj ponownie później!',
-    postStatus: 'opublikuj status',
-    statusMessage: 'wiadomość statusu',
-    day1: '1 dzień',
-    days7: '7 dni',
-    days30: '30 dni',
-    enterStatusMsg: 'wprowadź swoją wiadomość statusu...',
-    displayFor: 'wyświetlaj przez:',
-    updateStatusFailed:
-        'nie udało się zaktualizować wiadomości statusu, spróbuj ponownie później.',
-    delete: 'usuń',
-    edit: 'edytuj',
-    enterPw: 'wprowadź swoje hasło',
-    reportUser: 'zgłoś użytkownika',
-    reportMessage: 'zgłoś wiadomość',
-    reportReason: 'opisz problem...',
-    addScreenshots: 'dodaj zrzuty ekranu',
-    reportAndBlock: 'zgłoś i zablokuj',
-    reportSent: 'zgłoszenie wysłane pomyślnie',
-    reportFailed: 'wysłanie zgłoszenia nie powiodło się',
-    maxTwoScreenshots: 'maksymalnie 2 zrzuty ekranu',
-    removeScreenshot: 'usuń zrzut ekranu',
-    createRave: 'utwórz rave',
-    editRave: 'edytuj rave',
-    deleteRave: 'usuń rave',
-    raveUpdated: 'rave zaktualizowany pomyślnie',
-    raveUpdateFailed: 'nie udało się zaktualizować rave',
-    raveDeleted: 'rave usunięty pomyślnie',
-    raveDeleteFailed: 'nie udało się usunąć rave',
-    confirmDeleteRave: 'czy na pewno chcesz usunąć ten rave?',
-    deleteRaveWarning:
-        'tej czynności nie można cofnąć. rave i jego czat grupowy zostaną trwale usunięte.',
-    raveName: 'nazwa rave',
-    raveDate: 'data rave',
-    startTime: 'otwarcie drzwi',
-    raveLocation: 'lokalizacja rave',
-    raveDescription: 'opis',
-    ticketShop: 'link do sklepu z biletami',
-    additionalLink: 'dodatkowy link',
-    addDJs: 'dodaj DJ-ów',
-    addCollaborators: 'dodaj współpracowników',
-    createGroupChat: 'utwórz czat grupowy',
-    raveCreated: 'rave utworzony pomyślnie',
-    raveCreationFailed: 'tworzenie rave nie powiodło się',
-    attending: 'uczestniczący',
-    raveDetails: 'szczegóły rave',
-    organizer: 'organizator',
-    collaborators: 'współpracownicy',
-    lineup: 'lineup',
-    selectDate: 'wybierz datę',
-    selectTime: 'wybierz godzinę',
-    searchDJs: 'szukaj DJ-ów...',
-    searchBookers: 'szukaj bookerów...',
-    multiDay: 'wielodniowe wydarzenie',
-    endDate: 'data zakończenia',
-
-    // radar and alerts
-    raveRadar: 'radar rave',
-    raveAlerts: 'alerty rave',
-    setupRaveAlert: 'skonfiguruj alert rave',
-    getNotifiedNewRaves:
-        'otrzymuj powiadomienia gdy nowe rave są tworzone w twojej okolicy',
-    location: 'lokalizacja',
-    currentLocationSelected: 'wybrano bieżącą lokalizację',
-    useCurrentLocation: 'użyj bieżącej lokalizacji',
-    orEnterCityName: 'lub wprowadź nazwę miasta',
-    alertRadius: 'promień alertu',
-    createAlert: 'utwórz alert',
-    raveAlertCreatedSuccess: 'alert rave utworzony pomyślnie!',
-    raveAlertCreationFailed: 'nie udało się utworzyć alertu rave',
-    locationNotFound:
-        'lokalizacja nie znaleziona. spróbuj innego miasta lub adresu.',
-    failedValidateLocation:
-        'nie udało się zweryfikować lokalizacji. sprawdź połączenie internetowe.',
-    failedCurrentLocation: 'nie udało się pobrać bieżącej lokalizacji',
-    locationPermissionsDenied: 'uprawnienia lokalizacji zostały odrzucone',
-    locationPermissionsPermanentlyDenied:
-        'uprawnienia lokalizacji zostały trwale odrzucone',
-
-    // search and loading
-    searchRavesDjsGenres: 'szukaj rave, dj, gatunki, lokalizacje...',
-    loadingRaves: 'ładowanie rave...',
-    loadingDetails: 'ładowanie szczegółów...',
-    noRavesFound: 'nie znaleziono rave',
-    tryDifferentKeywords: 'spróbuj innych słów kluczowych',
-    noRavesAvailable: 'brak dostępnych rave',
-    checkBackLater: 'sprawdź później nowe wydarzenia',
-    failedLoadRaves: 'nie udało się załadować rave',
-    failedLoadRaveDetails: 'nie udało się załadować szczegółów rave',
-    failedUpdateAttendance: 'nie udało się zaktualizować uczestnictwa',
-    leftRave: 'opuścił',
-    joinedRave: 'dołączył do',
-    retry: 'spróbuj ponownie',
-
-    // general ui
-    error: 'błąd',
-    close: 'zamknij',
     unknown: 'nieznany',
-    guest: 'gość',
     km: 'km',
+    uploadingImage: 'przesyłanie obrazu...',
+    close: 'zamknij',
+    errorLoadingMembers: 'błąd ładowania członków',
+    invalidCredentials: 'nieprawidłowe dane logowania. spróbuj ponownie.',
+    failedToContinueAsGuest: 'nie udało się kontynuować jako gość',
+    appleSignInError: 'Błąd Logowania Apple',
+    cantBeEmpty: 'nie może być puste',
+    enterFullAddress: 'wprowadź pełny adres',
+    invalidInput: 'nieprawidłowe wejście',
+    cantContainSpace: 'nie może zawierać spacji',
+    invalidDomain: 'nieprawidłowa domena',
+    version: 'wersja 1.0.0',
+    welcomeToGigHub: 'witaj w Gig Hub!',
+    lostConnectionToSoundCloud: 'utracono połączenie z SoundCloud!',
+    connectSoundCloudToContinue: 'podłącz swój SoundCloud, aby kontynuować:',
+    upcomingGigs: ' nadchodzące koncerty',
+    noUpcomingGigsYet:
+        'jeszcze nie ma nadchodzących koncertów. stwórz swój pierwszy!',
+    noUpcomingGigs: 'brak nadchodzących koncertów',
+    noMembersFound: 'nie znaleziono członków',
+    noMessagesYet: 'jeszcze nie ma wiadomości',
+    failedToGetUserInformation: 'nie udało się pobrać informacji o użytkowniku',
+    failedToUnblockUser:
+        'nie udało się odblokować użytkownika. spróbuj ponownie.',
   };
 
   // UKRAINIAN
-  static const Map<String, dynamic> uk = {
+  static const Map<String, String> uk = {
     title: 'локалізація',
     dj: 'DJ',
     booker: 'букер',
@@ -1681,6 +2168,8 @@ mixin AppLocale {
     deleteChatMsg: 'видалити чат для вас і ',
     areYouSure: 'ви впевнені?',
     chats: 'чати',
+    directChats: 'прямі чати',
+    groupChats: 'групові чати',
     today: 'сьогодні',
     msg: 'повідомлення...',
     editProfile: 'редагувати профіль',
@@ -1701,6 +2190,10 @@ mixin AppLocale {
     unblockedSuccess: 'користувача успішно розблоковано',
     unblockedFail: 'не вдалося розблокувати користувача',
     noChats: 'немає чатів. почніть зараз!',
+    noGroupChatsYet: 'ще немає групових чатів',
+    groupChatsWillAppearHere:
+        'групові чати з\'являться тут, коли ви створите рейви з увімкненим груповим чатом',
+    errorLoadingGroupChats: 'помилка завантаження групових чатів',
     loadingChatsError: 'не вдалося завантажити чати',
     startTalking: 'почніть розмову!',
     removeImages: 'видалити всі зображення',
@@ -1810,16 +2303,64 @@ mixin AppLocale {
     joinedRave: 'приєднався до',
     retry: 'спробувати знову',
 
+    // UI elements
+    leaveEvent: 'покинути подію',
+    attendEvent: 'відвідати подію',
+    djs: 'dj',
+    moreInfo: 'більше інфо',
+
+    // Loading and error messages
+    failedToUploadImage: 'не вдалося завантажити зображення',
+    startChattingHint:
+        'почніть спілкуватись, відвідуючи профілі та натискаючи кнопку чату',
+    failedToSendMessage: 'не вдалося надіслати повідомлення',
+    errorLoadingMessages: 'помилка завантаження повідомлень',
+    failedToUpdateFlintaStatus: 'не вдалося оновити статус flinta*',
+    failedToLeaveChat: 'не вдалося покинути чат',
+    leftGroupChatSuccessfully: 'успішно покинуто груповий чат',
+
+    // Validation messages
+    pleaseSelectStartDate: 'оберіть дату початку',
+    pleaseWaitValidatingLocation:
+        'зачекайте, поки ми перевіряємо місцезнаходження',
+    pleaseEnterValidLocation: 'введіть правильне місцезнаходження',
+
+    // Report dialog
+    failedToAddScreenshot: 'не вдалося додати знімок екрана',
+    pleaseDescribeIssue: 'опишіть проблему',
+
     // general ui
     error: 'помилка',
-    close: 'закрити',
     unknown: 'невідомий',
-    guest: 'гість',
     km: 'км',
+    uploadingImage: 'завантаження зображення...',
+    close: 'закрити',
+    errorLoadingMembers: 'помилка завантаження членів',
+    invalidCredentials: 'недійсні облікові дані. будь ласка, спробуйте ще раз.',
+    failedToContinueAsGuest: 'не вдалося продовжити як гість',
+    appleSignInError: 'Помилка входу Apple',
+    cantBeEmpty: 'не може бути порожнім',
+    enterFullAddress: 'введіть повну адресу',
+    invalidInput: 'недійсний ввід',
+    cantContainSpace: 'не може містити пробіл',
+    invalidDomain: 'недійсний домен',
+    version: 'версія 1.0.0',
+    welcomeToGigHub: 'ласкаво просимо до Gig Hub!',
+    lostConnectionToSoundCloud: 'втрачено з\'єднання з SoundCloud!',
+    connectSoundCloudToContinue: 'підключіть свій SoundCloud, щоб продовжити:',
+    upcomingGigs: ' майбутні концерти',
+    noUpcomingGigsYet: 'ще немає майбутніх концертів. створіть свій перший!',
+    noUpcomingGigs: 'немає майбутніх концертів',
+    noMembersFound: 'членів не знайдено',
+    noMessagesYet: 'ще немає повідомлень',
+    failedToGetUserInformation:
+        'не вдалося отримати інформацію про користувача',
+    failedToUnblockUser:
+        'не вдалося розблокувати користувача. будь ласка, спробуйте ще раз.',
   };
 
   // ARABIC
-  static const Map<String, dynamic> ar = {
+  static const Map<String, String> ar = {
     title: 'المحلية',
     dj: 'دي جي',
     booker: 'حجز',
@@ -1864,6 +2405,8 @@ mixin AppLocale {
     deleteChatMsg: 'حذف الدردشة لك و  ',
     areYouSure: 'هل أنت متأكد؟',
     chats: 'الدردشات',
+    directChats: 'الدردشات المباشرة',
+    groupChats: 'دردشات المجموعة',
     today: 'اليوم',
     msg: 'رسالة...',
     editProfile: 'تعديل الملف الشخصي',
@@ -1884,6 +2427,10 @@ mixin AppLocale {
     unblockedSuccess: 'تم إلغاء حظر المستخدم بنجاح',
     unblockedFail: 'فشل إلغاء حظر المستخدم',
     noChats: 'لا توجد دردشات. ابدأ الآن!',
+    noGroupChatsYet: 'لا توجد دردشات مجموعة بعد',
+    groupChatsWillAppearHere:
+        'ستظهر دردشات المجموعة هنا عندما تقوم بإنشاء حفلات مع تفعيل دردشة المجموعة',
+    errorLoadingGroupChats: 'خطأ في تحميل دردشات المجموعة',
     loadingChatsError: 'لا يمكن تحميل الدردشات',
     startTalking: 'ابدأ في التحدث!',
     removeImages: 'إزالة جميع الصور',
@@ -1989,16 +2536,61 @@ mixin AppLocale {
     joinedRave: 'انضم إلى',
     retry: 'إعادة المحاولة',
 
+    // UI elements
+    leaveEvent: 'مغادرة الحدث',
+    attendEvent: 'حضور الحدث',
+    djs: 'dj',
+    moreInfo: 'مزيد من المعلومات',
+
+    // Loading and error messages
+    failedToUploadImage: 'فشل في تحميل الصورة',
+    startChattingHint:
+        'ابدأ في الدردشة بزيارة الملفات الشخصية والضغط على زر الدردشة',
+    failedToSendMessage: 'فشل في إرسال الرسالة',
+    errorLoadingMessages: 'خطأ في تحميل الرسائل',
+    failedToUpdateFlintaStatus: 'فشل في تحديث حالة flinta*',
+    failedToLeaveChat: 'فشل في مغادرة الدردشة',
+    leftGroupChatSuccessfully: 'تم مغادرة الدردشة الجماعية بنجاح',
+
+    // Validation messages
+    pleaseSelectStartDate: 'يرجى تحديد تاريخ البداية',
+    pleaseWaitValidatingLocation: 'يرجى الانتظار أثناء التحقق من الموقع',
+    pleaseEnterValidLocation: 'يرجى إدخال موقع صحيح',
+
+    // Report dialog
+    failedToAddScreenshot: 'فشل في إضافة لقطة الشاشة',
+    pleaseDescribeIssue: 'يرجى وصف المشكلة',
+
     // general ui
     error: 'خطأ',
-    close: 'إغلاق',
     unknown: 'غير معروف',
-    guest: 'ضيف',
     km: 'كم',
+    uploadingImage: 'تحميل الصورة...',
+    close: 'إغلاق',
+    errorLoadingMembers: 'خطأ في تحميل الأعضاء',
+    invalidCredentials: 'بيانات اعتماد غير صالحة. يرجى المحاولة مرة أخرى.',
+    failedToContinueAsGuest: 'فشل في المتابعة كضيف',
+    appleSignInError: 'خطأ في تسجيل الدخول إلى Apple',
+    cantBeEmpty: 'لا يمكن أن يكون فارغاً',
+    enterFullAddress: 'أدخل العنوان الكامل',
+    invalidInput: 'إدخال غير صالح',
+    cantContainSpace: 'لا يمكن أن يحتوي على مسافة',
+    invalidDomain: 'نطاق غير صالح',
+    version: 'الإصدار 1.0.0',
+    welcomeToGigHub: 'مرحباً بك في Gig Hub!',
+    lostConnectionToSoundCloud: 'فقد الاتصال بـ SoundCloud!',
+    connectSoundCloudToContinue: 'قم بتوصيل SoundCloud الخاص بك للمتابعة:',
+    upcomingGigs: ' الحفلات القادمة',
+    noUpcomingGigsYet: 'لا توجد حفلات قادمة بعد. أنشئ أول حفلة لك!',
+    noUpcomingGigs: 'لا توجد حفلات قادمة',
+    noMembersFound: 'لم يتم العثور على أعضاء',
+    noMessagesYet: 'لا توجد رسائل بعد',
+    failedToGetUserInformation: 'فشل في الحصول على معلومات المستخدم',
+    failedToUnblockUser: 'فشل في إلغاء حظر المستخدم. يرجى المحاولة مرة أخرى.',
   };
 
   // TURKISH
-  static const Map<String, dynamic> tr = {
+  static const Map<String, String> tr = {
     title: 'yerelleştirme',
     dj: 'DJ',
     booker: 'rezervasyon',
@@ -2044,6 +2636,8 @@ mixin AppLocale {
     deleteChatMsg: 'sizin ve için sohbeti sil ',
     areYouSure: 'emin misiniz?',
     chats: 'sohbetler',
+    directChats: 'doğrudan sohbetler',
+    groupChats: 'grup sohbetleri',
     today: 'bugün',
     msg: 'mesaj...',
     editProfile: 'profili düzenle',
@@ -2064,6 +2658,10 @@ mixin AppLocale {
     unblockedSuccess: 'kullanıcı başarıyla engeli kaldırıldı',
     unblockedFail: 'kullanıcının engeli kaldırılamadı',
     noChats: 'sohbet yok. şimdi başlayın!',
+    noGroupChatsYet: 'henüz grup sohbeti yok',
+    groupChatsWillAppearHere:
+        'grup sohbeti etkinleştirilmiş rave oluşturduğunuzda grup sohbetleri burada görünecek',
+    errorLoadingGroupChats: 'grup sohbetleri yüklenirken hata',
     loadingChatsError: 'sohbetler yüklenemedi',
     startTalking: 'konuşmaya başlayın!',
     removeImages: 'tüm görselleri kaldır',
@@ -2170,16 +2768,62 @@ mixin AppLocale {
     joinedRave: 'katıldı',
     retry: 'tekrar dene',
 
+    // UI elements
+    leaveEvent: 'etkinlikten ayrıl',
+    attendEvent: 'etkinliğe katıl',
+    djs: 'dj',
+    moreInfo: 'daha fazla bilgi',
+
+    // Loading and error messages
+    failedToUploadImage: 'görsel yükleme başarısız',
+    startChattingHint:
+        'profil\'leri ziyaret ederek ve sohbet düğmesine dokunarak sohbete başlayın',
+    failedToSendMessage: 'mesaj gönderme başarısız',
+    errorLoadingMessages: 'mesaj yükleme hatası',
+    failedToUpdateFlintaStatus: 'flinta* durumu güncelleme başarısız',
+    failedToLeaveChat: 'sohbetten ayrılma başarısız',
+    leftGroupChatSuccessfully: 'grup sohbeti başarıyla terk edildi',
+
+    // Validation messages
+    pleaseSelectStartDate: 'lütfen başlangıç tarihi seçin',
+    pleaseWaitValidatingLocation: 'konumu doğrularken lütfen bekleyin',
+    pleaseEnterValidLocation: 'lütfen geçerli bir konum girin',
+
+    // Report dialog
+    failedToAddScreenshot: 'ekran görüntüsü ekleme başarısız',
+    pleaseDescribeIssue: 'lütfen sorunu açıklayın',
+
     // general ui
     error: 'hata',
-    close: 'kapat',
     unknown: 'bilinmeyen',
-    guest: 'misafir',
     km: 'km',
+    uploadingImage: 'görsel yükleniyor...',
+    close: 'kapat',
+    errorLoadingMembers: 'üyeler yüklenirken hata',
+    invalidCredentials: 'geçersiz kimlik bilgileri. lütfen tekrar deneyin.',
+    failedToContinueAsGuest: 'misafir olarak devam edilemedi',
+    appleSignInError: 'Apple Giriş Hatası',
+    cantBeEmpty: 'boş olamaz',
+    enterFullAddress: 'tam adresi girin',
+    invalidInput: 'geçersiz giriş',
+    cantContainSpace: 'boşluk içeremez',
+    invalidDomain: 'geçersiz alan adı',
+    version: 'sürüm 1.0.0',
+    welcomeToGigHub: 'Gig Hub\'a hoş geldiniz!',
+    lostConnectionToSoundCloud: 'SoundCloud bağlantısı kaybedildi!',
+    connectSoundCloudToContinue: 'devam etmek için SoundCloud\'unuzu bağlayın:',
+    upcomingGigs: ' yaklaşan konserler',
+    noUpcomingGigsYet: 'henüz yaklaşan konser yok. ilkini oluştur!',
+    noUpcomingGigs: 'yaklaşan konser yok',
+    noMembersFound: 'üye bulunamadı',
+    noMessagesYet: 'henüz mesaj yok',
+    failedToGetUserInformation: 'kullanıcı bilgileri alınamadı',
+    failedToUnblockUser:
+        'kullanıcı engeli kaldırılamadı. lütfen tekrar deneyin.',
   };
 
   // JAPANESE
-  static const Map<String, dynamic> ja = {
+  static const Map<String, String> ja = {
     title: 'ローカリゼーション',
     dj: 'DJ',
     booker: 'ブッカー',
@@ -2223,6 +2867,8 @@ mixin AppLocale {
     deleteChatMsg: 'あなたと のチャットを削除しますか',
     areYouSure: '本当ですか？',
     chats: 'チャット',
+    directChats: 'ダイレクトチャット',
+    groupChats: 'グループチャット',
     today: '今日',
     msg: 'メッセージ...',
     editProfile: 'プロフィールを編集する',
@@ -2243,6 +2889,9 @@ mixin AppLocale {
     unblockedSuccess: 'ユーザーのブロックが解除されました',
     unblockedFail: 'ユーザーのブロック解除に失敗しました',
     noChats: 'チャットがありません。今すぐ始めましょう！',
+    noGroupChatsYet: 'まだグループチャットがありません',
+    groupChatsWillAppearHere: 'グループチャットが有効になっているレイブを作成すると、ここにグループチャットが表示されます',
+    errorLoadingGroupChats: 'グループチャットの読み込みエラー',
     loadingChatsError: 'チャットを読み込めませんでした',
     startTalking: '話し始めましょう！',
     removeImages: 'すべての画像を削除する',
@@ -2343,16 +2992,60 @@ mixin AppLocale {
     joinedRave: '参加しました',
     retry: '再試行',
 
+    // UI elements
+    leaveEvent: 'イベントを退出',
+    attendEvent: 'イベントに参加',
+    djs: 'dj',
+    moreInfo: '詳細情報',
+
+    // Loading and error messages
+    failedToUploadImage: '画像アップロードに失敗しました',
+    startChattingHint: 'プロフィールを訪れてチャットボタンをタップしてチャットを始めましょう',
+    failedToSendMessage: 'メッセージ送信に失敗しました',
+    errorLoadingMessages: 'メッセージ読み込みエラー',
+    failedToUpdateFlintaStatus: 'flinta*ステータス更新に失敗しました',
+    failedToLeaveChat: 'チャット退出に失敗しました',
+    leftGroupChatSuccessfully: 'グループチャットを正常に退出しました',
+
+    // Validation messages
+    pleaseSelectStartDate: '開始日を選択してください',
+    pleaseWaitValidatingLocation: '場所を検証中です。お待ちください',
+    pleaseEnterValidLocation: '有効な場所を入力してください',
+
+    // Report dialog
+    failedToAddScreenshot: 'スクリーンショットの追加に失敗しました',
+    pleaseDescribeIssue: '問題を説明してください',
+
     // general ui
     error: 'エラー',
-    close: '閉じる',
     unknown: '不明',
-    guest: 'ゲスト',
     km: 'km',
+    uploadingImage: '画像をアップロード中...',
+    close: '閉じる',
+    errorLoadingMembers: 'メンバーの読み込みエラー',
+    invalidCredentials: '無効な資格情報です。もう一度お試しください。',
+    failedToContinueAsGuest: 'ゲストとして続行できませんでした',
+    appleSignInError: 'Appleサインインエラー',
+    cantBeEmpty: '空にできません',
+    enterFullAddress: '完全な住所を入力してください',
+    invalidInput: '無効な入力',
+    cantContainSpace: 'スペースを含めることはできません',
+    invalidDomain: '無効なドメイン',
+    version: 'バージョン 1.0.0',
+    welcomeToGigHub: 'Gig Hubへようこそ！',
+    lostConnectionToSoundCloud: 'SoundCloudとの接続が失われました！',
+    connectSoundCloudToContinue: '続行するにはSoundCloudを接続してください：',
+    upcomingGigs: ' 近日公開のギグ',
+    noUpcomingGigsYet: 'まだ近日公開のギグがありません。最初のものを作成してください！',
+    noUpcomingGigs: '近日公開のギグがありません',
+    noMembersFound: 'メンバーが見つかりません',
+    noMessagesYet: 'まだメッセージがありません',
+    failedToGetUserInformation: 'ユーザー情報の取得に失敗しました',
+    failedToUnblockUser: 'ユーザーのブロック解除に失敗しました。もう一度お試しください。',
   };
 
   // KOREAN
-  static const Map<String, dynamic> ko = {
+  static const Map<String, String> ko = {
     title: '로컬라이제이션',
     dj: 'DJ',
     booker: '부커',
@@ -2396,6 +3089,8 @@ mixin AppLocale {
     deleteChatMsg: '당신과 의 채팅을 삭제하시겠습니까',
     areYouSure: '확실합니까?',
     chats: '채팅들',
+    directChats: '직접 채팅',
+    groupChats: '그룹 채팅',
     today: '오늘',
     msg: '메시지...',
     editProfile: '프로필 편집하기',
@@ -2416,6 +3111,9 @@ mixin AppLocale {
     unblockedSuccess: '사용자의 차단이 해제되었습니다',
     unblockedFail: '사용자의 차단 해제에 실패했습니다',
     noChats: '채팅이 없습니다. 지금 시작하세요!',
+    noGroupChatsYet: '아직 그룹 채팅이 없습니다',
+    groupChatsWillAppearHere: '그룹 채팅이 활성화된 레이브를 만들면 여기 그룹 채팅이 나타납니다',
+    errorLoadingGroupChats: '그룹 채팅 로딩 오류',
     loadingChatsError: '채팅을 로드할 수 없습니다',
     startTalking: '대화를 시작하세요!',
     removeImages: '모든 이미지를 제거하기',
@@ -2516,16 +3214,60 @@ mixin AppLocale {
     joinedRave: '참가했습니다',
     retry: '다시 시도',
 
+    // UI elements
+    close: '닫기',
+    leaveEvent: '이벤트 떠나기',
+    attendEvent: '이벤트 참석',
+    djs: 'dj',
+    moreInfo: '더 많은 정보',
+
+    // Loading and error messages
+    failedToUploadImage: '이미지 업로드 실패',
+    startChattingHint: '프로필을 방문하고 채팅 버튼을 탭하여 채팅을 시작하세요',
+    failedToSendMessage: '메시지 전송 실패',
+    errorLoadingMessages: '메시지 로딩 오류',
+    failedToUpdateFlintaStatus: 'flinta* 상태 업데이트 실패',
+    failedToLeaveChat: '채팅 떠나기 실패',
+    leftGroupChatSuccessfully: '그룹 채팅 성공적으로 떠남',
+
+    // Validation messages
+    pleaseSelectStartDate: '시작 날짜를 선택하세요',
+    pleaseWaitValidatingLocation: '위치를 검증하는 동안 기다려주세요',
+    pleaseEnterValidLocation: '유효한 위치를 입력하세요',
+
+    // Report dialog
+    failedToAddScreenshot: '스크린샷 추가 실패',
+    pleaseDescribeIssue: '문제를 설명하세요',
+
     // general ui
     error: '오류',
-    close: '닫기',
     unknown: '알 수 없음',
-    guest: '게스트',
     km: 'km',
+    uploadingImage: '이미지 업로드 중...',
+    errorLoadingMembers: '회원 로딩 오류',
+    invalidCredentials: '잘못된 자격 증명입니다. 다시 시도해주세요.',
+    failedToContinueAsGuest: '게스트로 계속할 수 없습니다',
+    appleSignInError: 'Apple 로그인 오류',
+    cantBeEmpty: '비워둘 수 없습니다',
+    enterFullAddress: '전체 주소를 입력하세요',
+    invalidInput: '잘못된 입력',
+    cantContainSpace: '공백을 포함할 수 없습니다',
+    invalidDomain: '잘못된 도메인',
+    version: '버전 1.0.0',
+    welcomeToGigHub: 'Gig Hub에 오신 것을 환영합니다!',
+    lostConnectionToSoundCloud: 'SoundCloud 연결이 끊어졌습니다!',
+    connectSoundCloudToContinue: '계속하려면 SoundCloud를 연결하세요:',
+    upcomingGigs: ' 다가오는 공연',
+    noUpcomingGigsYet: '아직 다가오는 공연이 없습니다. 첫 번째 공연을 만드세요!',
+    noUpcomingGigs: '다가오는 공연이 없습니다',
+    noMembersFound: '회원을 찾을 수 없습니다',
+    noMessagesYet: '아직 메시지가 없습니다',
+    failedToGetUserInformation: '사용자 정보를 가져오지 못했습니다',
+    failedToUnblockUser: '사용자 차단 해제에 실패했습니다. 다시 시도해주세요.',
   };
 
   // CHINESE
-  static const Map<String, dynamic> zh = {
+  static const Map<String, String> zh = {
     title: '本地化',
     dj: 'DJ',
     booker: '预订者',
@@ -2569,6 +3311,8 @@ mixin AppLocale {
     deleteChatMsg: '删除您和 的聊天记录',
     areYouSure: '你确定吗？',
     chats: '聊天记录们',
+    directChats: '直接聊天',
+    groupChats: '群聊',
     today: '今天',
     msg: '消息...',
     editProfile: '编辑个人资料',
@@ -2589,6 +3333,9 @@ mixin AppLocale {
     unblockedSuccess: '用户已成功解锁',
     unblockedFail: '无法解锁用户',
     noChats: '没有聊天记录。现在开始吧！',
+    noGroupChatsYet: '还没有群聊',
+    groupChatsWillAppearHere: '当您创建启用群聊的狂欢时，群聊将出现在这里',
+    errorLoadingGroupChats: '加载群聊错误',
     loadingChatsError: '无法加载聊天记录',
     startTalking: '开始聊天吧！',
     removeImages: '删除所有图片',
@@ -2689,11 +3436,55 @@ mixin AppLocale {
     joinedRave: '加入了',
     retry: '重试',
 
+    // UI elements
+    close: '关闭',
+    leaveEvent: '离开事件',
+    attendEvent: '参加事件',
+    djs: 'dj',
+    moreInfo: '更多信息',
+
+    // Loading and error messages
+    failedToUploadImage: '上传图片失败',
+    startChattingHint: '通过访问个人资料并点击聊天按钮开始聊天',
+    failedToSendMessage: '发送消息失败',
+    errorLoadingMessages: '加载消息错误',
+    failedToUpdateFlintaStatus: '更新 flinta* 状态失败',
+    failedToLeaveChat: '离开聊天失败',
+    leftGroupChatSuccessfully: '成功离开群聊',
+
+    // Validation messages
+    pleaseSelectStartDate: '请选择开始日期',
+    pleaseWaitValidatingLocation: '请等待我们验证位置',
+    pleaseEnterValidLocation: '请输入有效位置',
+
+    // Report dialog
+    failedToAddScreenshot: '添加截图失败',
+    pleaseDescribeIssue: '请描述问题',
+
     // general ui
     error: '错误',
-    close: '关闭',
     unknown: '未知',
-    guest: '访客',
     km: '公里',
+    uploadingImage: '上传图片中...',
+    errorLoadingMembers: '加载成员错误',
+    invalidCredentials: '无效凭据。请重试。',
+    failedToContinueAsGuest: '无法作为访客继续',
+    appleSignInError: 'Apple登录错误',
+    cantBeEmpty: '不能为空',
+    enterFullAddress: '输入完整地址',
+    invalidInput: '无效输入',
+    cantContainSpace: '不能包含空格',
+    invalidDomain: '无效域名',
+    version: '版本 1.0.0',
+    welcomeToGigHub: '欢迎来到 Gig Hub！',
+    lostConnectionToSoundCloud: '与 SoundCloud 连接丢失！',
+    connectSoundCloudToContinue: '连接您的 SoundCloud 以继续：',
+    upcomingGigs: ' 即将到来的演出',
+    noUpcomingGigsYet: '还没有即将到来的演出。创建您的第一个！',
+    noUpcomingGigs: '没有即将到来的演出',
+    noMembersFound: '未找到成员',
+    noMessagesYet: '还没有消息',
+    failedToGetUserInformation: '获取用户信息失败',
+    failedToUnblockUser: '解锁用户失败。请重试。',
   };
 }

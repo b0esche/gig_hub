@@ -259,7 +259,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                 if (snapshot.hasError) {
                   return Center(
                     child: Text(
-                      'Error loading messages',
+                      AppLocale.errorLoadingMessages.getString(context),
                       style: TextStyle(color: Palette.glazedWhite),
                     ),
                   );
@@ -1035,7 +1035,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('failed to upload image: $e'),
+            content: Text('${AppLocale.failedToUploadImage.getString(context)}: $e'),
             backgroundColor: Palette.alarmRed,
           ),
         );

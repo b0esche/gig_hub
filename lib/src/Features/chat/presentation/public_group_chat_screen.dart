@@ -418,7 +418,7 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
           SnackBar(
             content: Center(
               child: Text(
-                'failed to get user information',
+                AppLocale.failedToGetUserInformation.getString(context),
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -841,7 +841,7 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
           SnackBar(
             content: Center(
               child: Text(
-                'failed to upload image: ${e.toString()}',
+                '${AppLocale.failedToUploadImage.getString(context)}: ${e.toString()}',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -984,7 +984,7 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
                         if (members.isEmpty) {
                           return Center(
                             child: Text(
-                              'no members found',
+                              AppLocale.noMembersFound.getString(context),
                               style: TextStyle(
                                 color: Palette.primalBlack.o(0.7),
                                 fontSize: 14,
@@ -1377,7 +1377,7 @@ class _PublicGroupChatScreenState extends State<PublicGroupChatScreen> {
                         ),
                         SizedBox(height: 16),
                         Text(
-                          'no messages yet',
+                          AppLocale.noMessagesYet.getString(context),
                           style: TextStyle(
                             color: Palette.glazedWhite.o(0.7),
                             fontSize: 16,

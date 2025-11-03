@@ -87,7 +87,7 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
             child: Column(
               children: [
                 Text(
-                  'error loading group chats',
+                  AppLocale.errorLoadingGroupChats.getString(context),
                   style: TextStyle(color: Palette.glazedWhite),
                   textAlign: TextAlign.center,
                 ),
@@ -125,7 +125,7 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'no group chats yet',
+                    AppLocale.noGroupChatsYet.getString(context),
                     style: TextStyle(
                       color: Palette.glazedWhite.o(0.7),
                       fontSize: 14,
@@ -134,7 +134,7 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'group chats will appear here when you create raves with group chat enabled',
+                    AppLocale.groupChatsWillAppearHere.getString(context),
                     style: TextStyle(
                       color: Palette.glazedWhite.o(0.5),
                       fontSize: 12,
@@ -239,7 +239,7 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
               ),
             ] else ...[
               Text(
-                'no messages yet',
+                AppLocale.noMessagesYet.getString(context),
                 style: TextStyle(
                   color: Palette.glazedWhite.o(0.5),
                   fontSize: 14,
@@ -354,7 +354,7 @@ class _GroupChatListWidgetState extends State<GroupChatListWidget> {
               ),
             ] else ...[
               Text(
-                'no messages yet',
+                AppLocale.noMessagesYet.getString(context),
                 style: TextStyle(
                   color: Palette.glazedWhite.o(0.5),
                   fontSize: 12,

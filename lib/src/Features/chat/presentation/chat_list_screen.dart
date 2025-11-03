@@ -268,7 +268,7 @@ class _ChatListScreenState extends State<ChatListScreen>
           indicatorColor: Palette.forgedGold,
           labelColor: Palette.forgedGold,
           unselectedLabelColor: Palette.glazedWhite.o(0.7),
-          tabs: [Tab(text: 'direct chats'), Tab(text: 'group chats')],
+          tabs: [Tab(text: AppLocale.directChats.getString(context)), Tab(text: AppLocale.groupChats.getString(context))],
         ),
       ),
       body: TabBarView(
@@ -318,14 +318,14 @@ class _ChatListScreenState extends State<ChatListScreen>
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 4),
-              Text(
-                'start chatting by visiting profiles and tapping the chat button',
-                style: TextStyle(
-                  color: Palette.glazedWhite.o(0.5),
-                  fontSize: 12,
-                ),
-                textAlign: TextAlign.center,
-              ),
+               Text(
+                 AppLocale.startChattingHint.getString(context),
+                 style: TextStyle(
+                   color: Palette.glazedWhite.o(0.5),
+                   fontSize: 12,
+                 ),
+                 textAlign: TextAlign.center,
+               ),
             ],
           ),
         ),

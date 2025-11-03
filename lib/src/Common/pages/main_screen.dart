@@ -97,8 +97,8 @@ class _MainScreenState extends State<MainScreen> {
                     child: Text(
                       widget.initialUser is Guest ||
                               widget.initialUser is Booker
-                          ? "welcome to Gig Hub!"
-                          : "lost connection to SoundCloud!",
+                          ? AppLocale.welcomeToGigHub.getString(context)
+                          : AppLocale.lostConnectionToSoundCloud.getString(context),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.sometypeMono(
                         fontSize: 18,
@@ -108,7 +108,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ),
                   content: Text(
-                    "connect your SoundCloud to continue:",
+                    AppLocale.connectSoundCloudToContinue.getString(context),
                     maxLines: 1,
                     style: GoogleFonts.sometypeMono(
                       fontSize: 13,

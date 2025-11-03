@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Palette.forgedGold,
             content: Center(
               child: Text(
-                'invalid credentials. please try again.',
+                AppLocale.invalidCredentials.getString(context),
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -953,7 +953,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           backgroundColor: Palette.forgedGold,
                                           content: Center(
                                             child: Text(
-                                              'access failed. please try again.',
+                                              AppLocale.accessFailed.getString(context),
                                               style: TextStyle(fontSize: 16),
                                             ),
                                           ),

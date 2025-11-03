@@ -50,7 +50,7 @@ class _RaveListState extends State<RaveList> {
         Row(
           children: [
             Text(
-              ' upcoming gigs',
+              AppLocale.upcomingGigs.getString(context),
               style: GoogleFonts.sometypeMono(
                 textStyle: TextStyle(
                   color: Palette.glazedWhite,
@@ -157,8 +157,8 @@ class _RaveListState extends State<RaveList> {
             const SizedBox(height: 8),
             Text(
               widget.showCreateButton && targetUserId == currentUser?.uid
-                  ? 'no upcoming gigs yet. create your first one!'
-                  : 'no upcoming gigs',
+                  ? AppLocale.noUpcomingGigsYet.getString(context)
+                  : AppLocale.noUpcomingGigs.getString(context),
               style: TextStyle(color: Palette.glazedWhite.o(0.7), fontSize: 14),
               textAlign: TextAlign.center,
             ),
@@ -343,7 +343,7 @@ class _RaveListState extends State<RaveList> {
                 ),
                 const SizedBox(width: 16),
                 Text(
-                  'loading details...',
+                  AppLocale.loadingDetails.getString(context),
                   style: TextStyle(color: Palette.glazedWhite),
                 ),
               ],
@@ -401,7 +401,7 @@ class _RaveListState extends State<RaveList> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('failed to load rave details'),
+            content: Text(AppLocale.failedLoadRaveDetails.getString(context)),
             backgroundColor: Palette.alarmRed,
           ),
         );
@@ -455,7 +455,7 @@ class _RaveListState extends State<RaveList> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('failed to update attendance'),
+            content: Text(AppLocale.failedUpdateAttendance.getString(context)),
             backgroundColor: Palette.alarmRed,
             action: SnackBarAction(
               label: 'retry',

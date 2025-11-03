@@ -61,7 +61,7 @@ class _BlockedUsersDialogState extends State<BlockedUsersDialog> {
             backgroundColor: Palette.alarmRed,
             content: Center(
               child: Text(
-                'failed to unblock user. please try again.',
+                AppLocale.failedToUnblockUser.getString(context),
                 style: TextStyle(color: Palette.glazedWhite, fontSize: 16),
               ),
             ),

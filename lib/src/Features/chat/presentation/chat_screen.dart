@@ -504,7 +504,7 @@ class ChatScreenState extends State<ChatScreen>
                           TextButton(
                             onPressed: () => Navigator.of(context).pop(),
                             child: Text(
-                              'close',
+                              AppLocale.close.getString(context),
                               style: TextStyle(color: Palette.forgedGold),
                             ),
                           ),

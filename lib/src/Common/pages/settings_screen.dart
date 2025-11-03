@@ -831,7 +831,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 24, 12),
                         child: Text(
-                          "version 1.0.0",
+                          "version 1.0.01",
                           style: TextStyle(color: Palette.glazedWhite),
                         ),
                       ),

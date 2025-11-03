@@ -82,171 +82,181 @@ class _BlockedUsersDialogState extends State<BlockedUsersDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 12),
-          LiquidGlass(
-            shape: LiquidRoundedRectangle(borderRadius: 24),
-            child: SizedBox(
-              height: 400,
-              width: 320,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                color: Palette.shadowGrey.o(0.6),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        AppLocale.blocks.getString(context),
-                        style: GoogleFonts.sometypeMono(
-                          textStyle: TextStyle(
-                            color: Palette.primalBlack,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
+          LiquidGlassLayer(
+            child: LiquidGlass(
+              shape: LiquidRoundedRectangle(borderRadius: 24),
+              child: SizedBox(
+                height: 400,
+                width: 320,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  color: Palette.shadowGrey.o(0.6),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          AppLocale.blocks.getString(context),
+                          style: GoogleFonts.sometypeMono(
+                            textStyle: TextStyle(
+                              color: Palette.primalBlack,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 16),
-                      Expanded(
-                        child:
-                            _isLoading
-                                ? Center(
-                                  child: CircularProgressIndicator(
-                                    color: Palette.forgedGold,
-                                    strokeWidth: 1.85,
-                                  ),
-                                )
-                                : _blockedUsers.isEmpty
-                                ? Center(
-                                  child: Text(
-                                    AppLocale.noBlockedUsers.getString(context),
-                                    style: GoogleFonts.sometypeMono(
-                                      textStyle: TextStyle(
-                                        color: Palette.primalBlack.o(0.85),
-                                        fontSize: 14,
+                        SizedBox(height: 16),
+                        Expanded(
+                          child:
+                              _isLoading
+                                  ? Center(
+                                    child: CircularProgressIndicator(
+                                      color: Palette.forgedGold,
+                                      strokeWidth: 1.85,
+                                    ),
+                                  )
+                                  : _blockedUsers.isEmpty
+                                  ? Center(
+                                    child: Text(
+                                      AppLocale.noBlockedUsers.getString(
+                                        context,
+                                      ),
+                                      style: GoogleFonts.sometypeMono(
+                                        textStyle: TextStyle(
+                                          color: Palette.primalBlack.o(0.85),
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                                : ListView.builder(
-                                  itemCount: _blockedUsers.length,
-                                  itemBuilder: (context, index) {
-                                    final user = _blockedUsers[index];
-                                    final hasAvatar =
-                                        user is DJ || user is Booker;
-                                    final avatarUrl =
-                                        hasAvatar
-                                            ? (user is DJ
-                                                ? user.avatarImageUrl
-                                                : (user as Booker)
-                                                    .avatarImageUrl)
-                                            : null;
+                                  )
+                                  : ListView.builder(
+                                    itemCount: _blockedUsers.length,
+                                    itemBuilder: (context, index) {
+                                      final user = _blockedUsers[index];
+                                      final hasAvatar =
+                                          user is DJ || user is Booker;
+                                      final avatarUrl =
+                                          hasAvatar
+                                              ? (user is DJ
+                                                  ? user.avatarImageUrl
+                                                  : (user as Booker)
+                                                      .avatarImageUrl)
+                                              : null;
 
-                                    return Container(
-                                      margin: EdgeInsets.only(bottom: 8),
-                                      padding: EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: Palette.glazedWhite.o(0.3),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          // Avatar
-                                          Container(
-                                            width: 40,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                color: Palette.primalBlack.o(
-                                                  0.3,
-                                                ),
-                                                width: 1,
-                                              ),
-                                            ),
-                                            child: CircleAvatar(
-                                              radius: 18,
-                                              backgroundImage:
-                                                  hasAvatar && avatarUrl != null
-                                                      ? (avatarUrl.startsWith(
-                                                            'http',
-                                                          )
-                                                          ? NetworkImage(
-                                                            avatarUrl,
-                                                          )
-                                                          : FileImage(
-                                                            File(avatarUrl),
-                                                          ))
-                                                      : null,
-                                              child:
-                                                  hasAvatar && avatarUrl != null
-                                                      ? null
-                                                      : Icon(
-                                                        Icons.person,
-                                                        color: Palette
-                                                            .primalBlack
-                                                            .o(0.6),
-                                                        size: 20,
-                                                      ),
-                                            ),
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 8),
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: Palette.glazedWhite.o(0.3),
+                                          borderRadius: BorderRadius.circular(
+                                            12,
                                           ),
-                                          SizedBox(width: 12),
-                                          // Name
-                                          Expanded(
-                                            child: Text(
-                                              hasAvatar
-                                                  ? (user is DJ
-                                                      ? user.name
-                                                      : (user as Booker).name)
-                                                  : 'guest user',
-                                              style: GoogleFonts.sometypeMono(
-                                                textStyle: TextStyle(
-                                                  color: Palette.primalBlack,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 14,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            // Avatar
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                  color: Palette.primalBlack.o(
+                                                    0.3,
+                                                  ),
+                                                  width: 1,
                                                 ),
                                               ),
-                                              overflow: TextOverflow.ellipsis,
+                                              child: CircleAvatar(
+                                                radius: 18,
+                                                backgroundImage:
+                                                    hasAvatar &&
+                                                            avatarUrl != null
+                                                        ? (avatarUrl.startsWith(
+                                                              'http',
+                                                            )
+                                                            ? NetworkImage(
+                                                              avatarUrl,
+                                                            )
+                                                            : FileImage(
+                                                              File(avatarUrl),
+                                                            ))
+                                                        : null,
+                                                child:
+                                                    hasAvatar &&
+                                                            avatarUrl != null
+                                                        ? null
+                                                        : Icon(
+                                                          Icons.person,
+                                                          color: Palette
+                                                              .primalBlack
+                                                              .o(0.6),
+                                                          size: 20,
+                                                        ),
+                                              ),
                                             ),
-                                          ),
-                                          // Unblock button
-                                          SizedBox(
-                                            height: 28,
-                                            child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Palette
-                                                    .forgedGold
-                                                    .o(0.8),
-                                                foregroundColor:
-                                                    Palette.primalBlack,
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 12,
-                                                ),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                ),
-                                              ),
-                                              onPressed:
-                                                  () => _unblockUser(user),
+                                            SizedBox(width: 12),
+                                            // Name
+                                            Expanded(
                                               child: Text(
-                                                AppLocale.unblock.getString(
-                                                  context,
+                                                hasAvatar
+                                                    ? (user is DJ
+                                                        ? user.name
+                                                        : (user as Booker).name)
+                                                    : 'guest user',
+                                                style: GoogleFonts.sometypeMono(
+                                                  textStyle: TextStyle(
+                                                    color: Palette.primalBlack,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14,
+                                                  ),
                                                 ),
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            // Unblock button
+                                            SizedBox(
+                                              height: 28,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Palette
+                                                      .forgedGold
+                                                      .o(0.8),
+                                                  foregroundColor:
+                                                      Palette.primalBlack,
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 12,
+                                                  ),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          6,
+                                                        ),
+                                                  ),
+                                                ),
+                                                onPressed:
+                                                    () => _unblockUser(user),
+                                                child: Text(
+                                                  AppLocale.unblock.getString(
+                                                    context,
+                                                  ),
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                      ),
-                    ],
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -267,24 +277,26 @@ class _BlockedUsersDialogState extends State<BlockedUsersDialog> {
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Center(
-                  child: LiquidGlass(
-                    shape: LiquidRoundedSuperellipse(borderRadius: 24),
-                    glassContainsChild: false,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: Icon(
-                        Icons.close_rounded,
-                        color: Palette.forgedGold,
-                        size: 18,
-                        shadows: [
-                          Shadow(
-                            offset: Offset(0.3, 0.3),
-                            blurRadius: 2,
-                            color: Palette.primalBlack.o(0.65),
-                          ),
-                        ],
+                  child: LiquidGlassLayer(
+                    child: LiquidGlass(
+                      shape: LiquidRoundedSuperellipse(borderRadius: 24),
+                      glassContainsChild: false,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(
+                          Icons.close_rounded,
+                          color: Palette.forgedGold,
+                          size: 18,
+                          shadows: [
+                            Shadow(
+                              offset: Offset(0.3, 0.3),
+                              blurRadius: 2,
+                              color: Palette.primalBlack.o(0.65),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

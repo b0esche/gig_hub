@@ -104,220 +104,224 @@ class _SearchFunctionCardState extends State<SearchFunctionCard> {
                   isSearchCardAnimating = !isSearchCardAnimating;
                 })
                 : null,
-        child: LiquidGlass(
-          shape: LiquidRoundedRectangle(borderRadius: 16),
+        child: LiquidGlassLayer(
+          child: LiquidGlass(
+            shape: LiquidRoundedRectangle(borderRadius: 16),
 
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 350),
-            width: !isSearchCardCollapsed ? 300 : 110,
-            height: !isSearchCardCollapsed ? 192 : 48,
-            curve: Curves.easeInOut,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 350),
+              width: !isSearchCardCollapsed ? 300 : 110,
+              height: !isSearchCardCollapsed ? 192 : 48,
+              curve: Curves.easeInOut,
 
-            alignment: Alignment.center,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              elevation: 3,
-              color: Palette.glazedWhite.o(0.15),
-              child: Padding(
-                padding:
-                    !isSearchCardCollapsed
-                        ? EdgeInsets.fromLTRB(16, 16, 0, 0)
-                        : EdgeInsetsGeometry.only(
-                          top: 2,
-                          bottom: 2,
-                          left: 8,
-                          right: 8,
-                        ),
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  reverseDuration: const Duration(microseconds: 250),
-                  switchInCurve: Curves.easeInOut,
-                  switchOutCurve: Curves.easeInOut,
-                  child:
-                      showSearchContent
-                          ? Column(
-                            key: const ValueKey('expanded'),
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomFormField(
-                                readOnly: true,
-                                label: "genres...",
-                                onPressed: _showGenreDialog,
-                                controller: genreController,
-                              ),
-                              const SizedBox(height: 8),
-                              CustomFormField(
-                                readOnly: true,
-                                label: "bpm...",
-                                onPressed: _showBpmDialog,
-                                controller: bpmController,
-                              ),
-                              const SizedBox(height: 8),
-                              LocationAutocompleteField(
-                                controller: locationController,
-                                onCitySelected: (city) {
-                                  setState(() {
-                                    selectedCity = city;
-                                  });
-                                },
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const SizedBox(width: 85),
-                                  ElevatedButton(
-                                    onPressed: _search,
+              alignment: Alignment.center,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 3,
+                color: Palette.glazedWhite.o(0.15),
+                child: Padding(
+                  padding:
+                      !isSearchCardCollapsed
+                          ? EdgeInsets.fromLTRB(16, 16, 0, 0)
+                          : EdgeInsetsGeometry.only(
+                            top: 2,
+                            bottom: 2,
+                            left: 8,
+                            right: 8,
+                          ),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    reverseDuration: const Duration(microseconds: 250),
+                    switchInCurve: Curves.easeInOut,
+                    switchOutCurve: Curves.easeInOut,
+                    child:
+                        showSearchContent
+                            ? Column(
+                              key: const ValueKey('expanded'),
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomFormField(
+                                  readOnly: true,
+                                  label: "genres...",
+                                  onPressed: _showGenreDialog,
+                                  controller: genreController,
+                                ),
+                                const SizedBox(height: 8),
+                                CustomFormField(
+                                  readOnly: true,
+                                  label: "bpm...",
+                                  onPressed: _showBpmDialog,
+                                  controller: bpmController,
+                                ),
+                                const SizedBox(height: 8),
+                                LocationAutocompleteField(
+                                  controller: locationController,
+                                  onCitySelected: (city) {
+                                    setState(() {
+                                      selectedCity = city;
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    const SizedBox(width: 85),
+                                    ElevatedButton(
+                                      onPressed: _search,
 
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Palette.shadowGrey,
-                                      splashFactory: NoSplash.splashFactory,
-                                      maximumSize: const Size(150, 24),
-                                      minimumSize: const Size(88, 22),
-                                      padding: EdgeInsets.zero,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        side: BorderSide(
-                                          color: Palette.concreteGrey.o(0.7),
-                                          width: 1.5,
-                                        ),
-                                      ),
-                                      elevation: 4,
-                                    ),
-                                    child: Text(
-                                      AppLocale.search.getString(context),
-                                      style: GoogleFonts.sometypeMono(
-                                        textStyle: TextStyle(
-                                          color: Palette.primalBlack,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  TextButton(
-                                    style: ButtonStyle(
-                                      foregroundColor:
-                                          WidgetStateProperty.resolveWith<
-                                            Color
-                                          >((states) {
-                                            if (states.contains(
-                                              WidgetState.pressed,
-                                            )) {
-                                              return Palette.forgedGold;
-                                            }
-                                            return Palette.primalBlack;
-                                          }),
-                                      alignment: Alignment.bottomCenter,
-                                      splashFactory: NoSplash.splashFactory,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        FocusManager.instance.primaryFocus
-                                            ?.unfocus();
-                                        selectedGenres.clear();
-                                        selectedBpm = null;
-                                        selectedCity = null;
-                                        genreController.clear();
-                                        bpmController.clear();
-                                        locationController.clear();
-                                      });
-                                      widget.onBpmRangeChanged(null);
-                                      widget.onGenresChanged(null);
-                                      _search();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Palette.shadowGrey,
-                                        border: Border.all(
-                                          color: Palette.concreteGrey,
-                                        ),
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(6),
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Palette.gigGrey.o(0.65),
-                                            blurRadius: 2,
-                                            offset: const Offset(0.5, 2),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Palette.shadowGrey,
+                                        splashFactory: NoSplash.splashFactory,
+                                        maximumSize: const Size(150, 24),
+                                        minimumSize: const Size(88, 22),
+                                        padding: EdgeInsets.zero,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
                                           ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                          4,
-                                          0,
-                                          4,
-                                          0,
+                                          side: BorderSide(
+                                            color: Palette.concreteGrey.o(0.7),
+                                            width: 1.5,
+                                          ),
                                         ),
-                                        child: Text(
-                                          AppLocale.clear.getString(context),
-                                          style: GoogleFonts.sometypeMono(
-                                            textStyle: TextStyle(
-                                              fontSize: 11.5,
-                                              fontWeight: FontWeight.w500,
-                                              color: Palette.primalBlack,
+                                        elevation: 4,
+                                      ),
+                                      child: Text(
+                                        AppLocale.search.getString(context),
+                                        style: GoogleFonts.sometypeMono(
+                                          textStyle: TextStyle(
+                                            color: Palette.primalBlack,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        foregroundColor:
+                                            WidgetStateProperty.resolveWith<
+                                              Color
+                                            >((states) {
+                                              if (states.contains(
+                                                WidgetState.pressed,
+                                              )) {
+                                                return Palette.forgedGold;
+                                              }
+                                              return Palette.primalBlack;
+                                            }),
+                                        alignment: Alignment.bottomCenter,
+                                        splashFactory: NoSplash.splashFactory,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                          selectedGenres.clear();
+                                          selectedBpm = null;
+                                          selectedCity = null;
+                                          genreController.clear();
+                                          bpmController.clear();
+                                          locationController.clear();
+                                        });
+                                        widget.onBpmRangeChanged(null);
+                                        widget.onGenresChanged(null);
+                                        _search();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Palette.shadowGrey,
+                                          border: Border.all(
+                                            color: Palette.concreteGrey,
+                                          ),
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(6),
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Palette.gigGrey.o(0.65),
+                                              blurRadius: 2,
+                                              offset: const Offset(0.5, 2),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                            4,
+                                            0,
+                                            4,
+                                            0,
+                                          ),
+                                          child: Text(
+                                            AppLocale.clear.getString(context),
+                                            style: GoogleFonts.sometypeMono(
+                                              textStyle: TextStyle(
+                                                fontSize: 11.5,
+                                                fontWeight: FontWeight.w500,
+                                                color: Palette.primalBlack,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                          : isSearchCardAnimating
-                          ? Center(
-                            key: const ValueKey('collapsed'),
-                            child: ElevatedButton(
-                              autofocus: true,
-                              onPressed: () async {
-                                setState(() {
-                                  isSearchCardAnimating =
-                                      !isSearchCardAnimating;
-                                  isSearchCardCollapsed =
-                                      !isSearchCardCollapsed;
-                                });
-                                await Future.delayed(
-                                  const Duration(milliseconds: 350),
-                                );
-                                setState(() {
-                                  showSearchContent = !showSearchContent;
-                                });
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Palette.shadowGrey,
-                                splashFactory: NoSplash.splashFactory,
+                                  ],
+                                ),
+                              ],
+                            )
+                            : isSearchCardAnimating
+                            ? Center(
+                              key: const ValueKey('collapsed'),
+                              child: ElevatedButton(
+                                autofocus: true,
+                                onPressed: () async {
+                                  setState(() {
+                                    isSearchCardAnimating =
+                                        !isSearchCardAnimating;
+                                    isSearchCardCollapsed =
+                                        !isSearchCardCollapsed;
+                                  });
+                                  await Future.delayed(
+                                    const Duration(milliseconds: 350),
+                                  );
+                                  setState(() {
+                                    showSearchContent = !showSearchContent;
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Palette.shadowGrey,
+                                  splashFactory: NoSplash.splashFactory,
 
-                                maximumSize: const Size(150, 24),
-                                minimumSize: const Size(88, 22),
-                                padding: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  side: BorderSide(
-                                    color: Palette.concreteGrey.o(0.7),
-                                    width: 1.5,
+                                  maximumSize: const Size(150, 24),
+                                  minimumSize: const Size(88, 22),
+                                  padding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: BorderSide(
+                                      color: Palette.concreteGrey.o(0.7),
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  elevation: 3,
+                                ),
+                                child: Text(
+                                  AppLocale.search.getString(context),
+                                  style: GoogleFonts.sometypeMono(
+                                    textStyle: TextStyle(
+                                      color: Palette.primalBlack,
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ),
-                                elevation: 3,
                               ),
-                              child: Text(
-                                AppLocale.search.getString(context),
-                                style: GoogleFonts.sometypeMono(
-                                  textStyle: TextStyle(
-                                    color: Palette.primalBlack,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                          : null,
+                            )
+                            : null,
+                  ),
                 ),
               ),
             ),

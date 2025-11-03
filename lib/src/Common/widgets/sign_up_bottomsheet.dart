@@ -85,61 +85,65 @@ class _SignUpSheetState extends State<SignUpSheet> {
               SizedBox(
                 height: 48,
                 width: 270,
-                child: LiquidGlass(
-                  shape: LiquidRoundedRectangle(borderRadius: 16),
+                child: LiquidGlassLayer(
+                  child: LiquidGlass(
+                    shape: LiquidRoundedRectangle(borderRadius: 16),
 
-                  child: SegmentedButton<String>(
-                    expandedInsets: EdgeInsets.all(2),
-                    showSelectedIcon: false,
-                    segments: const [
-                      ButtonSegment<String>(
-                        value: 'booker',
-                        label: Text("booker", style: TextStyle(fontSize: 12)),
-                      ),
-                      ButtonSegment<String>(
-                        value: 'dj',
-                        label: Text(
-                          "    DJ    ",
-                          style: TextStyle(fontSize: 12),
+                    child: SegmentedButton<String>(
+                      expandedInsets: EdgeInsets.all(2),
+                      showSelectedIcon: false,
+                      segments: const [
+                        ButtonSegment<String>(
+                          value: 'booker',
+                          label: Text("booker", style: TextStyle(fontSize: 12)),
                         ),
-                      ),
-                    ],
-                    selected: selected,
-                    onSelectionChanged: (Set<String> newSelection) {
-                      setState(() {
-                        selected = newSelection;
-                      });
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.resolveWith<Color?>((
-                        states,
-                      ) {
-                        if (states.contains(WidgetState.selected)) {
-                          return Palette.shadowGrey;
-                        }
-                        return Palette.shadowGrey.o(0.35);
-                      }),
-                      foregroundColor: WidgetStateProperty.all(
-                        Palette.primalBlack,
-                      ),
-                      textStyle: WidgetStateProperty.resolveWith<TextStyle?>((
-                        states,
-                      ) {
-                        return TextStyle(
-                          fontWeight:
-                              states.contains(WidgetState.selected)
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                        );
-                      }),
-                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          side: BorderSide(color: Palette.shadowGrey, width: 2),
+                        ButtonSegment<String>(
+                          value: 'dj',
+                          label: Text(
+                            "    DJ    ",
+                            style: TextStyle(fontSize: 12),
+                          ),
                         ),
-                      ),
-                      padding: WidgetStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.symmetric(horizontal: 24),
+                      ],
+                      selected: selected,
+                      onSelectionChanged: (Set<String> newSelection) {
+                        setState(() {
+                          selected = newSelection;
+                        });
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.resolveWith<Color?>((states) {
+                              if (states.contains(WidgetState.selected)) {
+                                return Palette.shadowGrey;
+                              }
+                              return Palette.shadowGrey.o(0.35);
+                            }),
+                        foregroundColor: WidgetStateProperty.all(
+                          Palette.primalBlack,
+                        ),
+                        textStyle: WidgetStateProperty.resolveWith<TextStyle?>((
+                          states,
+                        ) {
+                          return TextStyle(
+                            fontWeight:
+                                states.contains(WidgetState.selected)
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                          );
+                        }),
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: BorderSide(
+                              color: Palette.shadowGrey,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        padding: WidgetStateProperty.all<EdgeInsets>(
+                          const EdgeInsets.symmetric(horizontal: 24),
+                        ),
                       ),
                     ),
                   ),
@@ -248,32 +252,34 @@ class _SignUpSheetState extends State<SignUpSheet> {
                 ),
               ),
               const SizedBox(height: 96),
-              LiquidGlass(
-                shape: LiquidRoundedRectangle(borderRadius: 16),
+              LiquidGlassLayer(
+                child: LiquidGlass(
+                  shape: LiquidRoundedRectangle(borderRadius: 16),
 
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Palette.forgedGold,
-                      foregroundColor: Palette.primalBlack,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(
-                          color: Palette.concreteGrey.o(0.7),
-                          width: 2,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Palette.forgedGold,
+                        foregroundColor: Palette.primalBlack,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: BorderSide(
+                            color: Palette.concreteGrey.o(0.7),
+                            width: 2,
+                          ),
                         ),
                       ),
-                    ),
-                    onPressed: _submitForm,
-                    child: Text(
-                      AppLocale.next.getString(context),
-                      style: GoogleFonts.sometypeMono(
-                        textStyle: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Palette.glazedWhite,
+                      onPressed: _submitForm,
+                      child: Text(
+                        AppLocale.next.getString(context),
+                        style: GoogleFonts.sometypeMono(
+                          textStyle: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.glazedWhite,
+                          ),
                         ),
                       ),
                     ),

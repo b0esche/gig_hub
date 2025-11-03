@@ -523,70 +523,73 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 48,
                         width: 270,
-                        child: LiquidGlass(
-                          shape: LiquidRoundedRectangle(borderRadius: 16),
+                        child: LiquidGlassLayer(
+                          child: LiquidGlass(
+                            shape: LiquidRoundedRectangle(borderRadius: 16),
 
-                          child: SegmentedButton<String>(
-                            showSelectedIcon: false,
-                            segments: const [
-                              ButtonSegment<String>(
-                                value: 'booker',
-                                label: Text(
-                                  "booker",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ),
-                              ButtonSegment<String>(
-                                value: 'dj',
-                                label: Text(
-                                  "    DJ    ",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ),
-                            ],
-                            selected: selected,
-                            onSelectionChanged: (Set<String> newSelection) {
-                              setState(() {
-                                selected = newSelection;
-                              });
-                            },
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  WidgetStateProperty.resolveWith<Color?>((
-                                    states,
-                                  ) {
-                                    if (states.contains(WidgetState.selected)) {
-                                      return Palette.shadowGrey;
-                                    }
-                                    return Palette.shadowGrey.o(0.35);
-                                  }),
-                              foregroundColor: WidgetStateProperty.all(
-                                Palette.primalBlack,
-                              ),
-                              textStyle:
-                                  WidgetStateProperty.resolveWith<TextStyle?>((
-                                    states,
-                                  ) {
-                                    return TextStyle(
-                                      fontWeight:
-                                          states.contains(WidgetState.selected)
-                                              ? FontWeight.bold
-                                              : FontWeight.normal,
-                                    );
-                                  }),
-                              shape: WidgetStateProperty.all<
-                                RoundedRectangleBorder
-                              >(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  side: BorderSide(
-                                    color: Palette.shadowGrey,
-                                    width: 2,
+                            child: SegmentedButton<String>(
+                              showSelectedIcon: false,
+                              segments: const [
+                                ButtonSegment<String>(
+                                  value: 'booker',
+                                  label: Text(
+                                    "booker",
+                                    style: TextStyle(fontSize: 12),
                                   ),
                                 ),
-                              ),
-                              padding: WidgetStateProperty.all<EdgeInsets>(
-                                const EdgeInsets.symmetric(horizontal: 24),
+                                ButtonSegment<String>(
+                                  value: 'dj',
+                                  label: Text(
+                                    "    DJ    ",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                              selected: selected,
+                              onSelectionChanged: (Set<String> newSelection) {
+                                setState(() {
+                                  selected = newSelection;
+                                });
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    WidgetStateProperty.resolveWith<Color?>((
+                                      states,
+                                    ) {
+                                      if (states.contains(
+                                        WidgetState.selected,
+                                      )) {
+                                        return Palette.shadowGrey;
+                                      }
+                                      return Palette.shadowGrey.o(0.35);
+                                    }),
+                                foregroundColor: WidgetStateProperty.all(
+                                  Palette.primalBlack,
+                                ),
+                                textStyle: WidgetStateProperty.resolveWith<
+                                  TextStyle?
+                                >((states) {
+                                  return TextStyle(
+                                    fontWeight:
+                                        states.contains(WidgetState.selected)
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                  );
+                                }),
+                                shape: WidgetStateProperty.all<
+                                  RoundedRectangleBorder
+                                >(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: BorderSide(
+                                      color: Palette.shadowGrey,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                padding: WidgetStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.symmetric(horizontal: 24),
+                                ),
                               ),
                             ),
                           ),
@@ -821,39 +824,45 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               SizedBox(height: 8),
 
-                              LiquidGlass(
-                                shape: LiquidRoundedRectangle(borderRadius: 16),
+                              LiquidGlassLayer(
+                                child: LiquidGlass(
+                                  shape: LiquidRoundedRectangle(
+                                    borderRadius: 16,
+                                  ),
 
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    padding: WidgetStateProperty.all<
-                                      EdgeInsetsGeometry
-                                    >(EdgeInsets.only(left: 90, right: 90)),
-                                    backgroundColor:
-                                        WidgetStateProperty.all<Color>(
-                                          Palette.forgedGold.o(0.65),
-                                        ),
-                                    shape: WidgetStateProperty.all<
-                                      OutlinedBorder
-                                    >(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                        side: BorderSide(
-                                          color: Palette.concreteGrey.o(0.7),
-                                          width: 2,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      padding: WidgetStateProperty.all<
+                                        EdgeInsetsGeometry
+                                      >(EdgeInsets.only(left: 90, right: 90)),
+                                      backgroundColor:
+                                          WidgetStateProperty.all<Color>(
+                                            Palette.forgedGold.o(0.65),
+                                          ),
+                                      shape: WidgetStateProperty.all<
+                                        OutlinedBorder
+                                      >(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                          side: BorderSide(
+                                            color: Palette.concreteGrey.o(0.7),
+                                            width: 2,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  onPressed: _performLogin,
-                                  child: Text(
-                                    AppLocale.logIn.getString(context),
-                                    style: GoogleFonts.sometypeMono(
-                                      textStyle: TextStyle(
-                                        color: Palette.glazedWhite,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        wordSpacing: -8,
+                                    onPressed: _performLogin,
+                                    child: Text(
+                                      AppLocale.logIn.getString(context),
+                                      style: GoogleFonts.sometypeMono(
+                                        textStyle: TextStyle(
+                                          color: Palette.glazedWhite,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          wordSpacing: -8,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -967,42 +976,44 @@ class _LoginScreenState extends State<LoginScreen> {
                         endIndent: 8,
                       ),
                       SizedBox(height: 16),
-                      LiquidGlass(
-                        shape: LiquidRoundedRectangle(borderRadius: 16),
+                      LiquidGlassLayer(
+                        child: LiquidGlass(
+                          shape: LiquidRoundedRectangle(borderRadius: 16),
 
-                        child: Shimmer.fromColors(
-                          period: Duration(milliseconds: 2600),
-                          baseColor: Palette.glazedWhite,
-                          highlightColor: Palette.forgedGold,
-                          child: Container(
-                            height: 48,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                foregroundColor: Colors.transparent,
-                                padding: EdgeInsets.only(left: 32, right: 32),
+                          child: Shimmer.fromColors(
+                            period: Duration(milliseconds: 2600),
+                            baseColor: Palette.glazedWhite,
+                            highlightColor: Palette.forgedGold,
+                            child: Container(
+                              height: 48,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  foregroundColor: Colors.transparent,
+                                  padding: EdgeInsets.only(left: 32, right: 32),
 
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                  side: BorderSide(
-                                    color: Palette.glazedWhite.o(0.7),
-                                    width: 2,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    side: BorderSide(
+                                      color: Palette.glazedWhite.o(0.7),
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              onPressed: () async {
-                                await _continueAsGuest();
-                              },
-                              child: Text(
-                                AppLocale.continueAsGuest.getString(context),
-                                style: GoogleFonts.sometypeMono(
-                                  textStyle: TextStyle(
-                                    color: Palette.primalBlack,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
+                                onPressed: () async {
+                                  await _continueAsGuest();
+                                },
+                                child: Text(
+                                  AppLocale.continueAsGuest.getString(context),
+                                  style: GoogleFonts.sometypeMono(
+                                    textStyle: TextStyle(
+                                      color: Palette.primalBlack,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),

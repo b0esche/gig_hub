@@ -102,30 +102,32 @@ class GenreBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        LiquidGlass(
-          shape: LiquidRoundedRectangle(borderRadius: 16),
-          clipBehavior: Clip.hardEdge,
-          glassContainsChild: true,
+        LiquidGlassLayer(
+          child: LiquidGlass(
+            shape: LiquidRoundedRectangle(borderRadius: 16),
+            clipBehavior: Clip.hardEdge,
+            glassContainsChild: true,
 
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Palette.shadowGrey, width: 0.85),
-              color: Palette.gigGrey.o(0.35),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(4),
-              child: Text(
-                genre,
-                style: GoogleFonts.sometypeMono(
-                  textStyle: TextStyle(
-                    wordSpacing: -4,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: Palette.shadowGrey,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Palette.shadowGrey.o(0.35),
-                    decorationThickness: 1.2,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Palette.shadowGrey, width: 0.85),
+                color: Palette.gigGrey.o(0.35),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: Text(
+                  genre,
+                  style: GoogleFonts.sometypeMono(
+                    textStyle: TextStyle(
+                      wordSpacing: -4,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Palette.shadowGrey,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Palette.shadowGrey.o(0.35),
+                      decorationThickness: 1.2,
+                    ),
                   ),
                 ),
               ),

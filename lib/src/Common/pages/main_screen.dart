@@ -604,21 +604,24 @@ class _MainScreenState extends State<MainScreen> {
                                 right: 0,
                                 height: 20,
                                 child: IgnorePointer(
-                                  child: LiquidGlass(
-                                    shape: LiquidRoundedRectangle(
-                                      borderRadius: 0,
-                                    ),
-                                    glassContainsChild: false,
+                                  child: LiquidGlassLayer(
+                                    settings: LiquidGlassSettings(blur: 8),
+                                    child: LiquidGlass(
+                                      shape: LiquidRoundedRectangle(
+                                        borderRadius: 0,
+                                      ),
+                                      glassContainsChild: false,
 
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Palette.primalBlack,
-                                            Palette.primalBlack.o(0),
-                                          ],
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Palette.primalBlack,
+                                              Palette.primalBlack.o(0),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

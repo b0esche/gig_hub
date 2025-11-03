@@ -62,135 +62,137 @@ class _CustomNavBarState extends State<CustomNavBar> with RouteAware {
                 right: 16,
                 top: 16,
               ),
-              child: LiquidGlass(
-                shape: LiquidRoundedRectangle(borderRadius: 8),
+              child: LiquidGlassLayer(
+                child: LiquidGlass(
+                  shape: LiquidRoundedRectangle(borderRadius: 8),
 
-                child: Container(
-                  color: Palette.glazedWhite.o(0.075),
-                  height: 48,
-                  width: 420,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.home_filled,
-                            color: Palette.forgedGold,
+                  child: Container(
+                    color: Palette.glazedWhite.o(0.075),
+                    height: 48,
+                    width: 420,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.home_filled,
+                              color: Palette.forgedGold,
+                            ),
                           ),
                         ),
-                      ),
-                      if (widget.currentUser is! Guest)
-                        VerticalDivider(color: Palette.primalBlack),
-                      if (widget.currentUser is! Guest)
-                        IconButton(
-                          onPressed: () async {
-                            if (widget.currentUser is DJ) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => ProfileScreenDJ(
-                                        currentUser: widget.currentUser,
-                                        dj: widget.currentUser as DJ,
+                        if (widget.currentUser is! Guest)
+                          VerticalDivider(color: Palette.primalBlack),
+                        if (widget.currentUser is! Guest)
+                          IconButton(
+                            onPressed: () async {
+                              if (widget.currentUser is DJ) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => ProfileScreenDJ(
+                                          currentUser: widget.currentUser,
+                                          dj: widget.currentUser as DJ,
 
-                                        showChatButton: false,
-                                        showEditButton: false,
-                                        showFavoriteIcon: false,
-                                      ),
-                                ),
-                              );
-                            } else if (widget.currentUser is Booker) {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => ProfileScreenBooker(
-                                        booker: widget.currentUser as Booker,
-                                        db: db,
+                                          showChatButton: false,
+                                          showEditButton: false,
+                                          showFavoriteIcon: false,
+                                        ),
+                                  ),
+                                );
+                              } else if (widget.currentUser is Booker) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => ProfileScreenBooker(
+                                          booker: widget.currentUser as Booker,
+                                          db: db,
 
-                                        showEditButton: false,
+                                          showEditButton: false,
+                                        ),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    duration: Duration(milliseconds: 950),
+                                    backgroundColor: Palette.forgedGold,
+                                    content: Center(
+                                      child: Text(
+                                        'sign up as DJ or booker to create a profile!',
+                                        style: TextStyle(fontSize: 16),
                                       ),
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  duration: Duration(milliseconds: 950),
-                                  backgroundColor: Palette.forgedGold,
-                                  content: Center(
-                                    child: Text(
-                                      'sign up as DJ or booker to create a profile!',
-                                      style: TextStyle(fontSize: 16),
                                     ),
                                   ),
-                                ),
-                              );
-                            }
-                          },
-                          icon: Icon(
-                            Icons.account_box_rounded,
-                            color: Palette.glazedWhite,
+                                );
+                              }
+                            },
+                            icon: Icon(
+                              Icons.account_box_rounded,
+                              color: Palette.glazedWhite,
+                            ),
                           ),
+                        VerticalDivider(color: Palette.primalBlack),
+                        Stack(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                // Allow all users (including guests) to access chat
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => ChatListScreen(
+                                          currentUser: widget.currentUser,
+                                        ),
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                Icons.question_answer_outlined,
+                                color: Palette.glazedWhite,
+                              ),
+                            ),
+                            if (hasUnreadMessages)
+                              Positioned(
+                                right: 2,
+                                bottom: 12,
+                                child: Container(
+                                  height: 8,
+                                  width: 8,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Palette.forgedGold,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                      VerticalDivider(color: Palette.primalBlack),
-                      Stack(
-                        children: [
-                          IconButton(
+
+                        VerticalDivider(color: Palette.primalBlack),
+
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: IconButton(
                             onPressed: () {
-                              // Allow all users (including guests) to access chat
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:
-                                      (context) => ChatListScreen(
-                                        currentUser: widget.currentUser,
-                                      ),
+                                  builder: (context) => const RaveRadarScreen(),
                                 ),
                               );
                             },
                             icon: Icon(
-                              Icons.question_answer_outlined,
+                              Icons.radar_rounded,
                               color: Palette.glazedWhite,
                             ),
                           ),
-                          if (hasUnreadMessages)
-                            Positioned(
-                              right: 2,
-                              bottom: 12,
-                              child: Container(
-                                height: 8,
-                                width: 8,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Palette.forgedGold,
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-
-                      VerticalDivider(color: Palette.primalBlack),
-
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RaveRadarScreen(),
-                              ),
-                            );
-                          },
-                          icon: Icon(
-                            Icons.radar_rounded,
-                            color: Palette.glazedWhite,
-                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

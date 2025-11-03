@@ -64,152 +64,156 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 12),
-          LiquidGlass(
-            shape: LiquidRoundedRectangle(borderRadius: 24),
-            child: SizedBox(
-              height: 240,
-              width: 300,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                color: Palette.shadowGrey.o(0.6),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 24,
+          LiquidGlassLayer(
+            child: LiquidGlass(
+              shape: LiquidRoundedRectangle(borderRadius: 24),
+              child: SizedBox(
+                height: 240,
+                width: 300,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        '${bpmRange.start.round()} - ${bpmRange.end.round()} bpm',
-                        style: GoogleFonts.sometypeMono(
-                          textStyle: TextStyle(
-                            color: Palette.primalBlack,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                  color: Palette.shadowGrey.o(0.6),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 24,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          '${bpmRange.start.round()} - ${bpmRange.end.round()} bpm',
+                          style: GoogleFonts.sometypeMono(
+                            textStyle: TextStyle(
+                              color: Palette.primalBlack,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                      ),
-                      SliderTheme(
-                        data: SliderTheme.of(context).copyWith(
-                          showValueIndicator: ShowValueIndicator.never,
-                        ),
-                        child: LiquidGlass(
-                          shape: LiquidRoundedRectangle(borderRadius: 24),
+                        SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            showValueIndicator: ShowValueIndicator.never,
+                          ),
+                          child: LiquidGlassLayer(
+                            child: LiquidGlass(
+                              shape: LiquidRoundedRectangle(borderRadius: 24),
 
-                          child: RangeSlider(
-                            min: 60,
-                            max: 200,
-                            divisions: 140,
-                            labels: RangeLabels(
-                              bpmRange.start.round().toString(),
-                              bpmRange.end.round().toString(),
+                              child: RangeSlider(
+                                min: 60,
+                                max: 200,
+                                divisions: 140,
+                                labels: RangeLabels(
+                                  bpmRange.start.round().toString(),
+                                  bpmRange.end.round().toString(),
+                                ),
+                                values: bpmRange,
+                                activeColor: Palette.forgedGold.o(0.9),
+                                inactiveColor: Palette.primalBlack.o(0.3),
+                                onChanged: (RangeValues values) {
+                                  setState(() {
+                                    bpmRange = values;
+                                    _minBpmController.text =
+                                        values.start.round().toString();
+                                    _maxBpmController.text =
+                                        values.end.round().toString();
+                                  });
+                                },
+                              ),
                             ),
-                            values: bpmRange,
-                            activeColor: Palette.forgedGold.o(0.9),
-                            inactiveColor: Palette.primalBlack.o(0.3),
-                            onChanged: (RangeValues values) {
-                              setState(() {
-                                bpmRange = values;
-                                _minBpmController.text =
-                                    values.start.round().toString();
-                                _maxBpmController.text =
-                                    values.end.round().toString();
-                              });
-                            },
                           ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: _minBpmController,
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.sometypeMono(
-                                textStyle: TextStyle(
-                                  color: Palette.primalBlack,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              decoration: InputDecoration(
-                                labelText: 'Min BPM',
-                                labelStyle: TextStyle(
-                                  color: Palette.primalBlack.o(0.7),
-                                  fontSize: 12,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Palette.forgedGold.o(0.5),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _minBpmController,
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.sometypeMono(
+                                  textStyle: TextStyle(
+                                    color: Palette.primalBlack,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
                                   ),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Palette.forgedGold,
-                                    width: 2,
+                                decoration: InputDecoration(
+                                  labelText: 'Min BPM',
+                                  labelStyle: TextStyle(
+                                    color: Palette.primalBlack.o(0.7),
+                                    fontSize: 12,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Palette.forgedGold.o(0.5),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Palette.forgedGold,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 8,
                                   ),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 8,
-                                ),
+                                onChanged: (value) {
+                                  _updateBpmRangeFromText();
+                                },
                               ),
-                              onChanged: (value) {
-                                _updateBpmRangeFromText();
-                              },
                             ),
-                          ),
-                          SizedBox(width: 12),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _maxBpmController,
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.sometypeMono(
-                                textStyle: TextStyle(
-                                  color: Palette.primalBlack,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              decoration: InputDecoration(
-                                labelText: 'Max BPM',
-                                labelStyle: TextStyle(
-                                  color: Palette.primalBlack.o(0.7),
-                                  fontSize: 12,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Palette.forgedGold.o(0.5),
+                            SizedBox(width: 12),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _maxBpmController,
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.sometypeMono(
+                                  textStyle: TextStyle(
+                                    color: Palette.primalBlack,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
                                   ),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Palette.forgedGold,
-                                    width: 2,
+                                decoration: InputDecoration(
+                                  labelText: 'Max BPM',
+                                  labelStyle: TextStyle(
+                                    color: Palette.primalBlack.o(0.7),
+                                    fontSize: 12,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Palette.forgedGold.o(0.5),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Palette.forgedGold,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 8,
                                   ),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 8,
-                                ),
+                                onChanged: (value) {
+                                  _updateBpmRangeFromText();
+                                },
                               ),
-                              onChanged: (value) {
-                                _updateBpmRangeFromText();
-                              },
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -230,28 +234,30 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Center(
-                  child: LiquidGlass(
-                    shape: LiquidRoundedSuperellipse(borderRadius: 24),
-                    glassContainsChild: false,
+                  child: LiquidGlassLayer(
+                    child: LiquidGlass(
+                      shape: LiquidRoundedSuperellipse(borderRadius: 24),
+                      glassContainsChild: false,
 
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.of(
-                          context,
-                        ).pop([bpmRange.start.round(), bpmRange.end.round()]);
-                      },
-                      icon: Icon(
-                        Icons.check,
-                        color: Palette.forgedGold,
-                        size: 18,
-                        shadows: [
-                          Shadow(
-                            offset: Offset(0.3, 0.3),
-                            blurRadius: 2,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(
+                            context,
+                          ).pop([bpmRange.start.round(), bpmRange.end.round()]);
+                        },
+                        icon: Icon(
+                          Icons.check,
+                          color: Palette.forgedGold,
+                          size: 18,
+                          shadows: [
+                            Shadow(
+                              offset: Offset(0.3, 0.3),
+                              blurRadius: 2,
 
-                            color: Palette.primalBlack.o(0.65),
-                          ),
-                        ],
+                              color: Palette.primalBlack.o(0.65),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

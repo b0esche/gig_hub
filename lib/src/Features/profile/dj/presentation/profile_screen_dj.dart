@@ -778,61 +778,65 @@ class _ProfileScreenDJState extends State<ProfileScreenDJ> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            LiquidGlass(
-                              shape: LiquidRoundedRectangle(borderRadius: 8),
+                            LiquidGlassLayer(
+                              child: LiquidGlass(
+                                shape: LiquidRoundedRectangle(borderRadius: 8),
 
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Palette.shadowGrey.o(0.4),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: Palette.concreteGrey,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Palette.shadowGrey.o(0.4),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Palette.concreteGrey,
+                                    ),
                                   ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        size: 16,
-                                        color: Palette.primalBlack,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      !editMode
-                                          ? LocationDisplay(widget: widget)
-                                          : LocationInputField(
-                                            locationController:
-                                                _locationController,
-                                            locationFocusNode:
-                                                _locationFocusNode,
-                                            locationError: _locationError,
-                                          ),
-                                    ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.location_on,
+                                          size: 16,
+                                          color: Palette.primalBlack,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        !editMode
+                                            ? LocationDisplay(widget: widget)
+                                            : LocationInputField(
+                                              locationController:
+                                                  _locationController,
+                                              locationFocusNode:
+                                                  _locationFocusNode,
+                                              locationError: _locationError,
+                                            ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            LiquidGlass(
-                              shape: LiquidRoundedRectangle(borderRadius: 8),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Palette.shadowGrey.o(0.4),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: Palette.concreteGrey,
+                            LiquidGlassLayer(
+                              child: LiquidGlass(
+                                shape: LiquidRoundedRectangle(borderRadius: 8),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Palette.shadowGrey.o(0.4),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Palette.concreteGrey,
+                                    ),
                                   ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.speed, size: 20),
-                                      const SizedBox(width: 4),
-                                      !editMode
-                                          ? BpmDisplay(widget: widget)
-                                          : bpmInputField(context),
-                                    ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: Row(
+                                      children: [
+                                        const Icon(Icons.speed, size: 20),
+                                        const SizedBox(width: 4),
+                                        !editMode
+                                            ? BpmDisplay(widget: widget)
+                                            : bpmInputField(context),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

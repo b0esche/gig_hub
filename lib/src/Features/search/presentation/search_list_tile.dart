@@ -201,98 +201,106 @@ class _SearchListTileState extends State<SearchListTile> {
                                       MainAxisAlignment.spaceEvenly,
                                   spacing: 32,
                                   children: [
-                                    LiquidGlass(
-                                      shape: LiquidRoundedRectangle(
-                                        borderRadius: 10,
-                                      ),
-
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            width: 2,
-                                            color: Palette.forgedGold.o(0.8),
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
-                                          color: Palette.forgedGold.o(0.45),
+                                    LiquidGlassLayer(
+                                      child: LiquidGlass(
+                                        shape: LiquidRoundedRectangle(
+                                          borderRadius: 10,
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Row(
-                                            spacing: 4,
-                                            children: [
-                                              Icon(
-                                                Icons.location_pin,
-                                                size: 18,
-                                                color: Palette.primalBlack,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                      0,
-                                                      0,
-                                                      4,
-                                                      0,
+
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 2,
+                                              color: Palette.forgedGold.o(0.8),
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                            color: Palette.forgedGold.o(0.45),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Row(
+                                              spacing: 4,
+                                              children: [
+                                                Icon(
+                                                  Icons.location_pin,
+                                                  size: 18,
+                                                  color: Palette.primalBlack,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                        0,
+                                                        0,
+                                                        4,
+                                                        0,
+                                                      ),
+                                                  child: Text(
+                                                    widget.location,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          Palette.primalBlack,
+                                                      fontSize: 13,
                                                     ),
-                                                child: Text(
-                                                  widget.location,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Palette.primalBlack,
-                                                    fontSize: 13,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    LiquidGlass(
-                                      shape: LiquidRoundedRectangle(
-                                        borderRadius: 10,
-                                      ),
-
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            width: 2,
-                                            color: Palette.forgedGold.o(0.8),
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
-                                          color: Palette.forgedGold.o(0.45),
+                                    LiquidGlassLayer(
+                                      child: LiquidGlass(
+                                        shape: LiquidRoundedRectangle(
+                                          borderRadius: 10,
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Row(
-                                            spacing: 4,
-                                            children: [
-                                              Icon(
-                                                Icons.speed,
-                                                size: 22,
-                                                color: Palette.primalBlack,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                      0,
-                                                      0,
-                                                      4,
-                                                      0,
+
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 2,
+                                              color: Palette.forgedGold.o(0.8),
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                            color: Palette.forgedGold.o(0.45),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Row(
+                                              spacing: 4,
+                                              children: [
+                                                Icon(
+                                                  Icons.speed,
+                                                  size: 22,
+                                                  color: Palette.primalBlack,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                        0,
+                                                        0,
+                                                        4,
+                                                        0,
+                                                      ),
+                                                  child: Text(
+                                                    "${widget.bpm.first}-${widget.bpm.last} bpm",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          Palette.primalBlack,
+                                                      fontSize: 13,
                                                     ),
-                                                child: Text(
-                                                  "${widget.bpm.first}-${widget.bpm.last} bpm",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Palette.primalBlack,
-                                                    fontSize: 13,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),

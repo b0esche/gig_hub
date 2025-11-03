@@ -102,7 +102,7 @@ class _LegalStatusWidgetState extends State<LegalStatusWidget> {
             Icon(allAccepted ? Icons.check_circle : Icons.warning, size: 16),
             const SizedBox(width: 8),
             Text(
-              allAccepted ? 'legal agreements' : 'review agreements',
+              allAccepted ? AppLocale.legalAgreements.getString(context) : AppLocale.reviewAgreements.getString(context),
               style: GoogleFonts.outfit(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

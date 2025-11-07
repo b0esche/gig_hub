@@ -81,7 +81,6 @@ flutter test
 
 ```bash
 git clone https://github.com/b0esche/gig_hub
-cd gig_hub
 ```
 
 2. Add environment variables to `.env`. Important keys used by the app:
@@ -89,14 +88,6 @@ cd gig_hub
 - `SOUNDCLOUD_CLIENT_ID`, `SOUNDCLOUD_CLIENT_SECRET`, `SOUNDCLOUD_REDIRECT_URI`
 - `ENCRYPTION_KEY` (32 chars)
 - `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, `EMAILJS_PUBLIC_KEY` (optional)
-
-3. Install dependencies and run:
-
-```bash
-flutter pub get
-flutter analyze
-flutter run -d <device>  # Supports Android, iOS, Web, Linux, macOS, Windows
-```
 
 ---
 

@@ -65,7 +65,9 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
         children: [
           SizedBox(height: 12),
           LiquidGlassLayer(
+            settings: LiquidGlassSettings(thickness: 6, refractiveIndex: 1.1),
             child: LiquidGlass(
+              glassContainsChild: true,
               shape: LiquidRoundedRectangle(borderRadius: 24),
               child: SizedBox(
                 height: 240,
@@ -97,32 +99,26 @@ class _BpmSelectionDialogState extends State<BpmSelectionDialog> {
                           data: SliderTheme.of(context).copyWith(
                             showValueIndicator: ShowValueIndicator.never,
                           ),
-                          child: LiquidGlassLayer(
-                            child: LiquidGlass(
-                              shape: LiquidRoundedRectangle(borderRadius: 24),
-
-                              child: RangeSlider(
-                                min: 60,
-                                max: 200,
-                                divisions: 140,
-                                labels: RangeLabels(
-                                  bpmRange.start.round().toString(),
-                                  bpmRange.end.round().toString(),
-                                ),
-                                values: bpmRange,
-                                activeColor: Palette.forgedGold.o(0.9),
-                                inactiveColor: Palette.primalBlack.o(0.3),
-                                onChanged: (RangeValues values) {
-                                  setState(() {
-                                    bpmRange = values;
-                                    _minBpmController.text =
-                                        values.start.round().toString();
-                                    _maxBpmController.text =
-                                        values.end.round().toString();
-                                  });
-                                },
-                              ),
+                          child: RangeSlider(
+                            min: 60,
+                            max: 200,
+                            divisions: 140,
+                            labels: RangeLabels(
+                              bpmRange.start.round().toString(),
+                              bpmRange.end.round().toString(),
                             ),
+                            values: bpmRange,
+                            activeColor: Palette.forgedGold.o(0.9),
+                            inactiveColor: Palette.primalBlack.o(0.3),
+                            onChanged: (RangeValues values) {
+                              setState(() {
+                                bpmRange = values;
+                                _minBpmController.text =
+                                    values.start.round().toString();
+                                _maxBpmController.text =
+                                    values.end.round().toString();
+                              });
+                            },
                           ),
                         ),
                         Row(

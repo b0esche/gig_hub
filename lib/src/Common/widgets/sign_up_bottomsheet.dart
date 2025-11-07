@@ -86,9 +86,13 @@ class _SignUpSheetState extends State<SignUpSheet> {
                 height: 48,
                 width: 270,
                 child: LiquidGlassLayer(
+                  settings: LiquidGlassSettings(
+                    thickness: 30,
+                    refractiveIndex: 1.1,
+                  ),
                   child: LiquidGlass(
                     shape: LiquidRoundedRectangle(borderRadius: 16),
-
+                    glassContainsChild: true,
                     child: SegmentedButton<String>(
                       expandedInsets: EdgeInsets.all(2),
                       showSelectedIcon: false,
@@ -253,9 +257,14 @@ class _SignUpSheetState extends State<SignUpSheet> {
               ),
               const SizedBox(height: 96),
               LiquidGlassLayer(
+                settings: LiquidGlassSettings(
+                  thickness: 30,
+                  refractiveIndex: 1.1,
+                  chromaticAberration: 1.3,
+                ),
                 child: LiquidGlass(
                   shape: LiquidRoundedRectangle(borderRadius: 16),
-
+                  glassContainsChild: true,
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

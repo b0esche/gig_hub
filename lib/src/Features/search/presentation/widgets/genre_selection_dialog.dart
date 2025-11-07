@@ -32,7 +32,9 @@ class _GenreSelectionDialogState extends State<GenreSelectionDialog> {
         children: [
           SizedBox(height: 14),
           LiquidGlassLayer(
+            settings: LiquidGlassSettings(thickness: 16, refractiveIndex: 1.1),
             child: LiquidGlass(
+              glassContainsChild: true,
               shape: LiquidRoundedRectangle(borderRadius: 28),
               child: SizedBox(
                 height: 318,
@@ -152,7 +154,6 @@ class _GenreSelectionDialogState extends State<GenreSelectionDialog> {
                       child: LiquidGlassLayer(
                         child: LiquidGlass(
                           shape: LiquidRoundedSuperellipse(borderRadius: 24),
-                          glassContainsChild: false,
 
                           child: IconButton(
                             style: ButtonStyle(

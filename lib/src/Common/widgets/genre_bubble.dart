@@ -103,6 +103,12 @@ class GenreBubble extends StatelessWidget {
     return Stack(
       children: [
         LiquidGlassLayer(
+          settings: LiquidGlassSettings(
+            blur: 1,
+            refractiveIndex: 1.1,
+            thickness: 12,
+            lightIntensity: 2,
+          ),
           child: LiquidGlass(
             shape: LiquidRoundedRectangle(borderRadius: 16),
             clipBehavior: Clip.hardEdge,

@@ -105,9 +105,15 @@ class _SearchFunctionCardState extends State<SearchFunctionCard> {
                 })
                 : null,
         child: LiquidGlassLayer(
+          settings: LiquidGlassSettings(
+            thickness: 18,
+            refractiveIndex: 1.15,
+            chromaticAberration: 0.25,
+            glassColor: Palette.forgedGold.o(0.035),
+          ),
           child: LiquidGlass(
             shape: LiquidRoundedRectangle(borderRadius: 16),
-
+            glassContainsChild: true,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 350),
               width: !isSearchCardCollapsed ? 300 : 110,

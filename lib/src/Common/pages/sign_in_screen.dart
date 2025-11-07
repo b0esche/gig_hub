@@ -524,7 +524,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 48,
                         width: 270,
                         child: LiquidGlassLayer(
+                          settings: LiquidGlassSettings(
+                            thickness: 30,
+                            refractiveIndex: 1.1,
+                            chromaticAberration: 1.3,
+                          ),
                           child: LiquidGlass(
+                            glassContainsChild: true,
                             shape: LiquidRoundedRectangle(borderRadius: 16),
 
                             child: SegmentedButton<String>(
@@ -825,7 +831,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(height: 8),
 
                               LiquidGlassLayer(
+                                settings: LiquidGlassSettings(
+                                  thickness: 28,
+                                  refractiveIndex: 1.135,
+                                  chromaticAberration: 0.35,
+                                  glassColor: Palette.forgedGold.o(0.025),
+                                ),
                                 child: LiquidGlass(
+                                  glassContainsChild: true,
                                   shape: LiquidRoundedRectangle(
                                     borderRadius: 16,
                                   ),

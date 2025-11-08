@@ -112,7 +112,6 @@ class GenreBubble extends StatelessWidget {
             shape: LiquidRoundedRectangle(borderRadius: 16),
             clipBehavior: Clip.hardEdge,
             glassContainsChild: true,
-
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),

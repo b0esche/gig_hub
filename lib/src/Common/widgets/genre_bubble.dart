@@ -104,9 +104,8 @@ class GenreBubble extends StatelessWidget {
       children: [
         LiquidGlassLayer(
           settings: LiquidGlassSettings(
-            blur: 1,
             refractiveIndex: 1.1,
-            thickness: 12,
+            thickness: 10,
             lightIntensity: 2,
           ),
           child: LiquidGlass(

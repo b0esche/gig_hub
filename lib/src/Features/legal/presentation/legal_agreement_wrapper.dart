@@ -34,21 +34,24 @@ class _LegalAgreementWrapperState extends State<LegalAgreementWrapper> {
       context: context,
       barrierDismissible: false, // Prevent dismissing without accepting
       builder:
-          (context) => LegalAgreementDialog(
-            isRequired: true,
-            onAccept: () async {
-              // Save acceptance to Firestore
-              await LegalAgreementService.acceptAllAgreements(widget.user);
+          (context) => PopScope(
+            canPop: false,
+            child: LegalAgreementDialog(
+              isRequired: true,
+              onAccept: () async {
+                // Save acceptance to Firestore
+                await LegalAgreementService.acceptAllAgreements(widget.user);
 
-              if (mounted) {
-                setState(() {
-                  _showDialog = false;
-                });
+                if (mounted) {
+                  setState(() {
+                    _showDialog = false;
+                  });
 
-                // Trigger app.dart to refresh user data
-                App.refreshUserData();
-              }
-            },
+                  // Trigger app.dart to refresh user data
+                  App.refreshUserData();
+                }
+              },
+            ),
           ),
     );
   }
